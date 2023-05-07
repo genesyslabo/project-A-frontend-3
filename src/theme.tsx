@@ -20,6 +20,7 @@ const breakpoints = {
 }
 const colors = {
     darkgreen: '#02715F',
+    lightfont: '#6E8A99',
 }
 
 export const theme = extendTheme({

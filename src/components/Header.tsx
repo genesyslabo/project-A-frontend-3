@@ -7,12 +7,12 @@ export function Header() {
 
     return (
         <>
-            <Box as='nav' className="w-full flex fixed top-0 left-0 px-8 justify-between items-center space-x-6 h-24 bg-[#9BDCFF]">
+            <Box as='nav' className="w-full flex fixed z-20 top-0 left-0 px-8 justify-between items-center space-x-6 h-24 bg-[#9BDCFF]">
                 <Avatar bg={"#02715F"} name='Logo' src='/' />
                 <Spacer />
                 <Image src={ isOpen ? "/assets/images/icon-close.png" : "/assets/images/icon-hamburger.png" }
                     onClick={isOpen ? onClose : onOpen}
-                    className='' />
+                    className='w-10' />
             </Box>
 
             <Box className={

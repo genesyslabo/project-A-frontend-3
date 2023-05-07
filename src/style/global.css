@@ -10,14 +10,14 @@
     font-family: "GothamRnd";
     font-style: normal;
     font-weight: bold;
-    src: url("/assets/fonts/GothamRounded/GothamRounded-Bold.otf") format("opentype");
+    src: url("/assets/fonts/GothamRounded/GothamRnd-Bold.otf") format("opentype");
 }
 
 @font-face {
     font-family: "GothamRnd";
     font-style: normal;
     font-weight: light;
-    src: url("/assets/fonts/GothamRounded/GothamRounded-Light.otf") format("opentype");
+    src: url("/assets/fonts/GothamRounded/GothamRnd-Light.otf") format("opentype");
 }
 
 
@@ -32,4 +32,11 @@
 
 body {
     font-family: 'GothamRnd' !important;
+    color: black;
+}
+
+button {
+    font-family: 'GothamRnd' !important;
+    font-size: 24px;
+    font-weight: bold;
 }
