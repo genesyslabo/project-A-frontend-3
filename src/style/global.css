@@ -1,0 +1,35 @@
+
+@font-face {
+    font-family: "GothamRnd";
+    font-style: normal;
+    font-weight: normal;
+    src: url("/assets/fonts/GothamRounded/GothamRnd-Medium.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "GothamRnd";
+    font-style: normal;
+    font-weight: bold;
+    src: url("/assets/fonts/GothamRounded/GothamRounded-Bold.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "GothamRnd";
+    font-style: normal;
+    font-weight: light;
+    src: url("/assets/fonts/GothamRounded/GothamRounded-Light.otf") format("opentype");
+}
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+    --chakra-fonts-body: 'GothamRnd'
+}
+
+body {
+    font-family: 'GothamRnd' !important;
+}
