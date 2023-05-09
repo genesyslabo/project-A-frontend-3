@@ -198,8 +198,27 @@ const Index = () => {
     return (<>
         <FramePage menu="home">
             <Flex className="flex flex-col justify-center items-center pt-24 md:pt-0">
+                <Box className="flex flex-col gap-4 bg-[#EDF8FF] rounded-2xl p-4">
+                    <Box className="flex flex-row gap-2 items-center">
+                        <Box>
+                            <Avatar bg={"#BEE1F4"} name=" " size={"xl"} />
+                        </Box>
+                        <Box className="flex flex-col gap-2">
+                            <Text className="text-black font-bold text-3xl">Flare Staking</Text>
+                            <Text className="text-[#6E8A99] text-xl">Collateralize assets to borrow liquidity.</Text>
+                            <Text className="text-[#6E8A99] text-lg underline">Learn More</Text>
+                        </Box>
+                    </Box>
+                    <Grid className="grid-cols-2 gap-2">
+                        <Box className="text-black text-4xl font-bold">816</Box>
+                        <Box className="text-black text-4xl font-bold">911</Box>
+                        <Box className="text-[#6E8A99] text-2xl">Total sked</Box>
+                        <Box className="text-[#6E8A99] text-2xl">Total reward</Box>
+                    </Grid>
+                </Box>
+
                 <HStack className="w-full my-4">
-                    <Box className="text-[56px]" color={"darkgreen"} fontFamily={"PingFangSC-Semibold"}>Vesting</Box>
+                    <Box className="text-[48px]" color={"darkgreen"} fontFamily={"PingFangSC-Semibold"}>Vesting</Box>
                     <Spacer />
                     <Tabs variant='soft-rounded' colorScheme='green'>
                         <TabList borderRadius={"var(--chakra-radii-full)"} bg={"white"}>
