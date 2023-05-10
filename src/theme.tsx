@@ -24,7 +24,7 @@ const colors = {
 }
 
 export const theme = extendTheme({
-    initialColorMode: "light",
+    // initialColorMode: "light",
     // semanticTokens: {
     //     colors: {
     //         text: {

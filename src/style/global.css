@@ -3,6 +3,13 @@
     font-family: "GothamRnd";
     font-style: normal;
     font-weight: normal;
+    src: url("/assets/fonts/GothamRounded/GothamRnd-Book.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "GothamRnd";
+    font-style: normal;
+    font-weight: 500;
     src: url("/assets/fonts/GothamRounded/GothamRnd-Medium.otf") format("opentype");
 }
 
@@ -39,4 +46,16 @@ button {
     font-family: 'GothamRnd' !important;
     font-size: 24px;
     font-weight: bold;
+}
+
+
+.chakra-modal__content-container {
+    align-items: flex-end !important;
+}
+
+.chakra-modal__content {
+    margin-bottom: 0 !important;
+    border-radius: 16px 16px 0px 0px !important;
+    background-color: #EDF8FF !important;
+    color: black !important;
 }

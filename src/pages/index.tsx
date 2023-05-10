@@ -1,13 +1,15 @@
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Avatar, AvatarBadge, Box, Button, Flex, Grid, HStack, Image, Spacer, Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs, Text, VStack, useDisclosure, useToast } from "@chakra-ui/react"
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Avatar, AvatarBadge, Box, Button, Flex, Grid, HStack, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, RadioGroup, Spacer, Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs, Tag, TagLabel, TagLeftIcon, Text, VStack, useDisclosure, useToast } from "@chakra-ui/react"
+import { LockIcon } from '@chakra-ui/icons'
 import { FramePage } from "../components/FramePage"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
-import { PropsWithChildren } from "react"
 import Link from "next/link"
+import React, { PropsWithChildren } from "react"
+import { RadioCard } from "../components/CustomRadio"
 
 const CustomSwitchTab: React.FC<{ text: string }> = (props) => {
     return (<>
         <Tab
-            className={"text-[#02715F] bg-white px-4 text-center"}
+            className={"text-[#02715F] bg-white px-4 text-center font-medium text-base"}
             _active={{
                 bg: 'darkgreen',
                 transform: 'scale(0.95)',
@@ -29,7 +31,7 @@ const CustomSwitchTab: React.FC<{ text: string }> = (props) => {
 const CustomTab: React.FC<{ text: string }> = (props) => {
     return (
         <Tab
-            className={"text-[#6E8A99]"}
+            className={"text-[#6E8A99] text-lg font-medium"}
             paddingInlineStart={0}
             _active={{
                 bg: 'transparent',
@@ -51,63 +53,341 @@ const CustomTab: React.FC<{ text: string }> = (props) => {
 }
 
 const DepositsPanel = () => {
-    return (<>
-        <Accordion defaultIndex={[0]} allowMultiple>
-            <AccordionItem>
-                <AccordionButton className="bg-white rounded-t-2xl">
-                    <Flex className="w-full flex-col gap-2">
-                        <Flex className="flex-row items-center py-2">
-                            <Image src="/assets/images/icon-currency.png" className="w-8" />
-                            <Text className="text-black ml-2">USDC-ETHLP</Text>
-                        </Flex>
-                        <Flex className="flex-row gap-8 text-[#6E8A99]">
-                            <Text className="w-20 text-left">Earnd</Text>
-                            <Text>APR</Text>
-                            <Spacer />
-                        </Flex>
-                        <Flex className="flex-row gap-8 text-black">
-                            <Text className="w-20 text-left">0</Text>
-                            <Text>34.63%</Text>
-                            <Spacer />
-                        </Flex>
-                    </Flex>
-                    <AccordionIcon color={"darkgreen"} fontSize={32} />
-                </AccordionButton>
-                
-                <AccordionPanel pb={4} className="bg-[#D2EEFF] text-[#507589] rounded-b-2xl">
-                    <Box border={"1px solid rgba(0,166,139,1)"} borderRadius={"20px"} p={"20px"} my={"20px"}>
-                        <Text className="mb-2">START FARMING</Text>
-                        <ConnectButton />
-                    </Box>
-                    <Grid className="grid-cols-2 gap-4">
-                        <Box>APR</Box>
-                        <Box className="text-right text-black">34.63%</Box>
-                        <Box>multiplier</Box>
-                        <Box className="text-right text-black">140x</Box>
-                        <Box>Staked Liquidity</Box>
-                        <Box className="text-right text-black">$1,499,257</Box>
-                    </Grid>
-                </AccordionPanel>
-            </AccordionItem>
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
-            <AccordionItem>
-                <h2>
-                <AccordionButton>
-                    <Box as="span" flex='1' textAlign='left'>
-                    Section 2 title
-                    </Box>
-                    <AccordionIcon />
-                </AccordionButton>
-                </h2>
-                <AccordionPanel pb={4}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                commodo consequat.
-                </AccordionPanel>
-            </AccordionItem>
-        </Accordion>
-    </>)
+    return (
+        <>
+            <Accordion defaultIndex={[0]} allowMultiple>
+                <AccordionItem>
+                    <AccordionButton className="bg-white rounded-t-2xl">
+                        <Flex className="w-full flex-row items-center gap-4">
+                            <Avatar bg={"#02715F"} name=" ">
+                                <AvatarBadge
+                                    boxSize="1.25em"
+                                    bg="transparent"
+                                    borderColor="transparent"
+                                >
+                                    <Image src="/assets/images/icon-cyclic.png" />
+                                </AvatarBadge>
+                            </Avatar>
+
+                            <VStack className="text-left" alignItems={"start"}>
+                                <Text className="text-[#0094FF] text-[10px] font-medium">locked</Text>
+                                <Text className="text-black font-bold text-sm !mt-0">
+                                    stake FLARE
+                                </Text>
+                                <Text className="text-[#6E8A99] text-[10px] !mt-0">
+                                    Stake, Earn-And more!
+                                </Text>
+                            </VStack>
+
+                            <VStack className="text-left" alignItems={"start"}>
+                                <Text className="text-[#6E8A99] text-xs font-medium">
+                                    APR
+                                </Text>
+                                <Text className="text-black text-base font-medium">
+                                    34.63%
+                                </Text>
+                            </VStack>
+                        </Flex>
+                        <AccordionIcon color={"darkgreen"} fontSize={32} />
+                    </AccordionButton>
+
+                    <AccordionPanel
+                        pb={4}
+                        className="bg-[#D2EEFF] text-[#507589] rounded-b-2xl"
+                    >
+                        <Box className="flex flex-row gap-2 items-center mt-2">
+                            <Text
+                                color={"#0094FF"}
+                                fontSize={"12px"}
+                                fontWeight={"500"}
+                            >
+                                MY POSITION
+                            </Text>
+                            <Tag
+                                size="sm"
+                                bg={"darkgreen"}
+                                color={"white"}
+                                borderRadius="full"
+                            >
+                                <TagLeftIcon boxSize="12px" as={LockIcon} />
+                                <TagLabel>Locked</TagLabel>
+                            </Tag>
+                        </Box>
+                        <Grid
+                            border={"1px solid rgba(0,166,139,1)"}
+                            borderRadius={"8px"}
+                            p={"20px"}
+                            my={"20px"}
+                            className="grid-cols-2"
+                        >
+                            <Text className="text-[#0094FF] font-bold">
+                                RECENT FLARE PROFIT
+                            </Text>
+                            <Text className="text-[#0094FF] font-bold">
+                                YIELD BOOST
+                            </Text>
+                            <Text className="text-black font-bold text-2xl">
+                                0.0000
+                            </Text>
+                            <Text className="text-black font-bold text-2xl">
+                                1.38x
+                            </Text>
+                            <Text className="font-bold">~0.00USD</Text>
+                            <Text className="font-bold">Lock for 1 week</Text>
+                        </Grid>
+                        <Flex
+                            border={"1px solid rgba(0,166,139,1)"}
+                            borderRadius={"8px"}
+                            p={"20px"}
+                            my={"20px"}
+                            className="flex-col gap-4"
+                        >
+                            <Grid className="grid-cols-2">
+                                <Text className="font-bold">
+                                    <span className="text-[#0094FF]">
+                                        FLARE
+                                    </span>
+                                    LOCKED
+                                </Text>
+                                <Text className="font-bold">ULNLOCJS IN</Text>
+                                <Text className="text-black font-bold text-2xl">
+                                    20.0000
+                                </Text>
+                                <Text className="text-black font-bold text-2xl">
+                                    7 days
+                                </Text>
+                                <Text className="font-bold">~50.98USD</Text>
+                                <Text className="font-bold">
+                                    On May 10,2023,11:38
+                                </Text>
+                            </Grid>
+                            <Button
+                                size="lg"
+                                bg="darkgreen"
+                                color={"white"}
+                                fontSize={16}
+                                borderColor="darkgreen"
+                                _hover={{ bg: "#00A68B" }}
+                                _active={{
+                                    bg: "#00A68B",
+                                    transform: "scale(0.98)",
+                                }}
+                            >
+                                Staking
+                            </Button>
+                        </Flex>
+                    </AccordionPanel>
+                </AccordionItem>
+
+                <AccordionItem mt={4}>
+                    <AccordionButton className="bg-white rounded-t-2xl">
+                        <Flex className="w-full flex-row items-center gap-2">
+                            <Avatar bg={"#02715F"} name=" ">
+                                <AvatarBadge
+                                    boxSize="1.25em"
+                                    bg="transparent"
+                                    borderColor="transparent"
+                                >
+                                    <Image src="/assets/images/icon-cyclic.png" />
+                                </AvatarBadge>
+                            </Avatar>
+
+                            <VStack className="text-left" alignItems={"start"}>
+                                <Text className="text-black text-xl">
+                                    Flexible FLARE
+                                </Text>
+                                <Text className="text-[#6E8A99]">
+                                    Fleible staking on the side.
+                                </Text>
+                            </VStack>
+                            <VStack>
+                                <Text className="text-[#6E8A99] text-xl">
+                                    Flexible APY
+                                </Text>
+                                <Text className="text-black text-[22px]">
+                                    0.93%
+                                </Text>
+                            </VStack>
+                            <VStack>
+                                <Text className="text-[#6E8A99] text-xl">
+                                    Locked APR Up to
+                                </Text>
+                                <Text className="text-black text-[22px]">
+                                    20.93%
+                                </Text>
+                            </VStack>
+                        </Flex>
+                        <AccordionIcon color={"darkgreen"} fontSize={32} />
+                    </AccordionButton>
+
+                    <AccordionPanel
+                        pb={4}
+                        className="bg-[#D2EEFF] text-[#507589] rounded-b-2xl"
+                    >
+                        <Grid className="grid-cols-2 gap-2 mt-4">
+                            <Box>Flexible APY</Box>
+                            <Box className="text-right text-black">0.63%</Box>
+                            <Box>Locked APR</Box>
+                            <Box className="text-right text-black">
+                                Up to 20.63%
+                            </Box>
+                        </Grid>
+                        <VStack
+                            border={"1px solid rgba(0,166,139,1)"}
+                            borderRadius={"20px"}
+                            p={"20px"}
+                            my={"20px"}
+                            gap={2}
+                            align={"left"}
+                        >
+                            <Text className="mb-2 font-bold" color={"#0094FF"}>
+                                RECENT FLARE PROFIT
+                            </Text>
+                            <Flex className="flex-row items-center">
+                                <Box>
+                                    <span className="text-black text-[28px]">
+                                        0
+                                    </span>{" "}
+                                    ~ 0USD
+                                </Box>
+                                <Box className="grow text-right">
+                                    0.1% unstaking fee if withdraw within 72h
+                                </Box>
+                            </Flex>
+                        </VStack>
+                        <VStack
+                            border={"1px solid rgba(0,166,139,1)"}
+                            borderRadius={"20px"}
+                            p={"20px"}
+                            my={"20px"}
+                            gap={2}
+                            align={"left"}
+                        >
+                            <Text className="mb-2 text-black font-bold">
+                                <Box as="span" color={"#0094FF"}>
+                                    STAKE
+                                </Box>{" "}
+                                FLARE
+                            </Text>
+                            <Button
+                                size="lg"
+                                bg="darkgreen"
+                                color={"white"}
+                                borderColor="darkgreen"
+                                _hover={{ bg: "#00A68B" }}
+                                _active={{
+                                    bg: "#00A68B",
+                                    transform: "scale(0.98)",
+                                }}
+                                onClick={isOpen ? onClose : onOpen}
+                            >
+                                Flexible
+                            </Button>
+                            <Link href={""}>
+                                <Text className="underline">
+                                    What's the difference?
+                                </Text>
+                            </Link>
+                        </VStack>
+                        <Grid className="grid-cols-2 gap-4 text-black text-[20px]">
+                            <Box>Total staked</Box>
+                            <Box className="text-right">241,951,557 FLARE</Box>
+                            <Box>Total locked</Box>
+                            <Box className="text-right">189,65,524 FLARE</Box>
+                            <Box>Average lock duration</Box>
+                            <Box className="text-right">41 weeks</Box>
+                            <Box>Performance Fee</Box>
+                            <Box className="text-right">0-2%</Box>
+                        </Grid>
+                    </AccordionPanel>
+                </AccordionItem>
+            </Accordion>
+
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>FLEXIBLE</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <Flex className="flex-col gap-2">
+                            <Flex>
+                                <Text className="grow text-[#5B7A8A] text-xs font-medium">
+                                    FLARE TO STAKE
+                                </Text>
+                                <Flex className="gap-1 items-center">
+                                    <Box
+                                        bg={"darkgreen"}
+                                        className="rounded-full w-4 h-4"
+                                    ></Box>
+                                    <Box className="font-bold text-sm">
+                                        FLARE
+                                    </Box>
+                                </Flex>
+                            </Flex>
+                            <Flex className="flex-col items-end bg-[#D2EEFF] rounded-lg gap-2 p-2">
+                                <Text className="font-bold">20</Text>
+                                <Text className="text-xs text-[#666666]">
+                                    -241,951,557 USD
+                                </Text>
+                            </Flex>
+                            <Text className="text-right text-[#6E8A99] text-xs">
+                                Balance: 20.2313131
+                            </Text>
+                            <RadioGroup
+                                name="form-name"
+                                className="grid grid-cols-4 gap-2 mt-2"
+                            >
+                                <RadioCard>20%</RadioCard>
+                                <RadioCard>50%</RadioCard>
+                                <RadioCard>75%</RadioCard>
+                                <RadioCard>Max</RadioCard>
+                            </RadioGroup>
+                            <Flex className="flex-row">
+                                <Flex className="flex-col gap-2 grow text-xs text-[#676768]">
+                                    <Text>xxNFT x1 +25% &gt;</Text>
+                                    <Text>Annual ROI at current rates;</Text>
+                                </Flex>
+                                <Flex className="items-center font-medium text-sm">
+                                    35%
+                                </Flex>
+                            </Flex>
+
+                            <Button
+                                size="lg"
+                                bg="darkgreen"
+                                color={"white"}
+                                borderColor="darkgreen"
+                                _hover={{ bg: "#00A68B" }}
+                                _active={{
+                                    bg: "#00A68B",
+                                    transform: "scale(0.98)",
+                                }}
+                            >
+                                Confirm
+                            </Button>
+
+                            <Button
+                                size="lg"
+                                bg="white"
+                                color={"darkgreen"}
+                                variant="outline"
+                                borderColor={"darkgreen"}
+                                _hover={{}}
+                                _active={{
+                                    bg: "white",
+                                    transform: "scale(0.98)",
+                                }}
+                            >
+                                Add FLARE LOCKED
+                            </Button>
+                        </Flex>
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
+        </>
+    );
 }
 
 const PositionPanel = () => {
@@ -115,78 +395,216 @@ const PositionPanel = () => {
         <Accordion defaultIndex={[0]} allowMultiple>
             <AccordionItem>
                 <AccordionButton className="bg-white rounded-t-2xl">
-                    <Grid className="w-full grid-cols-4 items-center">
+                    <Flex className="w-full flex-row items-center gap-2">
                         <Avatar bg={"#02715F"} name=" ">
                             <AvatarBadge boxSize='1.25em' bg='transparent' borderColor="transparent">
                                 <Image src="/assets/images/icon-cyclic.png" />
                             </AvatarBadge>
                         </Avatar>
-                        <Text className="text-left text-black">Stake FLARE</Text>
-                        <Flex className="text-left flex-col text-black">
-                            <Text className="">Flexible APY</Text>
-                            <Text>0.96%</Text>
+                        <VStack className="text-left !items-start">
+                            <Text className="text-black text-xs font-bold text-left">Flexible FLARE</Text>
+                            <Text className="!mt-0" color={"lightfont"} fontSize={"10px"}>Flexible staking on the side.</Text>
+                        </VStack>
+                        <Flex className="text-left flex-col">
+                            <Text color={"lightfont"} className="text-[11px]">Flexible APY</Text>
+                            <Text className="text-black text-sm font-medium">0.96%</Text>
                         </Flex>
-                        <Flex className="text-left flex-col text-black">
-                            <Text className="">Locked APR</Text>
-                            <Text>Up to</Text>
-                            <Text>20.96%</Text>
+                        <Flex className="text-left flex-col" color={"lightfont"}>
+                            <Text className="text-[11px] !mt-0 font-medium">Locked APR</Text>
+                            <Text className="text-[14px] !mt-0 font-medium">Up to</Text>
+                            <Text className="text-black !mt-0 text-[14px] font-medium">20.96%</Text>
                         </Flex>
-                    </Grid>
+                    </Flex>
                     <AccordionIcon color={"darkgreen"} fontSize={32} />
                 </AccordionButton>
                 
-                <AccordionPanel pb={4} className="bg-[#D2EEFF] text-[#507589] rounded-b-2xl">
+                <AccordionPanel pb={4} className="bg-[#D2EEFF] text-[#507589] rounded-b-2xl text-sm font-medium">
                     <Grid className="grid-cols-2 gap-2 my-4">
                         <Box color={"lightfont"}>Flexible APY</Box>
                         <Box className="text-right">0.96%</Box>
                         <Box color={"lightfont"}>Locked APY</Box>
                         <Box className="text-right">Up to 20.96%</Box>
                     </Grid>
-                    <VStack border={"1px solid rgba(0,166,139,1)"} borderRadius={"20px"} p={"20px"} my={"20px"} gap={2} align={"left"}>
-                        <Text className="mb-2" color={"darkgreen"}>RECENT FLARE PROFIT</Text>
-                        <Flex className="flex-row items-center">
-                            <Box><span className="text-black text-[28px]">0</span> ~ 0USD</Box>
-                            <Box className="grow text-right">0.1% unstaking fee if withdraw within 72h</Box>
+                    
+                    <VStack border={"1px solid rgba(0,166,139,1)"} borderRadius={"10px"} p={"20px"} my={"20px"} gap={2} align={"left"}>
+                        <Text className="mb-2 text-sm font-medium" color={"#0094FF"}>RECENT FLARE PROFIT</Text>
+                        <Flex className="flex-row items-start gap-4">
+                            <Flex className="flex-col">
+                                <Box className="text-black text-xl">0</Box>
+                                <Box className="whitespace-nowrap">~ 0USD</Box>    
+                            </Flex>
+                            <Box className="text-black text-sm grow">0.1% unstaking fee if withdraw within 72h</Box>
                         </Flex>
                     </VStack>
-                    <VStack border={"1px solid rgba(0,166,139,1)"} borderRadius={"20px"} p={"20px"} my={"20px"} gap={2} align={"left"}>
-                        <Text className="mb-2 text-black"><Box as="span" color={"darkgreen"}>STAKE</Box> FLARE</Text>
-                        <Grid className="grid-cols-2 gap-4">
-                            <Button 
-                                size='lg'
-                                bg='darkgreen'
-                                color={"white"}
-                                borderColor='darkgreen'
-                                _hover={{ bg: '#00A68B' }}
-                                _active={{
-                                  bg: '#00A68B',
-                                  transform: 'scale(0.98)',
-                                }}>Flexible</Button>
-                            <Button 
-                                size='lg'
-                                bg='darkgreen'
-                                color={"white"}
-                                borderColor='darkgreen'
-                                _hover={{ bg: '#00A68B' }}
-                                _active={{
-                                  bg: '#00A68B',
-                                  transform: 'scale(0.98)',
-                                }}>Locked</Button>
-                        </Grid>
+                    <VStack border={"1px solid rgba(0,166,139,1)"} borderRadius={"10px"} p={"20px"} my={"20px"} gap={2} align={"left"}>
+                        <Text className="mb-2 text-black font-medium"><Box as="span" color={"#0094FF"}>STAKE</Box> FLARE</Text>
+                        <Button 
+                            size='lg'
+                            bg='darkgreen'
+                            color={"white"}
+                            borderColor='darkgreen'
+                            _hover={{ bg: '#00A68B' }}
+                            _active={{
+                                bg: '#00A68B',
+                                transform: 'scale(0.98)',
+                            }}>Add FLARE</Button>
                         <Link href={""}>
-                            <Text className="underline">What's the difference?</Text>
+                            <Text className="underline text-sm">What's the difference?</Text>
                         </Link>
                     </VStack>
-                    <Grid className="grid-cols-2 gap-4 text-black font-bold text-[28px]">
+                    <Grid className="grid-cols-2 gap-2 text-black text-[14px]">
                         <Box>Total staked</Box>
-                        <Box className="text-right">241,951,557 CAKE</Box>
+                        <Box className="text-right">241,951,557 FLARE</Box>
                         <Box>Total locked</Box>
-                        <Box className="text-right">189,65,524 CAKE</Box>
+                        <Box className="text-right">189,65,524 FLARE</Box>
                         <Box>Average lock duration</Box>
                         <Box className="text-right">41 weeks</Box>
                         <Box>Performance Fee</Box>
                         <Box className="text-right">0-2%</Box>
                     </Grid>
+                </AccordionPanel>
+            </AccordionItem>
+
+            <AccordionItem mt={4}>
+                <AccordionButton className="bg-white rounded-t-2xl">
+                    <Flex className="w-full flex-row items-center gap-2">
+                        <Avatar bg={"#02715F"} name=" ">
+                            <AvatarBadge
+                                boxSize="1.25em"
+                                bg="transparent"
+                                borderColor="transparent"
+                            >
+                                <Image src="/assets/images/icon-cyclic.png" />
+                            </AvatarBadge>
+                        </Avatar>
+
+                        <VStack className="grow justify-center" alignItems={"start"}>
+                            <Text className="text-[#0094FF] font-medium text-[10px] !mt-0">locked</Text>
+                            <Text className="text-[#1E1E1E] text-sm font-bold !mt-0">
+                                stake FLARE
+                            </Text>
+                            <Text className="text-[#6E8A99] text-[10px] !mt-0">
+                                Stake, Earn-And more!
+                            </Text>
+                        </VStack>
+                        <VStack alignItems={"start"}>
+                            <Text className="text-[#6E8A99] text-xs font-medium">
+                                APR
+                            </Text>
+                            <Text className="text-black text-base font-medium">
+                                34.63%
+                            </Text>
+                        </VStack>
+                    </Flex>
+                    <AccordionIcon color={"darkgreen"} fontSize={32} />
+                </AccordionButton>
+
+                <AccordionPanel
+                    pb={4}
+                    className="bg-[#D2EEFF] text-[#507589] rounded-b-2xl"
+                >
+                    <Box className="flex flex-row gap-2 items-center mt-2">
+                        <Text
+                            color={"darkgreen"}
+                            fontSize={"12px"}
+                            fontWeight={"500"}
+                        >
+                            MY POSITION
+                        </Text>
+                        <Tag
+                            size="sm"
+                            bg={"darkgreen"}
+                            color={"white"}
+                            borderRadius="full"
+                        >
+                            <TagLeftIcon boxSize="12px" as={LockIcon} />
+                            <TagLabel>Locked</TagLabel>
+                        </Tag>
+                    </Box>
+                    <Flex
+                        border={"1px solid rgba(0,166,139,1)"}
+                        borderRadius={"8px"}
+                        p={"20px"}
+                        my={"10px"}
+                        className="flex-row gap-2"
+                    >
+                        <Flex className="flex-col">
+                            <Text className="text-[#0094FF] text-sm font-medium">
+                                RECENT FLARE PROFIT
+                            </Text>
+                            <Text className="text-black font-bold text-xl">
+                                0.0000
+                            </Text>
+                            <Text className="text-xs font-medium">~0.00USD</Text>
+                        </Flex>
+                        
+                        <Flex className="flex-col">
+                            <Text className="text-[#0094FF] text-sm font-medium">
+                                YIELD BOOST
+                            </Text>
+                            <Text className="text-black font-bold text-xl">
+                                1.38x
+                            </Text>
+                            <Text className="text-xs font-medium">Lock for 1 week</Text>
+                        </Flex>
+                    </Flex>
+                    <Flex
+                        border={"1px solid rgba(0,166,139,1)"}
+                        borderRadius={"8px"}
+                        p={"20px"}
+                        my={"20px"}
+                        className="flex-col gap-4"
+                    >
+                        <Grid className="grid-cols-2">
+                            <Text className="text-sm font-medium">
+                                <span className="text-[#0094FF]">
+                                    FLARE
+                                </span>
+                                LOCKED
+                            </Text>
+                            <Text className="text-sm font-medium">ULNLOCJS IN</Text>
+                            <Text className="text-black font-bold text-xl">
+                                20.0000
+                            </Text>
+                            <Text className="text-black font-bold text-xl">
+                                7 days
+                            </Text>
+                            <Text className="text-xs font-medium">~50.98USD</Text>
+                            <Text className="text-xs font-medium">
+                                On May 10,2023,11:38
+                            </Text>
+                        </Grid>
+                        <Grid className="grid-cols-2 gap-2">
+                            <Button
+                                size="lg"
+                                bg="darkgreen"
+                                color={"white"}
+                                borderColor="darkgreen"
+                                fontSize={16}
+                                _hover={{ bg: "#00A68B" }}
+                                _active={{
+                                    bg: "#00A68B",
+                                    transform: "scale(0.98)",
+                                }}
+                            >
+                                ADD FLARE
+                            </Button>
+                            <Button
+                                size="lg"
+                                bg="darkgreen"
+                                color={"white"}
+                                fontSize={16}
+                                borderColor="darkgreen"
+                                _hover={{ bg: "#00A68B" }}
+                                _active={{
+                                    bg: "#00A68B",
+                                    transform: "scale(0.98)",
+                                }}
+                            >
+                                Extend
+                            </Button>
+                        </Grid>
+                    </Flex>
                 </AccordionPanel>
             </AccordionItem>
         </Accordion>
@@ -197,28 +615,28 @@ const Index = () => {
    
     return (<>
         <FramePage menu="home">
-            <Flex className="flex flex-col justify-center items-center pt-24 md:pt-0">
-                <Box className="flex flex-col gap-4 bg-[#EDF8FF] rounded-2xl p-4">
+            <Flex className="flex flex-col justify-center items-center pt-4 md:pt-0">
+                <Box className="w-full flex flex-col gap-2 bg-[#EDF8FF] rounded-2xl p-4">
                     <Box className="flex flex-row gap-2 items-center">
                         <Box>
-                            <Avatar bg={"#BEE1F4"} name=" " size={"xl"} />
+                            <Avatar bg={"#BEE1F4"} name=" " size={"lg"} />
                         </Box>
-                        <Box className="flex flex-col gap-2">
-                            <Text className="text-black font-bold text-3xl">Flare Staking</Text>
-                            <Text className="text-[#6E8A99] text-xl">Collateralize assets to borrow liquidity.</Text>
-                            <Text className="text-[#6E8A99] text-lg underline">Learn More</Text>
+                        <Box className="flex flex-col gap-0">
+                            <Text className="text-black font-bold text-base">Flare Staking</Text>
+                            <Text className="text-[#6E8A99] text-xs">Collateralize assets to borrow liquidity.</Text>
+                            <Text className="text-[#6E8A99] text-xs underline">Learn More</Text>
                         </Box>
                     </Box>
                     <Grid className="grid-cols-2 gap-2">
-                        <Box className="text-black text-4xl font-bold">816</Box>
-                        <Box className="text-black text-4xl font-bold">911</Box>
-                        <Box className="text-[#6E8A99] text-2xl">Total sked</Box>
-                        <Box className="text-[#6E8A99] text-2xl">Total reward</Box>
+                        <Box className="text-black text-xl font-medium">816</Box>
+                        <Box className="text-black text-xl font-medium">911</Box>
+                        <Box className="text-[#6E8A99] text-xs">Total sked</Box>
+                        <Box className="text-[#6E8A99] text-xs">Total reward</Box>
                     </Grid>
                 </Box>
 
-                <HStack className="w-full my-4">
-                    <Box className="text-[48px]" color={"darkgreen"} fontFamily={"PingFangSC-Semibold"}>Vesting</Box>
+                <HStack className="w-full mt-4 mb-2">
+                    <Box className="text-[24px] font-bold" color={"darkgreen"}>Vesting</Box>
                     <Spacer />
                     <Tabs variant='soft-rounded' colorScheme='green'>
                         <TabList borderRadius={"var(--chakra-radii-full)"} bg={"white"}>
@@ -240,10 +658,10 @@ const Index = () => {
                         borderRadius="1px"
                         />
                     <TabPanels>
-                        <TabPanel>
+                        <TabPanel px={0}>
                             <DepositsPanel />
                         </TabPanel>
-                        <TabPanel>
+                        <TabPanel px={0}>
                             <PositionPanel />
                         </TabPanel>
                     </TabPanels>

@@ -15,7 +15,7 @@ export const FramePage: React.FC<PropsWithChildren<{
                 <Header />
                 <Container 
                     mb={20} 
-                    className="w-full !max-w-full px-8 mt-24" 
+                    className="w-full !max-w-full px-8 mt-12" 
                     h={"100%"} 
                     minH={{ sm: "80%", md: "100vh" }}
                     >
