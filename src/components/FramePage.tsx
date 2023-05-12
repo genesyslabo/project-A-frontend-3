@@ -12,7 +12,7 @@ export const FramePage: React.FC<PropsWithChildren<{
 ) => {
     return (<>
             <Flex className="w-full min-h-screen flex flex-col gap-0">
-                <Header />
+                <Header menu={props.menu} />
                 <Container 
                     mb={20} 
                     className="w-full !max-w-full px-8 mt-12" 

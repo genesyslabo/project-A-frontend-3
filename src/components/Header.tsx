@@ -2,7 +2,7 @@ import React from 'react';
 import {Avatar, Box, Image, Spacer, useDisclosure} from '@chakra-ui/react';
 import Link from 'next/link';
 
-export function Header() {
+export function Header(props) {
     const {isOpen, onOpen, onClose} = useDisclosure();
 
     return (
@@ -17,25 +17,25 @@ export function Header() {
 
             <Box className={
                 isOpen ? 
-                    "fixed top-24 left-0 bottom-0 z-50 !ml-0 flex flex-col justify-between bg-[#bee2fc] py-8 px-8 pb-12 text-white transition-all duration-300 ease-in-out md:hidden right-0 -translate-x-0"
+                    "fixed top-12 left-0 bottom-0 z-50 !ml-0 flex flex-col justify-between bg-[#bee2fc] py-8 px-8 pb-12 text-white transition-all duration-300 ease-in-out md:hidden right-0 -translate-x-0"
                     :
-                    "fixed top-24 left-0 bottom-0 z-50 !ml-0 flex flex-col justify-between bg-[#bee2fc] py-8 px-8 pb-12 text-white transition-all duration-300 ease-in-out md:hidden -translate-x-full"
+                    "fixed top-12 left-0 bottom-0 z-50 !ml-0 flex flex-col justify-between bg-[#bee2fc] py-8 px-8 pb-12 text-white transition-all duration-300 ease-in-out md:hidden -translate-x-full"
             }>
                 <Box as="ul" className="mb-8 flex flex-col justify-center space-y-8 font-bold text-[20px] text-[#6E8A99]">
-                    <li>
+                    <Box as='li' color={props.menu == 'about' ? 'darkgreen' : ''}>
                         About
-                    </li>
-                    <li>
+                    </Box>
+                    <Box as='li' color={props.menu == 'staking' ? 'darkgreen' : ''}>
                         <Link href="">
                             Staking
                         </Link>
-                    </li>
-                    <li>
+                    </Box>
+                    <Box as='li' color={props.menu == 'marketplace' ? 'darkgreen' : ''}>
                         Marketplace
-                    </li>
-                    <li>
+                    </Box>
+                    <Box as='li' color={props.menu == 'tokens' ? 'darkgreen' : ''}>
                         Tokens
-                    </li>
+                    </Box>
                 </Box>
             </Box>
         </>
