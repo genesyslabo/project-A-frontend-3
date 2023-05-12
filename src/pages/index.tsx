@@ -900,21 +900,22 @@ const PositionPanel = () => {
                             <Box as="span" color={"darkgreen"}>LOCK</Box> OVERVIEW
                         </Text>
 
-                        <Grid className="grid-cols-2 gap-2 text-black text-[14px] bg-[#D2EEFF] p-4" borderRadius={"7px"}>
+                        <Grid className="grid-cols-2 gap-2 text-[12px] font-medium bg-[#D2EEFF] p-4" 
+                            borderRadius={"7px"} color={"lightfont"}>
                             <Box>FLARELOCKED TO BE LOCKED</Box>
-                            <Box className="text-right">20.00-&lt;40.00</Box>
+                            <Box className="text-right text-black text-base">20.00-&gt;40.00</Box>
                             <Box>xxNFT x1 +25%</Box>
-                            <Box className="text-right">30%</Box>
+                            <Box className="text-right text-black text-base">30%</Box>
                             <Box>APR</Box>
-                            <Box className="text-right">1.74%</Box>
+                            <Box className="text-right text-black text-base">1.74%</Box>
                             <Box>DURATION</Box>
-                            <Box className="text-right">1 weeks</Box>
+                            <Box className="text-right text-black text-base">1 weeks</Box>
                             <Box>YIELD BOOST</Box>
-                            <Box className="text-right">1.38x</Box>
+                            <Box className="text-right text-black text-base">1.38x</Box>
                             <Box>UNLOCK ON</Box>
-                            <Box className="text-right">May 17th,2023 11:38 </Box>
+                            <Box className="text-right text-black text-base">May 17th,2023 11:38 </Box>
                             <Box>EXPECTED ROI</Box>
-                            <Box className="text-right">$0.05</Box>
+                            <Box className="text-right text-black text-base">$0.05</Box>
                         </Grid>
 
                         <Button
