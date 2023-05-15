@@ -59,7 +59,7 @@ const DepositsPanel = () => {
         <>
             <Accordion defaultIndex={[0]} allowMultiple>
                 <AccordionItem>
-                    <AccordionButton className="bg-white rounded-t-2xl">
+                    <AccordionButton className="bg-[#edf8ff] rounded-2xl">
                         <Flex className="w-full flex-row items-center gap-4">
                             <Avatar bg={"#02715F"} name=" ">
                                 <AvatarBadge
@@ -95,7 +95,7 @@ const DepositsPanel = () => {
 
                     <AccordionPanel
                         pb={4}
-                        className="bg-[#D2EEFF] text-[#507589] rounded-b-2xl"
+                        className="bg-[#D2EEFF] text-[#507589] rounded-b-2xl mt-2"
                     >
                         <Box className="flex flex-row gap-2 items-center mt-2">
                             <Text
@@ -182,7 +182,7 @@ const DepositsPanel = () => {
                 </AccordionItem>
 
                 <AccordionItem mt={4}>
-                    <AccordionButton className="bg-white rounded-t-2xl">
+                    <AccordionButton className="bg-[#edf8ff] rounded-2xl">
                         <Flex className="w-full flex-row items-center gap-2">
                             <Avatar bg={"#02715F"} name=" ">
                                 <AvatarBadge
@@ -227,7 +227,7 @@ const DepositsPanel = () => {
 
                     <AccordionPanel
                         pb={4}
-                        className="bg-[#D2EEFF] text-[#507589] rounded-b-2xl"
+                        className="bg-[#D2EEFF] text-[#507589] rounded-b-2xl mt-2"
                     >
                         <Grid className="grid-cols-2 gap-2 mt-4">
                             <Box className="text-base font-medium">Flexible APY</Box>
@@ -401,7 +401,7 @@ const PositionPanel = () => {
     return (<>
         <Accordion defaultIndex={[0]} allowMultiple>
             <AccordionItem>
-                <AccordionButton className="bg-white rounded-t-2xl">
+                <AccordionButton className="bg-[#edf8ff] rounded-2xl">
                     <Flex className="w-full flex-row items-center gap-2">
                         <Avatar bg={"#02715F"} name=" ">
                             <AvatarBadge boxSize='1.25em' bg='transparent' borderColor="transparent">
@@ -425,7 +425,7 @@ const PositionPanel = () => {
                     <AccordionIcon color={"darkgreen"} fontSize={32} />
                 </AccordionButton>
                 
-                <AccordionPanel pb={4} className="bg-[#D2EEFF] text-[#507589] rounded-b-2xl text-sm font-medium">
+                <AccordionPanel pb={4} className="bg-[#D2EEFF] text-[#507589] rounded-b-2xl text-sm font-medium mt-2">
                     <Grid className="grid-cols-2 gap-2 my-4">
                         <Box color={"lightfont"}>Flexible APY</Box>
                         <Box className="text-right text-black">0.96%</Box>
@@ -475,7 +475,7 @@ const PositionPanel = () => {
             </AccordionItem>
 
             <AccordionItem mt={4}>
-                <AccordionButton className="bg-white rounded-t-2xl">
+                <AccordionButton className="bg-[#edf8ff] rounded-2xl">
                     <Flex className="w-full flex-row items-center gap-2">
                         <Avatar bg={"#02715F"} name=" ">
                             <AvatarBadge
@@ -510,7 +510,7 @@ const PositionPanel = () => {
 
                 <AccordionPanel
                     pb={4}
-                    className="bg-[#D2EEFF] text-[#507589] rounded-b-2xl"
+                    className="bg-[#D2EEFF] text-[#507589] rounded-b-2xl mt-2"
                 >
                     <Box className="flex flex-row gap-2 items-center mt-2">
                         <Text
@@ -620,7 +620,7 @@ const PositionPanel = () => {
 
 
             <AccordionItem mt={4}>
-                <AccordionButton className="bg-white rounded-t-2xl">
+                <AccordionButton className="bg-[#edf8ff] rounded-2xl">
                     <Flex className="w-full flex-row items-center gap-2">
                         <Avatar bg={"#02715F"} name=" ">
                             <AvatarBadge
@@ -655,7 +655,7 @@ const PositionPanel = () => {
 
                 <AccordionPanel
                     pb={4}
-                    className="bg-[#D2EEFF] text-[#507589] rounded-b-2xl"
+                    className="bg-[#D2EEFF] text-[#507589] rounded-b-2xl mt-2"
                 >
                     <Box className="flex flex-row gap-2 items-center mt-2">
                         <Text
@@ -764,7 +764,7 @@ const PositionPanel = () => {
 
 
             <AccordionItem mt={4}>
-                <AccordionButton className="bg-white rounded-t-2xl">
+                <AccordionButton className="bg-[#edf8ff] rounded-2xl">
                     <Flex className="w-full flex-row items-center gap-2">
                         <Avatar bg={"#02715F"} name=" ">
                             <AvatarBadge boxSize='1.25em' bg='transparent' borderColor="transparent">
@@ -788,7 +788,7 @@ const PositionPanel = () => {
                     <AccordionIcon color={"darkgreen"} fontSize={32} />
                 </AccordionButton>
                 
-                <AccordionPanel pb={4} className="bg-[#D2EEFF] text-[#507589] rounded-b-2xl text-sm font-medium">
+                <AccordionPanel pb={4} className="bg-[#D2EEFF] text-[#507589] rounded-b-2xl text-sm font-medium mt-2">
                     <Grid className="grid-cols-2 gap-2 my-4">
                         <Box color={"lightfont"}>Flexible APY</Box>
                         <Box className="text-right text-black">0.96%</Box>

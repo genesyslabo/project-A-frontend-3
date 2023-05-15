@@ -5,7 +5,7 @@ export function Footer() {
 
     return (
         <>
-            <Box className="w-full flex flex-col justify-between items-start p-4 bg-[#000000] text-xs gap-4 font-['PingFangSC-Regular']">
+            <Box className="w-full flex flex-col text-white justify-between items-start p-4 bg-[#000000] text-xs gap-4 font-['PingFangSC-Regular']">
                 <Box>White Paper</Box>
                 <Box>Merchants</Box>
                 <Box>Terms of use</Box>
