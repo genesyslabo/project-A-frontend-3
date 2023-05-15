@@ -5,6 +5,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit"
 import Link from "next/link"
 import React, { PropsWithChildren } from "react"
 import { RadioCard } from "../components/CustomRadio"
+import CustomTab from "../components/CustomTab"
 
 const CustomSwitchTab: React.FC<{ text: string }> = (props) => {
     return (<>
@@ -26,30 +27,6 @@ const CustomSwitchTab: React.FC<{ text: string }> = (props) => {
                 { props.text }
         </Tab>
     </>)
-}
-
-const CustomTab: React.FC<{ text: string }> = (props) => {
-    return (
-        <Tab
-            className={"text-[#6E8A99] text-lg font-medium"}
-            paddingInlineStart={0}
-            _active={{
-                bg: 'transparent',
-                transform: 'scale(0.95)',
-                borderBottom: 0,
-                borderColor: 'transparent',
-                color: 'darkgreen'
-            }}
-            _selected={{ 
-                color: 'darkgreen',
-            }}
-            _hover={{
-                bg: 'transparent',
-            }}
-        >
-            { props.text }
-        </Tab>
-    )
 }
 
 const DepositsPanel = () => {
@@ -942,7 +919,7 @@ const Index = () => {
    
     return (<>
         <FramePage menu="staking">
-            <Flex className="flex flex-col justify-center items-center pt-4 md:pt-0">
+            <Flex className="flex flex-col justify-center items-center pt-4">
                 <Box className="w-full flex flex-col gap-2 bg-[#EDF8FF] rounded-2xl p-4">
                     <Box className="flex flex-row gap-2 items-center">
                         <Box>
