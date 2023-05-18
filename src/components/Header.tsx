@@ -94,7 +94,7 @@ export function Header(props) {
                         About
                     </Box>
                     <Box as='li' color={props.menu == 'staking' ? 'darkgreen' : ''}>
-                        <Link href="">
+                        <Link href="/">
                             Staking
                         </Link>
                     </Box>
@@ -103,6 +103,9 @@ export function Header(props) {
                     </Box>
                     <Box as='li' color={props.menu == 'tokens' ? 'darkgreen' : ''}>
                         Tokens
+                    </Box>
+                    <Box as='li' color={props.menu == 'airdrop' ? 'darkgreen' : ''}>
+                        <Link href="/airdrop">Airdrop</Link>
                     </Box>
                 </Box>
             </Box>
