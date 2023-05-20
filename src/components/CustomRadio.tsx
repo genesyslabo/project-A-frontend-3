@@ -15,7 +15,7 @@ export const RadioCard = (props) => {
           {...checkbox}
           className="flex items-center justify-center rounded-xl"
           cursor='pointer'
-          bg={"#C8EFE9"}
+          bg={"#CFF8FF"}
           color={"darkgreen"}
           _checked={{
             bg: 'darkgreen',

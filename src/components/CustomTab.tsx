@@ -3,7 +3,7 @@ import { Tab } from "@chakra-ui/react"
 const CustomTab: React.FC<{ text: string, textSize?: string }> = (props) => {
     return (
         <Tab
-            className={`text-[#6E8A99] ${props.textSize || '!text-lg'} font-medium`}
+            className={`text-[#6E8A99] ${props.textSize || '!text-lg'} font-bold`}
             paddingInlineStart={0}
             _active={{
                 bg: 'transparent',

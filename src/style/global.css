@@ -48,6 +48,10 @@ button {
     font-weight: bold;
 }
 
+.chakra-modal__header {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
 
 .chakra-modal__content-container {
     align-items: flex-end !important;
@@ -58,4 +62,18 @@ button {
     border-radius: 16px 16px 0px 0px !important;
     background-color: #EDF8FF !important;
     color: black !important;
+}
+
+@media (min-width: 768px) {
+    .chakra-modal__content-container {
+        align-items: center !important;
+    }
+
+    .chakra-modal__content {
+        margin-bottom: 0 !important;
+        border-radius: 16px !important;
+        background-color: #EDF8FF !important;
+        color: black !important;
+        padding-bottom: 16px;
+    }
 }

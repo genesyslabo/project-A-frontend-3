@@ -10,7 +10,7 @@ import CustomTab from "../components/CustomTab"
 const CustomSwitchTab: React.FC<{ text: string }> = (props) => {
     return (<>
         <Tab
-            className={"text-[#02715F] bg-white px-4 text-center font-medium text-base"}
+            className={"text-[#20B4CA] bg-white px-4 text-center font-medium text-base"}
             _active={{
                 bg: 'darkgreen',
                 transform: 'scale(0.95)',
@@ -36,9 +36,9 @@ const DepositsPanel = () => {
         <>
             <Accordion defaultIndex={[0]} allowMultiple>
                 <AccordionItem>
-                    <AccordionButton className="bg-[#edf8ff] rounded-2xl">
+                    <AccordionButton className="!bg-white rounded-2xl">
                         <Flex className="w-full flex-row items-center gap-4">
-                            <Avatar bg={"#02715F"} name=" ">
+                            <Avatar bg={"#20B4CA"} name=" ">
                                 <AvatarBadge
                                     boxSize="1.25em"
                                     bg="transparent"
@@ -49,7 +49,9 @@ const DepositsPanel = () => {
                             </Avatar>
 
                             <VStack className="text-left" alignItems={"start"}>
-                                <Text className="text-[#0094FF] text-[10px] font-medium">locked</Text>
+                                <Text className="text-[#FE9D1C] text-[10px] font-medium">
+                                    locked
+                                </Text>
                                 <Text className="text-black font-bold text-sm !mt-0">
                                     stake FLARE
                                 </Text>
@@ -72,11 +74,11 @@ const DepositsPanel = () => {
 
                     <AccordionPanel
                         pb={4}
-                        className="bg-[#D2EEFF] text-[#507589] rounded-b-2xl mt-2"
+                        className="bg-[#ECFDFF] text-[#507589] rounded-b-2xl mt-2"
                     >
                         <Box className="flex flex-row gap-2 items-center mt-2">
                             <Text
-                                color={"#0094FF"}
+                                color={"#FE9D1C"}
                                 fontSize={"12px"}
                                 fontWeight={"500"}
                             >
@@ -93,16 +95,16 @@ const DepositsPanel = () => {
                             </Tag>
                         </Box>
                         <Grid
-                            border={"1px solid rgba(0,166,139,1)"}
+                            border={"1px solid #96E6FF"}
                             borderRadius={"8px"}
                             p={"20px"}
                             my={"20px"}
                             className="grid-cols-2"
                         >
-                            <Text className="text-[#0094FF] font-medium text-sm">
+                            <Text className="text-[#FE9D1C] font-medium text-sm">
                                 RECENT FLARE PROFIT
                             </Text>
-                            <Text className="text-[#0094FF] font-medium text-sm">
+                            <Text className="text-[#FE9D1C] font-medium text-sm">
                                 YIELD BOOST
                             </Text>
                             <Text className="text-black font-bold text-xl">
@@ -111,11 +113,15 @@ const DepositsPanel = () => {
                             <Text className="text-black font-bold text-xl">
                                 1.38x
                             </Text>
-                            <Text className="font-medium text-sx">~0.00USD</Text>
-                            <Text className="font-medium text-sx">Lock for 1 week</Text>
+                            <Text className="font-medium text-xs">
+                                ~0.00USD
+                            </Text>
+                            <Text className="font-medium text-xs">
+                                Lock for 1 week
+                            </Text>
                         </Grid>
                         <Flex
-                            border={"1px solid rgba(0,166,139,1)"}
+                            border={"1px solid #96E6FF"}
                             borderRadius={"8px"}
                             p={"20px"}
                             my={"20px"}
@@ -123,20 +129,24 @@ const DepositsPanel = () => {
                         >
                             <Grid className="grid-cols-2">
                                 <Text className="font-medium text-sm">
-                                    <span className="text-[#0094FF]">
+                                    <span className="text-[#FE9D1C]">
                                         FLARE
                                     </span>
                                     LOCKED
                                 </Text>
-                                <Text className=" font-medium text-sm">ULNLOCJS IN</Text>
+                                <Text className=" font-medium text-sm">
+                                    ULNLOCJS IN
+                                </Text>
                                 <Text className="text-black font-bold text-xl">
                                     20.0000
                                 </Text>
                                 <Text className="text-black font-bold text-xl">
                                     7 days
                                 </Text>
-                                <Text className="font-medium text-sx">~50.98USD</Text>
-                                <Text className="font-medium text-sx">
+                                <Text className="font-medium text-xs">
+                                    ~50.98USD
+                                </Text>
+                                <Text className="font-medium text-xs">
                                     On May 10,2023,11:38
                                 </Text>
                             </Grid>
@@ -146,9 +156,10 @@ const DepositsPanel = () => {
                                 color={"white"}
                                 fontSize={16}
                                 borderColor="darkgreen"
-                                _hover={{ bg: "#00A68B" }}
+                                bgImg={"linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)"}
+                                _hover={{ bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)" }}
                                 _active={{
-                                    bg: "#00A68B",
+                                    bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)",
                                     transform: "scale(0.98)",
                                 }}
                             >
@@ -159,9 +170,9 @@ const DepositsPanel = () => {
                 </AccordionItem>
 
                 <AccordionItem mt={4}>
-                    <AccordionButton className="bg-[#edf8ff] rounded-2xl">
+                    <AccordionButton className="!bg-white rounded-2xl">
                         <Flex className="w-full flex-row items-center gap-2">
-                            <Avatar bg={"#02715F"} name=" ">
+                            <Avatar bg={"#20B4CA"} name=" ">
                                 <AvatarBadge
                                     boxSize="1.25em"
                                     bg="transparent"
@@ -204,25 +215,34 @@ const DepositsPanel = () => {
 
                     <AccordionPanel
                         pb={4}
-                        className="bg-[#D2EEFF] text-[#507589] rounded-b-2xl mt-2"
+                        className="bg-[#ECFDFF] text-[#507589] rounded-b-2xl mt-2"
                     >
                         <Grid className="grid-cols-2 gap-2 mt-4">
-                            <Box className="text-base font-medium">Flexible APY</Box>
-                            <Box className="text-right text-black text-base font-medium">0.63%</Box>
-                            <Box className="text-base font-medium">Locked APR</Box>
+                            <Box className="text-base font-medium">
+                                Flexible APY
+                            </Box>
+                            <Box className="text-right text-black text-base font-medium">
+                                0.63%
+                            </Box>
+                            <Box className="text-base font-medium">
+                                Locked APR
+                            </Box>
                             <Box className="text-right text-black text-base font-medium">
                                 Up to 20.63%
                             </Box>
                         </Grid>
                         <VStack
-                            border={"1px solid rgba(0,166,139,1)"}
+                            border={"1px solid #96E6FF"}
                             borderRadius={"8px"}
                             p={"20px"}
                             my={"20px"}
                             gap={2}
                             align={"left"}
                         >
-                            <Text className="mb-2 font-medium text-sm" color={"#0094FF"}>
+                            <Text
+                                className="mb-2 font-medium text-sm"
+                                color={"#FE9D1C"}
+                            >
                                 RECENT FLARE PROFIT
                             </Text>
                             <Flex className="flex-row items-center gap-8">
@@ -240,7 +260,7 @@ const DepositsPanel = () => {
                             </Flex>
                         </VStack>
                         <VStack
-                            border={"1px solid rgba(0,166,139,1)"}
+                            border={"1px solid #96E6FF"}
                             borderRadius={"8px"}
                             p={"20px"}
                             my={"20px"}
@@ -248,7 +268,7 @@ const DepositsPanel = () => {
                             align={"left"}
                         >
                             <Text className="mb-2 text-black font-medium text-sm">
-                                <Box as="span" color={"#0094FF"}>
+                                <Box as="span" color={"#FE9D1C"}>
                                     STAKE
                                 </Box>{" "}
                                 FLARE
@@ -258,9 +278,10 @@ const DepositsPanel = () => {
                                 bg="darkgreen"
                                 color={"white"}
                                 borderColor="darkgreen"
-                                _hover={{ bg: "#00A68B" }}
+                                bgImg={"linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)"}
+                                _hover={{ bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)" }}
                                 _active={{
-                                    bg: "#00A68B",
+                                    bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)",
                                     transform: "scale(0.98)",
                                 }}
                                 onClick={isOpen ? onClose : onOpen}
@@ -275,11 +296,17 @@ const DepositsPanel = () => {
                         </VStack>
                         <Grid className="grid-cols-2 gap-4 text-black text-[14px]">
                             <Box>Total staked</Box>
-                            <Box className="text-right font-medium">241,951,557 FLARE</Box>
+                            <Box className="text-right font-medium">
+                                241,951,557 FLARE
+                            </Box>
                             <Box>Total locked</Box>
-                            <Box className="text-right font-medium">189,65,524 FLARE</Box>
+                            <Box className="text-right font-medium">
+                                189,65,524 FLARE
+                            </Box>
                             <Box>Average lock duration</Box>
-                            <Box className="text-right font-medium">41 weeks</Box>
+                            <Box className="text-right font-medium">
+                                41 weeks
+                            </Box>
                             <Box>Performance Fee</Box>
                             <Box className="text-right font-medium">0-2%</Box>
                         </Grid>
@@ -308,7 +335,7 @@ const DepositsPanel = () => {
                                     </Box>
                                 </Flex>
                             </Flex>
-                            <Flex className="flex-col items-end bg-[#D2EEFF] rounded-lg gap-2 p-2">
+                            <Flex className="flex-col items-end bg-[#CFF8FF] rounded-lg gap-2 p-2">
                                 <Text className="font-bold">20</Text>
                                 <Text className="text-xs text-[#666666]">
                                     -241,951,557 USD
@@ -341,9 +368,10 @@ const DepositsPanel = () => {
                                 bg="darkgreen"
                                 color={"white"}
                                 borderColor="darkgreen"
-                                _hover={{ bg: "#00A68B" }}
+                                bgImg={"linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)"}
+                                _hover={{ bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)" }}
                                 _active={{
-                                    bg: "#00A68B",
+                                    bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)",
                                     transform: "scale(0.98)",
                                 }}
                             >
@@ -378,9 +406,9 @@ const PositionPanel = () => {
     return (<>
         <Accordion defaultIndex={[0]} allowMultiple>
             <AccordionItem>
-                <AccordionButton className="bg-[#edf8ff] rounded-2xl">
+                <AccordionButton className="!bg-white rounded-2xl">
                     <Flex className="w-full flex-row items-center gap-2">
-                        <Avatar bg={"#02715F"} name=" ">
+                        <Avatar bg={"#20B4CA"} name=" ">
                             <AvatarBadge boxSize='1.25em' bg='transparent' borderColor="transparent">
                                 <Image src="/assets/images/icon-cyclic.png" />
                             </AvatarBadge>
@@ -402,7 +430,7 @@ const PositionPanel = () => {
                     <AccordionIcon color={"darkgreen"} fontSize={32} />
                 </AccordionButton>
                 
-                <AccordionPanel pb={4} className="bg-[#D2EEFF] text-[#507589] rounded-b-2xl text-sm font-medium mt-2">
+                <AccordionPanel pb={4} className="bg-[#ECFDFF] text-[#507589] rounded-b-2xl text-sm font-medium mt-2">
                     <Grid className="grid-cols-2 gap-2 my-4">
                         <Box color={"lightfont"}>Flexible APY</Box>
                         <Box className="text-right text-black">0.96%</Box>
@@ -410,8 +438,8 @@ const PositionPanel = () => {
                         <Box className="text-right text-black">Up to 20.96%</Box>
                     </Grid>
                     
-                    <VStack border={"1px solid rgba(0,166,139,1)"} borderRadius={"10px"} p={"20px"} my={"20px"} gap={2} align={"left"}>
-                        <Text className="mb-2 text-sm font-medium" color={"#0094FF"}>RECENT FLARE PROFIT</Text>
+                    <VStack border={"1px solid #96E6FF"} borderRadius={"10px"} p={"20px"} my={"20px"} gap={2} align={"left"}>
+                        <Text className="mb-2 text-sm font-medium" color={"#FE9D1C"}>RECENT FLARE PROFIT</Text>
                         <Flex className="flex-row items-start gap-8">
                             <Flex className="flex-col">
                                 <Box className="text-black text-xl">0</Box>
@@ -420,16 +448,17 @@ const PositionPanel = () => {
                             <Box className="text-black text-sm grow underline">0.1% unstaking fee if withdraw within 72h</Box>
                         </Flex>
                     </VStack>
-                    <VStack border={"1px solid rgba(0,166,139,1)"} borderRadius={"10px"} p={"20px"} my={"20px"} gap={2} align={"left"}>
-                        <Text className="mb-2 text-black font-medium"><Box as="span" color={"#0094FF"}>STAKE</Box> FLARE</Text>
+                    <VStack border={"1px solid #96E6FF"} borderRadius={"10px"} p={"20px"} my={"20px"} gap={2} align={"left"}>
+                        <Text className="mb-2 text-black font-medium"><Box as="span" color={"#FE9D1C"}>STAKE</Box> FLARE</Text>
                         <Button 
                             size='lg'
                             bg='darkgreen'
                             color={"white"}
                             borderColor='darkgreen'
-                            _hover={{ bg: '#00A68B' }}
+                            bgImg={"linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)"}
+                            _hover={{  bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)" }}
                             _active={{
-                                bg: '#00A68B',
+                                bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)",
                                 transform: 'scale(0.98)',
                             }}
                             onClick={isOpen ? onClose : onOpen}
@@ -452,9 +481,9 @@ const PositionPanel = () => {
             </AccordionItem>
 
             <AccordionItem mt={4}>
-                <AccordionButton className="bg-[#edf8ff] rounded-2xl">
+                <AccordionButton className="bg-white rounded-2xl">
                     <Flex className="w-full flex-row items-center gap-2">
-                        <Avatar bg={"#02715F"} name=" ">
+                        <Avatar bg={"#20B4CA"} name=" ">
                             <AvatarBadge
                                 boxSize="1.25em"
                                 bg="transparent"
@@ -465,7 +494,7 @@ const PositionPanel = () => {
                         </Avatar>
 
                         <VStack className="grow justify-center" alignItems={"start"}>
-                            <Text className="text-[#0094FF] font-medium text-[10px] !mt-0">locked</Text>
+                            <Text className="text-[#FE9D1C] font-medium text-[10px] !mt-0">locked</Text>
                             <Text className="text-[#1E1E1E] text-sm font-bold !mt-0">
                                 stake FLARE
                             </Text>
@@ -487,7 +516,7 @@ const PositionPanel = () => {
 
                 <AccordionPanel
                     pb={4}
-                    className="bg-[#D2EEFF] text-[#507589] rounded-b-2xl mt-2"
+                    className="bg-[#ECFDFF] text-[#507589] rounded-b-2xl mt-2"
                 >
                     <Box className="flex flex-row gap-2 items-center mt-2">
                         <Text
@@ -508,14 +537,14 @@ const PositionPanel = () => {
                         </Tag>
                     </Box>
                     <Flex
-                        border={"1px solid rgba(0,166,139,1)"}
+                        border={"1px solid #96E6FF"}
                         borderRadius={"8px"}
                         p={"20px"}
                         my={"10px"}
                         className="flex-row gap-2"
                     >
                         <Flex className="flex-col">
-                            <Text className="text-[#0094FF] text-sm font-medium">
+                            <Text className="text-[#FE9D1C] text-sm font-medium">
                                 RECENT FLARE PROFIT
                             </Text>
                             <Text className="text-black font-bold text-xl">
@@ -525,7 +554,7 @@ const PositionPanel = () => {
                         </Flex>
                         
                         <Flex className="flex-col">
-                            <Text className="text-[#0094FF] text-sm font-medium">
+                            <Text className="text-[#FE9D1C] text-sm font-medium">
                                 YIELD BOOST
                             </Text>
                             <Text className="text-black font-bold text-xl">
@@ -535,7 +564,7 @@ const PositionPanel = () => {
                         </Flex>
                     </Flex>
                     <Flex
-                        border={"1px solid rgba(0,166,139,1)"}
+                        border={"1px solid #96E6FF"}
                         borderRadius={"8px"}
                         p={"20px"}
                         my={"20px"}
@@ -543,7 +572,7 @@ const PositionPanel = () => {
                     >
                         <Grid className="grid-cols-2">
                             <Text className="text-sm font-medium">
-                                <span className="text-[#0094FF]">
+                                <span className="text-[#FE9D1C]">
                                     FLARE
                                 </span>
                                 LOCKED
@@ -567,9 +596,10 @@ const PositionPanel = () => {
                                 color={"white"}
                                 borderColor="darkgreen"
                                 fontSize={16}
-                                _hover={{ bg: "#00A68B" }}
+                                bgImg={"linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)"}
+                                _hover={{ bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)" }}
                                 _active={{
-                                    bg: "#00A68B",
+                                    bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)",
                                     transform: "scale(0.98)",
                                 }}
                             >
@@ -581,9 +611,10 @@ const PositionPanel = () => {
                                 color={"white"}
                                 fontSize={16}
                                 borderColor="darkgreen"
-                                _hover={{ bg: "#00A68B" }}
+                                bgImg={"linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)"}
+                                _hover={{ bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)" }}
                                 _active={{
-                                    bg: "#00A68B",
+                                    bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)",
                                     transform: "scale(0.98)",
                                 }}
                             >
@@ -597,9 +628,9 @@ const PositionPanel = () => {
 
 
             <AccordionItem mt={4}>
-                <AccordionButton className="bg-[#edf8ff] rounded-2xl">
+                <AccordionButton className="bg-white rounded-2xl">
                     <Flex className="w-full flex-row items-center gap-2">
-                        <Avatar bg={"#02715F"} name=" ">
+                        <Avatar bg={"#20B4CA"} name=" ">
                             <AvatarBadge
                                 boxSize="1.25em"
                                 bg="transparent"
@@ -610,7 +641,7 @@ const PositionPanel = () => {
                         </Avatar>
 
                         <VStack className="grow justify-center" alignItems={"start"}>
-                            <Text className="text-[#0094FF] font-medium text-[10px] !mt-0">locked</Text>
+                            <Text className="text-[#FE9D1C] font-medium text-[10px] !mt-0">locked</Text>
                             <Text className="text-[#1E1E1E] text-sm font-bold !mt-0">
                                 stake FLARE
                             </Text>
@@ -632,7 +663,7 @@ const PositionPanel = () => {
 
                 <AccordionPanel
                     pb={4}
-                    className="bg-[#D2EEFF] text-[#507589] rounded-b-2xl mt-2"
+                    className="bg-[#ECFDFF] text-[#507589] rounded-b-2xl mt-2"
                 >
                     <Box className="flex flex-row gap-2 items-center mt-2">
                         <Text
@@ -653,14 +684,14 @@ const PositionPanel = () => {
                         </Tag>
                     </Box>
                     <Flex
-                        border={"1px solid rgba(0,166,139,1)"}
+                        border={"1px solid #96E6FF"}
                         borderRadius={"8px"}
                         p={"20px"}
                         my={"10px"}
                         className="flex-row gap-2"
                     >
                         <Flex className="flex-col">
-                            <Text className="text-[#0094FF] text-sm font-medium">
+                            <Text className="text-[#FE9D1C] text-sm font-medium">
                                 RECENT FLARE PROFIT
                             </Text>
                             <Text className="text-black font-bold text-xl">
@@ -670,7 +701,7 @@ const PositionPanel = () => {
                         </Flex>
                         
                         <Flex className="flex-col">
-                            <Text className="text-[#0094FF] text-sm font-medium">
+                            <Text className="text-[#FE9D1C] text-sm font-medium">
                                 YIELD BOOST
                             </Text>
                             <Text className="text-black font-bold text-xl">
@@ -680,7 +711,7 @@ const PositionPanel = () => {
                         </Flex>
                     </Flex>
                     <Flex
-                        border={"1px solid rgba(0,166,139,1)"}
+                        border={"1px solid #96E6FF"}
                         borderRadius={"8px"}
                         p={"20px"}
                         my={"20px"}
@@ -688,7 +719,7 @@ const PositionPanel = () => {
                     >
                         <Grid className="grid-cols-2">
                             <Text className="text-sm font-medium">
-                                <span className="text-[#0094FF]">
+                                <span className="text-[#FE9D1C]">
                                     FLARE
                                 </span>
                                 LOCKED
@@ -712,9 +743,10 @@ const PositionPanel = () => {
                                 color={"white"}
                                 borderColor="darkgreen"
                                 fontSize={16}
-                                _hover={{ bg: "#00A68B" }}
+                                bgImg={"linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)"}
+                                _hover={{ bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)" }}
                                 _active={{
-                                    bg: "#00A68B",
+                                    bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)",
                                     transform: "scale(0.98)",
                                 }}
                             >
@@ -726,9 +758,10 @@ const PositionPanel = () => {
                                 color={"white"}
                                 fontSize={16}
                                 borderColor="darkgreen"
-                                _hover={{ bg: "#00A68B" }}
+                                bgImg={"linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)"}
+                                _hover={{ bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)" }}
                                 _active={{
-                                    bg: "#00A68B",
+                                    bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)",
                                     transform: "scale(0.98)",
                                 }}
                             >
@@ -741,9 +774,9 @@ const PositionPanel = () => {
 
 
             <AccordionItem mt={4}>
-                <AccordionButton className="bg-[#edf8ff] rounded-2xl">
+                <AccordionButton className="bg-white rounded-2xl">
                     <Flex className="w-full flex-row items-center gap-2">
-                        <Avatar bg={"#02715F"} name=" ">
+                        <Avatar bg={"#20B4CA"} name=" ">
                             <AvatarBadge boxSize='1.25em' bg='transparent' borderColor="transparent">
                                 <Image src="/assets/images/icon-cyclic.png" />
                             </AvatarBadge>
@@ -765,7 +798,7 @@ const PositionPanel = () => {
                     <AccordionIcon color={"darkgreen"} fontSize={32} />
                 </AccordionButton>
                 
-                <AccordionPanel pb={4} className="bg-[#D2EEFF] text-[#507589] rounded-b-2xl text-sm font-medium mt-2">
+                <AccordionPanel pb={4} className="bg-[#ECFDFF] text-[#507589] rounded-b-2xl text-sm font-medium mt-2">
                     <Grid className="grid-cols-2 gap-2 my-4">
                         <Box color={"lightfont"}>Flexible APY</Box>
                         <Box className="text-right text-black">0.96%</Box>
@@ -773,8 +806,8 @@ const PositionPanel = () => {
                         <Box className="text-right text-black">Up to 20.96%</Box>
                     </Grid>
                     
-                    <VStack border={"1px solid rgba(0,166,139,1)"} borderRadius={"10px"} p={"20px"} my={"20px"} gap={2} align={"left"}>
-                        <Text className="mb-2 text-sm font-medium" color={"#0094FF"}>RECENT FLARE PROFIT</Text>
+                    <VStack border={"1px solid #96E6FF"} borderRadius={"10px"} p={"20px"} my={"20px"} gap={2} align={"left"}>
+                        <Text className="mb-2 text-sm font-medium" color={"#FE9D1C"}>RECENT FLARE PROFIT</Text>
                         <Flex className="flex-row items-start gap-8">
                             <Flex className="flex-col">
                                 <Box className="text-black text-xl">0</Box>
@@ -783,16 +816,17 @@ const PositionPanel = () => {
                             <Box className="text-black text-sm grow underline">0.1% unstaking fee if withdraw within 72h</Box>
                         </Flex>
                     </VStack>
-                    <VStack border={"1px solid rgba(0,166,139,1)"} borderRadius={"10px"} p={"20px"} my={"20px"} gap={2} align={"left"}>
-                        <Text className="mb-2 text-black font-medium"><Box as="span" color={"#0094FF"}>STAKE</Box> FLARE</Text>
+                    <VStack border={"1px solid #96E6FF"} borderRadius={"10px"} p={"20px"} my={"20px"} gap={2} align={"left"}>
+                        <Text className="mb-2 text-black font-medium"><Box as="span" color={"#FE9D1C"}>STAKE</Box> FLARE</Text>
                         <Button 
                             size='lg'
                             bg='darkgreen'
                             color={"white"}
                             borderColor='darkgreen'
-                            _hover={{ bg: '#00A68B' }}
+                            bgImg={"linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)"}
+                            _hover={{ bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)" }}
                             _active={{
-                                bg: '#00A68B',
+                                bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)",
                                 transform: 'scale(0.98)',
                             }}>Add FLARE</Button>
                         <Link href={""}>
@@ -834,7 +868,7 @@ const PositionPanel = () => {
                                 </Box>
                             </Flex>
                         </Flex>
-                        <Flex className="flex-col items-end bg-[#D2EEFF] rounded-lg gap-2 p-2">
+                        <Flex className="flex-col items-end bg-[#ECFDFF] rounded-lg gap-2 p-2">
                             <Text className="font-bold">20</Text>
                             <Text className="text-xs text-[#666666]">
                                 -241,951,557 USD
@@ -868,7 +902,7 @@ const PositionPanel = () => {
 
                         <Flex className="flex-row items-center mt-4 gap-2">
                             <Box className="inline grow">
-                                <Input variant='filled' placeholder='' bg={"#D2EEFF"} />
+                                <Input variant='filled' placeholder='' bg={"#ECFDFF"} />
                             </Box>
                             <Text className="inline text-sm font-medium">Week</Text>
                         </Flex>
@@ -877,7 +911,7 @@ const PositionPanel = () => {
                             <Box as="span" color={"darkgreen"}>LOCK</Box> OVERVIEW
                         </Text>
 
-                        <Grid className="grid-cols-2 gap-2 text-[12px] font-medium bg-[#D2EEFF] p-4" 
+                        <Grid className="grid-cols-2 gap-2 text-[12px] font-medium bg-[#ECFDFF] p-4" 
                             borderRadius={"7px"} color={"lightfont"}>
                             <Box>FLARELOCKED TO BE LOCKED</Box>
                             <Box className="text-right text-black text-base">20.00-&gt;40.00</Box>
@@ -900,9 +934,10 @@ const PositionPanel = () => {
                             bg="darkgreen"
                             color={"white"}
                             borderColor="darkgreen"
-                            _hover={{ bg: "#00A68B" }}
+                            bgImg={"linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)"}
+                            _hover={{ bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)" }}
                             _active={{
-                                bg: "#00A68B",
+                                bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)",
                                 transform: "scale(0.98)",
                             }}
                         >
@@ -920,10 +955,10 @@ const Index = () => {
     return (<>
         <FramePage menu="staking">
             <Flex className="flex flex-col justify-center items-center pt-4">
-                <Box className="w-full flex flex-col gap-2 bg-[#EDF8FF] rounded-2xl p-4">
+                <Box className="w-full flex flex-col gap-2 bg-white rounded-2xl p-4">
                     <Box className="flex flex-row gap-2 items-center">
                         <Box>
-                            <Avatar bg={"#BEE1F4"} name=" " size={"lg"} />
+                            <Avatar bg={"#20B4CA"} name=" " size={"lg"} />
                         </Box>
                         <Box className="flex flex-col gap-0">
                             <Text className="text-black font-bold text-base">Flare Staking</Text>

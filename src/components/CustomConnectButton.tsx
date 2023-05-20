@@ -36,7 +36,7 @@ export const CustomConnectButton = () => {
             {(() => {
               if (!connected) {
                 return (
-                  <Image src='/assets/images/icon-wallet.png' onClick={openConnectModal} />
+                  <Image src='/assets/images/icon-wallet.png' className='md:w-16' onClick={openConnectModal} />
                 );
               }
               if (chain.unsupported) {

@@ -10,28 +10,33 @@ const Airdrop = () => {
             <Flex className="flex flex-col justify-center items-center pt-4 gap-6">
                 <Flex color={"darkgreen"} className="w-full text-2xl font-medium items-start">Flare claim check</Flex>
 
-                <Flex className="w-full flex-col gap-2 bg-[#EDF8FF] rounded-2xl p-[2px]">
-                    <Flex className="flex-col md:flex-row gap-8 p-4 bg-[#e1f3fe] rounded-t-2xl">
-                        <Flex className="flex-col gap-2 grow">
-                            <Text className="text-[#6E8A99] text-sm font-bold">
-                                ACCOUNT
-                            </Text>
-                            <Text className="text-black text-base">
-                                0x7e8a2Af0335c9BB45664Ad1bd83163F7E3
-                            </Text>
-                        </Flex>
-                        <Flex className="flex-col gap-2">
-                            <Text className="text-[#6E8A99] text-sm font-bold">
-                                BALANCE
-                            </Text>
-                            <Flex className="flex-row items-center text-black text-base">
-                                0 APE 
-                                <Circle size='16px' bg='#02715F' color='white' className="ml-1" />
+                <Flex className="w-full flex-col">
+                    <Flex className="justify-end pr-1">
+                        <Image src="/assets/images/bot1.png" />
+                    </Flex>
+                    <Flex className="w-full flex-col gap-2 bg-white rounded-xl p-[2px]">
+                        <Flex className="flex-col md:flex-row gap-8 p-4 bg-[#f2fdff] rounded-t-2xl border-b border-[#DAF7FF]">
+                            <Flex className="flex-col gap-2 grow">
+                                <Text className="text-[#6E8A99] text-sm font-bold">
+                                    ACCOUNT
+                                </Text>
+                                <Text className="text-black text-base">
+                                    0x7e8a2Af0335c9BB45664Ad1bd83163F7E3
+                                </Text>
+                            </Flex>
+                            <Flex className="flex-col gap-2">
+                                <Text className="text-[#6E8A99] text-sm font-bold">
+                                    BALANCE
+                                </Text>
+                                <Flex className="flex-row items-center text-black text-base">
+                                    0 APE 
+                                    <Circle size='16px' bg='#02715F' color='white' className="ml-1" />
+                                </Flex>
                             </Flex>
                         </Flex>
-                    </Flex>
-                    <Flex className="items-center text-base text-black p-3 pb-8">
-                        Tokens are currently not claimable.
+                        <Flex className="items-center text-base text-black p-3 pb-8">
+                            Tokens are currently not claimable.
+                        </Flex>
                     </Flex>
                 </Flex>
 
@@ -47,8 +52,13 @@ const Airdrop = () => {
                         Enter the Token ID to see if a Bored Ape, Mutant Ape, or companion Kennel Club NFT is eligible for a one-time claim of ApeCoin.
                     </Text>
 
-                    <Flex className="items-center text-base text-black p-3 pb-8 bg-[#EDF8FF] rounded-2xl">
-                        Tokens are currently not claimable.
+                    <Flex className="flex-col">
+                        <Flex className="justify-end pr-1">
+                            <Image src="/assets/images/bot2.png" />
+                        </Flex>
+                        <Flex className="items-center text-base text-black p-3 pb-8 bg-white rounded-xl">
+                        You are not on the whitelist.
+                        </Flex>
                     </Flex>
 
                     <Text className="text-xs text-[#6E8A99]">

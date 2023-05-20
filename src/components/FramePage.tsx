@@ -15,7 +15,7 @@ export const FramePage: React.FC<PropsWithChildren<{
                 <Header menu={props.menu} />
                 <Container 
                     mb={20} 
-                    className="w-full !max-w-full px-8 mt-12" 
+                    className="w-full md:!w-10/12 lg:!w-8/12 !max-w-full px-8 mt-12" 
                     h={"100%"} 
                     minH={{ sm: "80%", md: "100vh" }}
                     >

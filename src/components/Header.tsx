@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {Avatar, Box, Button, Image, Spacer, TabIndicator, TabList, Tabs, useDisclosure} from '@chakra-ui/react';
+import {Avatar, Box, Button, Flex, Image, Spacer, TabIndicator, TabList, Tabs, useDisclosure} from '@chakra-ui/react';
 import Link from 'next/link';
 import { CustomConnectButton } from './CustomConnectButton';
 import CustomTab from './CustomTab';
@@ -12,6 +12,9 @@ export function Header(props) {
 
     const handleTabsChange = (index) => {
         switch (index) {
+            case 0:
+                router.push('/');
+                break;
             case 2:
                 router.push('/airdrop')
                 break;
@@ -36,51 +39,53 @@ export function Header(props) {
 
     return (
         <>
-            <Box as='nav' className="w-full flex gap-2 fixed z-20 top-0 left-0 px-8 justify-between items-center h-12 bg-[#9BDCFF]">
-                {/* <Avatar bg={"#02715F"} name='Logo' size={"sm"} src='/' /> */}
-                <Link href={"/"}><Image src='/assets/logo.png' className='cursor-pointer' /></Link>
-                <Tabs position="relative" 
-                    variant="unstyled" 
-                    className="w-full !hidden md:!block" 
-                    size={"lg"} 
-                    index={tabIndex}
-                    onChange={handleTabsChange}>
-                    <TabList gap={6}>
-                        <CustomTab textSize='!text-base' text="ENTRANCE" />
-                        <CustomTab textSize='!text-base' text="ABOUT" />
-                        <CustomTab textSize='!text-base' text="AIRDROP" />
-                    </TabList>
-                    <TabIndicator
-                        mt="-12.5px"
-                        height="2px"
+            <Box as='nav' className="w-full flex fixed z-20 top-0 left-0 justify-between items-center bg-[#BEF6FF]">
+                <Flex className='w-full md:!w-10/12 lg:!w-8/12 gap-2 px-8 h-12 justify-between items-center mx-auto'>
+                    {/* <Avatar bg={"#02715F"} name='Logo' size={"sm"} src='/' /> */}
+                    <Link href={"/"}><Image src='/assets/logo.png' className='cursor-pointer' /></Link>
+                    <Tabs position="relative" 
+                        variant="unstyled" 
+                        className="w-full !hidden md:!block" 
+                        size={"lg"} 
+                        index={tabIndex}
+                        onChange={handleTabsChange}>
+                        <TabList gap={6}>
+                            <CustomTab textSize='!text-base' text="ENTRANCE" />
+                            <CustomTab textSize='!text-base' text="ABOUT" />
+                            <CustomTab textSize='!text-base' text="AIRDROP" />
+                        </TabList>
+                        <TabIndicator
+                            mt="-12.5px"
+                            height="2px"
+                            bg="darkgreen"
+                            width={10}
+                            borderRadius="1px"
+                            />
+                    </Tabs>
+                    <Spacer />
+                    
+                    <CustomConnectButton />
+                    <Image src={ isOpen ? "/assets/images/icon-close.png" : "/assets/images/icon-hamburger.png" }
+                        onClick={isOpen ? onClose : onOpen}
+                        className='md:hidden w-4 ml-4' />
+                    <Button
+                        size="sm"
                         bg="darkgreen"
-                        width={10}
-                        borderRadius="1px"
-                        />
-                </Tabs>
-                <Spacer />
-                
-                <CustomConnectButton />
-                <Image src={ isOpen ? "/assets/images/icon-close.png" : "/assets/images/icon-hamburger.png" }
-                    onClick={isOpen ? onClose : onOpen}
-                    className='md:hidden w-6' />
-                <Button
-                    size="sm"
-                    bg="darkgreen"
-                    ml={4}
-                    minW={40}
-                    color={"white"}
-                    borderColor="darkgreen"
-                    fontSize={14}
-                    _hover={{ bg: "#00A68B" }}
-                    className='!hidden md:!inline-flex grow'
-                    _active={{
-                        bg: "#00A68B",
-                        transform: "scale(0.98)",
-                    }}
-                >
-                    START EXPLORING
-                </Button>
+                        ml={4}
+                        minW={40}
+                        color={"white"}
+                        borderColor="darkgreen"
+                        fontSize={14}
+                        _hover={{ bg: "#00A68B" }}
+                        className='!hidden md:!inline-flex grow'
+                        _active={{
+                            bg: "#00A68B",
+                            transform: "scale(0.98)",
+                        }}
+                    >
+                        START EXPLORING
+                    </Button>
+                </Flex>
             </Box>
 
             <Box className={

@@ -19,7 +19,7 @@ const breakpoints = {
     '2xl': '1536px',
 }
 const colors = {
-    darkgreen: '#02715F',
+    darkgreen: '#1BA4B9',
     lightfont: '#6E8A99',
 }
 
