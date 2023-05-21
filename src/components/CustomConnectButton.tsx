@@ -78,7 +78,7 @@ export const CustomConnectButton = () => {
                   </button>
                   <button onClick={openAccountModal} type="button" className='text-[#02715F]'>
                     {account.displayName}
-                    <span className='hidden md:inline'>
+                    <span className='hidden'>
                         {account.displayBalance
                         ? ` (${account.displayBalance})`
                         : ''}
