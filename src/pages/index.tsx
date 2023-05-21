@@ -7,6 +7,8 @@ import React, { PropsWithChildren } from "react"
 import { RadioCard } from "../components/CustomRadio"
 import CustomTab from "../components/CustomTab"
 
+import { ContractService } from '../service/contractService';
+
 const CustomSwitchTab: React.FC<{ text: string }> = (props) => {
     return (<>
         <Tab
@@ -162,8 +164,9 @@ const DepositsPanel = () => {
                                     bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)",
                                     transform: "scale(0.98)",
                                 }}
+                                onClick={ContractService.callFlare}
                             >
-                                Staking
+                                StakingTest
                             </Button>
                         </Flex>
                     </AccordionPanel>

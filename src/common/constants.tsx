@@ -1,5 +1,5 @@
-export const mainnetContractAddr = "0xE824557Ddd1Bf6A93d82A1e905176C41b4e88C81";
+export const mainnetContractAddr = "0x8cfD60DF3db3A64C6b04CF6EefBDA64000B18111";
 
-export const goerliContractAddr = "0xAe6545AE6ABEc9d6B082D592BFc84e49ADfEbC17";
+export const goerliContractAddr = "0x8cfD60DF3db3A64C6b04CF6EefBDA64000B18111";
 
 export const days = 3
