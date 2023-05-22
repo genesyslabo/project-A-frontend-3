@@ -164,9 +164,8 @@ const DepositsPanel = () => {
                                     bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)",
                                     transform: "scale(0.98)",
                                 }}
-                                onClick={ContractService.balanceOf}
                             >
-                                StakingTest
+                                Staking
                             </Button>
                         </Flex>
                     </AccordionPanel>
