@@ -1,6 +1,7 @@
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Avatar, AvatarBadge, Box, Button, Flex, Grid, HStack, Image, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, RadioGroup, Spacer, Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs, Tag, TagLabel, TagLeftIcon, Text, VStack, useDisclosure, useToast } from "@chakra-ui/react"
 import { LockIcon } from '@chakra-ui/icons'
 import { FramePage } from "../components/FramePage"
+import { StakingAPR } from "../components/StakingAPR"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import Link from "next/link"
 import React, { PropsWithChildren } from "react"
@@ -19,14 +20,14 @@ const CustomSwitchTab: React.FC<{ text: string }> = (props) => {
                 borderBottom: 0,
                 color: 'white'
             }}
-            _selected={{ 
+            _selected={{
                 color: 'white',
                 bg: 'darkgreen'
             }}
             _hover={{
                 color: '#9BDCFF'
             }}>
-                { props.text }
+            {props.text}
         </Tab>
     </>)
 }
@@ -66,9 +67,7 @@ const DepositsPanel = () => {
                                 <Text className="text-[#6E8A99] text-xs font-medium">
                                     APR
                                 </Text>
-                                <Text className="text-black text-base font-medium">
-                                    34.63%
-                                </Text>
+                                <StakingAPR />
                             </VStack>
                         </Flex>
                         <AccordionIcon color={"darkgreen"} fontSize={32} />
@@ -431,7 +430,7 @@ const PositionPanel = () => {
                     </Flex>
                     <AccordionIcon color={"darkgreen"} fontSize={32} />
                 </AccordionButton>
-                
+
                 <AccordionPanel pb={4} className="bg-[#ECFDFF] text-[#507589] rounded-b-2xl text-sm font-medium mt-2">
                     <Grid className="grid-cols-2 gap-2 my-4">
                         <Box color={"lightfont"}>Flexible APY</Box>
@@ -439,20 +438,20 @@ const PositionPanel = () => {
                         <Box color={"lightfont"}>Locked APY</Box>
                         <Box className="text-right text-black">Up to 20.96%</Box>
                     </Grid>
-                    
+
                     <VStack border={"1px solid #96E6FF"} borderRadius={"10px"} p={"20px"} my={"20px"} gap={2} align={"left"}>
                         <Text className="mb-2 text-sm font-medium" color={"#FE9D1C"}>RECENT FLARE PROFIT</Text>
                         <Flex className="flex-row items-start gap-8">
                             <Flex className="flex-col">
                                 <Box className="text-black text-xl">0</Box>
-                                <Box className="whitespace-nowrap">~ 0USD</Box>    
+                                <Box className="whitespace-nowrap">~ 0USD</Box>
                             </Flex>
                             <Box className="text-black text-sm grow underline">0.1% unstaking fee if withdraw within 72h</Box>
                         </Flex>
                     </VStack>
                     <VStack border={"1px solid #96E6FF"} borderRadius={"10px"} p={"20px"} my={"20px"} gap={2} align={"left"}>
                         <Text className="mb-2 text-black font-medium"><Box as="span" color={"#FE9D1C"}>STAKE</Box> FLARE</Text>
-                        <Button 
+                        <Button
                             size='lg'
                             bg='darkgreen'
                             color={"white"}
@@ -464,7 +463,7 @@ const PositionPanel = () => {
                                 transform: 'scale(0.98)',
                             }}
                             onClick={isOpen ? onClose : onOpen}
-                            >Add FLARE</Button>
+                        >Add FLARE</Button>
                         <Link href={""}>
                             <Text className="underline text-sm">What's the difference?</Text>
                         </Link>
@@ -554,7 +553,7 @@ const PositionPanel = () => {
                             </Text>
                             <Text className="text-xs font-medium">~0.00USD</Text>
                         </Flex>
-                        
+
                         <Flex className="flex-col">
                             <Text className="text-[#FE9D1C] text-sm font-medium">
                                 YIELD BOOST
@@ -701,7 +700,7 @@ const PositionPanel = () => {
                             </Text>
                             <Text className="text-xs font-medium">~0.00USD</Text>
                         </Flex>
-                        
+
                         <Flex className="flex-col">
                             <Text className="text-[#FE9D1C] text-sm font-medium">
                                 YIELD BOOST
@@ -799,7 +798,7 @@ const PositionPanel = () => {
                     </Flex>
                     <AccordionIcon color={"darkgreen"} fontSize={32} />
                 </AccordionButton>
-                
+
                 <AccordionPanel pb={4} className="bg-[#ECFDFF] text-[#507589] rounded-b-2xl text-sm font-medium mt-2">
                     <Grid className="grid-cols-2 gap-2 my-4">
                         <Box color={"lightfont"}>Flexible APY</Box>
@@ -807,20 +806,20 @@ const PositionPanel = () => {
                         <Box color={"lightfont"}>Locked APY</Box>
                         <Box className="text-right text-black">Up to 20.96%</Box>
                     </Grid>
-                    
+
                     <VStack border={"1px solid #96E6FF"} borderRadius={"10px"} p={"20px"} my={"20px"} gap={2} align={"left"}>
                         <Text className="mb-2 text-sm font-medium" color={"#FE9D1C"}>RECENT FLARE PROFIT</Text>
                         <Flex className="flex-row items-start gap-8">
                             <Flex className="flex-col">
                                 <Box className="text-black text-xl">0</Box>
-                                <Box className="whitespace-nowrap">~ 0USD</Box>    
+                                <Box className="whitespace-nowrap">~ 0USD</Box>
                             </Flex>
                             <Box className="text-black text-sm grow underline">0.1% unstaking fee if withdraw within 72h</Box>
                         </Flex>
                     </VStack>
                     <VStack border={"1px solid #96E6FF"} borderRadius={"10px"} p={"20px"} my={"20px"} gap={2} align={"left"}>
                         <Text className="mb-2 text-black font-medium"><Box as="span" color={"#FE9D1C"}>STAKE</Box> FLARE</Text>
-                        <Button 
+                        <Button
                             size='lg'
                             bg='darkgreen'
                             color={"white"}
@@ -913,7 +912,7 @@ const PositionPanel = () => {
                             <Box as="span" color={"darkgreen"}>LOCK</Box> OVERVIEW
                         </Text>
 
-                        <Grid className="grid-cols-2 gap-2 text-[12px] font-medium bg-[#ECFDFF] p-4" 
+                        <Grid className="grid-cols-2 gap-2 text-[12px] font-medium bg-[#ECFDFF] p-4"
                             borderRadius={"7px"} color={"lightfont"}>
                             <Box>FLARELOCKED TO BE LOCKED</Box>
                             <Box className="text-right text-black text-base">20.00-&gt;40.00</Box>
@@ -953,7 +952,7 @@ const PositionPanel = () => {
 }
 
 const Index = () => {
-   
+
     return (<>
         <FramePage menu="staking">
             <Flex className="flex flex-col justify-center items-center pt-4">
@@ -997,7 +996,7 @@ const Index = () => {
                         height="2px"
                         bg="darkgreen"
                         borderRadius="1px"
-                        />
+                    />
                     <TabPanels>
                         <TabPanel px={0}>
                             <DepositsPanel />

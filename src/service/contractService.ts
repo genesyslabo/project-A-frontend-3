@@ -188,8 +188,8 @@ const userStakingInfo = async () => {
         const stakingContract = getStakingContract(signer);
         const address = await signer.getAddress();
         const userInfo = await stakingContract.userInfo(0, address);
-        console.log('UserLockStakingInfo: ', userInfo);
-        return userInfo;
+        const amount = ethers.utils.formatUnits(userInfo.amount, 18);
+        return parseFloat(amount);
     } catch (error) {
         console.error('UserStakingInfo Error: ', error);
         throw error;
@@ -202,8 +202,11 @@ const userLockStakingInfo = async () => {
         const stakingContract = getStakingContract(signer);
         const address = await signer.getAddress();
         const userInfo = await stakingContract.userInfo(1, address);
-        console.log('UserLockStakingInfo: ', userInfo);
-        return userInfo;
+        const amount = ethers.utils.formatUnits(userInfo.amount, 18);
+        const endTime = userInfo.endTime;
+        const timestamp = (await signer.provider.getBlock('latest')).timestamp;
+        const restDays =  (endTime - timestamp) / 86400;
+        return parseFloat(amount), restDays;
     } catch (error) {
         console.error('UserLockStakingInfo Error: ', error);
         throw error;
@@ -223,7 +226,7 @@ const stakingAPR = async () => {
         return apr;
     } catch (error) {
         console.error('StakingAPR Error: ', error);
-        throw error;
+        return -1;
     }
 };
 
