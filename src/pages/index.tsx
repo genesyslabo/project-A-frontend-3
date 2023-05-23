@@ -277,6 +277,17 @@ const DepositsPanel = () => {
                                     </Text>
                                 </VStack>
                             </HStack>
+                            <VStack className="!hidden md:!flex">
+                                <Text className="text-[#6E8A99] text-[11px] font-medium whitespace-nowrap">
+                                    FLARE staked
+                                </Text>
+                                <Text className="text-[#6E8A99] text-[14px] font-medium !mt-0">
+                                    0
+                                </Text>
+                                <Text className="text-[#6E8A99] text-[14px] font-medium !mt-0">
+                                    0 USD
+                                </Text>
+                            </VStack>
                             <VStack>
                                 <Text className="text-[#6E8A99] text-[11px] font-medium whitespace-nowrap">
                                     Flexible APY
@@ -296,15 +307,23 @@ const DepositsPanel = () => {
                                     20.65%
                                 </Text>
                             </VStack>
+                            <VStack className="!hidden md:!flex">
+                                <Text className="text-[#6E8A99] text-[11px] font-medium whitespace-nowrap">
+                                    Total staked
+                                </Text>
+                                <Text className="text-black text-[14px] font-medium !mt-0">
+                                    241,951,557 FLARE
+                                </Text>
+                            </VStack>
                         </Flex>
                         <AccordionIcon color={"darkgreen"} fontSize={32} />
                     </AccordionButton>
 
                     <AccordionPanel
                         pb={4}
-                        className="bg-[#ECFDFF] text-[#507589] rounded-b-2xl mt-2"
+                        className="bg-[#ECFDFF] text-[#507589] rounded-b-2xl mt-2 flex flex-col md:flex-row md:gap-4"
                     >
-                        <Grid className="grid-cols-2 gap-2 mt-4">
+                        <Grid className="grid-cols-2 gap-2 mt-4 md:!hidden">
                             <Box className="text-base font-medium">
                                 Flexible APY
                             </Box>
@@ -357,7 +376,7 @@ const DepositsPanel = () => {
                             <Text className="mb-2 text-black font-medium text-sm">
                                 <Box as="span" color={"#FE9D1C"}>
                                     STAKE
-                                </Box>{" "}
+                                </Box>
                                 FLARE
                             </Text>
                             <HStack className="items-stretch justify-between">
@@ -393,7 +412,7 @@ const DepositsPanel = () => {
                                 </HStack>
                             </HStack>
                         </VStack>
-                        <Grid className="grid-cols-2 gap-4 text-black text-[14px]">
+                        <Grid className="grid-cols-2 gap-4 md:gap-2 md:py-4 text-black text-[14px]">
                             <Box>Total staked</Box>
                             <Box className="text-right font-medium">
                                 241,951,557 FLARE
@@ -445,6 +464,15 @@ const DepositsPanel = () => {
                                 </Text>
                                 <StakingAPR />
                             </VStack>
+
+                            <VStack className="!hidden md:!flex">
+                                <Text className="text-[#6E8A99] text-[11px] font-medium whitespace-nowrap">
+                                    Total staked
+                                </Text>
+                                <Text className="text-black text-[14px] font-medium !mt-0">
+                                    241,951,557 FLARE
+                                </Text>
+                            </VStack>
                         </Flex>
                         <AccordionIcon color={"darkgreen"} fontSize={32} />
                     </AccordionButton>
@@ -471,77 +499,91 @@ const DepositsPanel = () => {
                                 <TagLabel>Locked</TagLabel>
                             </Tag>
                         </Box>
-                        <Grid
-                            border={"1px solid #96E6FF"}
-                            borderRadius={"8px"}
-                            p={"20px"}
-                            my={"20px"}
-                            className="grid-cols-2"
-                        >
-                            <Text className="text-[#FE9D1C] font-medium text-sm">
-                                RECENT FLARE PROFIT
-                            </Text>
-                            <Text className="text-[#FE9D1C] font-medium text-sm">
-                                YIELD BOOST
-                            </Text>
-                            <Text className="text-black font-bold text-xl">
-                                0.0000
-                            </Text>
-                            <Text className="text-black font-bold text-xl">
-                                1.38x
-                            </Text>
-                            <Text className="font-medium text-xs">
-                                ~0.00USD
-                            </Text>
-                            <Text className="font-medium text-xs">
-                                Lock for 1 week
-                            </Text>
-                        </Grid>
-                        <Flex
-                            border={"1px solid #96E6FF"}
-                            borderRadius={"8px"}
-                            p={"20px"}
-                            my={"20px"}
-                            className="flex-col gap-4"
-                        >
-                            <Grid className="grid-cols-2">
-                                <Text className="font-medium text-sm">
-                                    <span className="text-[#FE9D1C]">
-                                        FLARE
-                                    </span>
-                                    LOCKED
+                        <Flex className="flex-col md:flex-row md:gap-4">
+                            <Grid className="grid-cols-2 gap-4 md:gap-0 md:py-4 items-center text-black text-[14px] !hidden md:!grid">
+                                <Box>Total locked</Box>
+                                <Box className="text-right font-medium">
+                                    189,65,524 FLARE
+                                </Box>
+                                <Box>Average lock duration</Box>
+                                <Box className="text-right font-medium">
+                                    41 weeks
+                                </Box>
+                                <Box>Performance Fee</Box>
+                                <Box className="text-right font-medium">0-2%</Box>
+                            </Grid>
+                            <Grid
+                                border={"1px solid #96E6FF"}
+                                borderRadius={"8px"}
+                                p={"20px"}
+                                my={"20px"}
+                                className="grid-cols-2"
+                            >
+                                <Text className="text-[#FE9D1C] font-medium text-sm">
+                                    RECENT FLARE PROFIT
                                 </Text>
-                                <Text className=" font-medium text-sm">
-                                    ULNLOCJS IN
+                                <Text className="text-[#FE9D1C] font-medium text-sm">
+                                    YIELD BOOST
                                 </Text>
                                 <Text className="text-black font-bold text-xl">
-                                    20.0000
+                                    0.0000
                                 </Text>
                                 <Text className="text-black font-bold text-xl">
-                                    7 days
+                                    1.38x
                                 </Text>
                                 <Text className="font-medium text-xs">
-                                    ~50.98USD
+                                    ~0.00USD
                                 </Text>
                                 <Text className="font-medium text-xs">
-                                    On May 10,2023,11:38
+                                    Lock for 1 week
                                 </Text>
                             </Grid>
-                            <Button
-                                size="lg"
-                                bg="darkgreen"
-                                color={"white"}
-                                fontSize={16}
-                                borderColor="darkgreen"
-                                bgImg={"linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)"}
-                                _hover={{ bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)" }}
-                                _active={{
-                                    bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)",
-                                    transform: "scale(0.98)",
-                                }}
+                            <Flex
+                                border={"1px solid #96E6FF"}
+                                borderRadius={"8px"}
+                                p={"20px"}
+                                my={"20px"}
+                                className="flex-col gap-4"
                             >
-                                Staking
-                            </Button>
+                                <Grid className="grid-cols-2">
+                                    <Text className="font-medium text-sm">
+                                        <span className="text-[#FE9D1C]">
+                                            FLARE
+                                        </span>
+                                        LOCKED
+                                    </Text>
+                                    <Text className=" font-medium text-sm">
+                                        ULNLOCJS IN
+                                    </Text>
+                                    <Text className="text-black font-bold text-xl">
+                                        20.0000
+                                    </Text>
+                                    <Text className="text-black font-bold text-xl">
+                                        7 days
+                                    </Text>
+                                    <Text className="font-medium text-xs">
+                                        ~50.98USD
+                                    </Text>
+                                    <Text className="font-medium text-xs">
+                                        On May 10,2023,11:38
+                                    </Text>
+                                </Grid>
+                                <Button
+                                    size="lg"
+                                    bg="darkgreen"
+                                    color={"white"}
+                                    fontSize={16}
+                                    borderColor="darkgreen"
+                                    bgImg={"linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)"}
+                                    _hover={{ bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)" }}
+                                    _active={{
+                                        bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)",
+                                        transform: "scale(0.98)",
+                                    }}
+                                >
+                                    Staking
+                                </Button>
+                            </Flex>
                         </Flex>
                     </AccordionPanel>
                 </AccordionItem>
