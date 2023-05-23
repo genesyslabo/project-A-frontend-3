@@ -93,7 +93,6 @@ const enterStaking = async (amount) => {
 
 const leaveStaking = async (amount) => {
     try {
-        const amount = 1;
         const amountInWei = ethers.utils.parseUnits(amount.toString(), 18);
         if (amountInWei.lte(MinStakingAmount)) {
             throw new Error('Insufficient amount');
@@ -211,6 +210,71 @@ const userLockStakingInfo = async () => {
     }
 };
 
+// APR = flarePerTime * Time * (amount / totalAllocPointBoost) / amount
+const stakingAPR = async () => {
+    try {
+        const signer = await getSigner();
+        const stakingContract = getStakingContract(signer);
+        const totalAllocPointBoost = await stakingContract.totalAllocPointBoost();
+        const flarePerSecond = await stakingContract.flarePerBlock();
+        const secondsPerYear = 365 * 24 * 60 * 60;
+        const apr = (flarePerSecond * secondsPerYear / totalAllocPointBoost);
+        console.log('StakingAPR: ', apr);
+        return apr;
+    } catch (error) {
+        console.error('StakingAPR Error: ', error);
+        throw error;
+    }
+};
+
+// APR = boost * flarePerTime * Time * (amount / totalAllocPointBoost) / amount
+const lockStakingAPR = async (amount, week) => {
+    try {
+        const amountInWei = ethers.utils.parseUnits(amount.toString(), 18);
+        const signer = await getSigner();
+        const stakingContract = getStakingContract(signer);
+        const address = await signer.getAddress();
+        const boost = await stakingContract.calculateBoost(address, amountInWei, week);
+        const totalAllocPointBoost = await stakingContract.totalAllocPointBoost();
+        const flarePerSecond = await stakingContract.flarePerBlock();
+        const secondsPerYear = 365 * 24 * 60 * 60;
+        const apr = (boost * flarePerSecond * secondsPerYear / totalAllocPointBoost);
+        console.log('LockStakingAPR: ', apr);
+        return apr;
+    } catch (error) {
+        console.error('LockStakingAPR Error: ', error);
+        throw error;
+    }
+};
+
+// boost = calculatBoost(address, amount + user.amount, weeks + (user.endtime-time))
+// APR = boost * flarePerTime * Time * (amount / totalAllocPointBoost) / amount
+const reEnterLockStakingAPR = async (amount, weeks) => {
+    try {
+        const amountInWei = ethers.utils.parseUnits(amount.toString(), 18);
+        const signer = await getSigner();
+        const stakingContract = getStakingContract(signer);
+        const address = await signer.getAddress();
+
+        const timestamp = (await signer.provider.getBlock('latest')).timestamp;
+        const userInfo = await stakingContract.userInfo(1, address);
+        const userAmount = userInfo.amount;
+        const userEndTime = userInfo.endTime;
+        const restWeeks =  Math.floor((userEndTime - timestamp) / 604800);
+        const boost = await stakingContract.calculateBoost(address, amountInWei.add(userAmount), weeks+restWeeks);
+
+        const totalAllocPointBoost = await stakingContract.totalAllocPointBoost();
+        const flarePerSecond = await stakingContract.flarePerBlock();
+        const secondsPerYear = 365 * 24 * 60 * 60;
+        const apr = (boost * flarePerSecond * secondsPerYear / totalAllocPointBoost);
+        console.log('ReEnterLockStakingAPR: ', apr);
+        return apr;
+    } catch (error) {
+        console.error('ReEnterLockStakingAPR Error: ', error);
+        throw error;
+    }
+};
+
 export const ContractService = {
     balanceOf, 
     approve, 
@@ -222,5 +286,8 @@ export const ContractService = {
     leaveLockStaking,
     calculateBoost,
     userStakingInfo,
-    userLockStakingInfo
+    userLockStakingInfo,
+    stakingAPR,
+    lockStakingAPR,
+    reEnterLockStakingAPR
 };
