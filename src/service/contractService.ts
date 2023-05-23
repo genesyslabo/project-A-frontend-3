@@ -173,13 +173,40 @@ const calculateBoost = async (amount, weeks) => {
         const signer = await getSigner();
         const stakingContract = getStakingContract(signer);
         const address = await signer.getAddress();
-        console.log('Address: ', address);
         const boost = await stakingContract.calculateBoost(address, amount, weeks);
         const boostNumber = ethers.utils.formatUnits(boost, 18);
         console.log('Boost: ', boostNumber);
         return parseFloat(boostNumber);
     } catch (error) {
         console.error('Boost Error: ', error);
+        throw error;
+    }
+};
+
+const userStakingInfo = async () => {
+    try {
+        const signer = await getSigner();
+        const stakingContract = getStakingContract(signer);
+        const address = await signer.getAddress();
+        const userInfo = await stakingContract.userInfo(0, address);
+        console.log('UserLockStakingInfo: ', userInfo);
+        return userInfo;
+    } catch (error) {
+        console.error('UserStakingInfo Error: ', error);
+        throw error;
+    }
+};
+
+const userLockStakingInfo = async () => {
+    try {
+        const signer = await getSigner();
+        const stakingContract = getStakingContract(signer);
+        const address = await signer.getAddress();
+        const userInfo = await stakingContract.userInfo(1, address);
+        console.log('UserLockStakingInfo: ', userInfo);
+        return userInfo;
+    } catch (error) {
+        console.error('UserLockStakingInfo Error: ', error);
         throw error;
     }
 };
@@ -193,5 +220,7 @@ export const ContractService = {
     enterLockStaking, 
     reEnterLockStaking,
     leaveLockStaking,
-    calculateBoost
+    calculateBoost,
+    userStakingInfo,
+    userLockStakingInfo
 };
