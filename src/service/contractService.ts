@@ -91,10 +91,28 @@ const enterStaking = async (amount) => {
     }
 };
 
+const leaveStaking = async (amount) => {
+    try {
+        const amount = 1;
+        const amountInWei = ethers.utils.parseUnits(amount.toString(), 18);
+        if (amountInWei.lte(MinStakingAmount)) {
+            throw new Error('Insufficient amount');
+        }
+        const signer = await getSigner();
+        const stakingContract = getStakingContract(signer);
+        const tx = await stakingContract.leaveStaking(amountInWei);
+        console.log('LeaveStaking: ', tx);
+        await tx.wait();
+        console.log('LeaveStaking Completed.');
+    } catch (error) {
+        console.error('LeaveStaking Error: ', error);
+        throw error;
+    }
+};
+
 const enterLockStaking = async (amount, weeks) => {
     try {
         const allowanceNumber = await allowance();
-        const time = weeks * 1440;
         if (allowanceNumber < amount) {
             throw new Error('Insufficient allowance');
         }
@@ -104,7 +122,7 @@ const enterLockStaking = async (amount, weeks) => {
         }
         const signer = await getSigner();
         const stakingContract = getStakingContract(signer);
-        const tx = await stakingContract.enterLockStaking(amountInWei, time);
+        const tx = await stakingContract.enterLockStaking(amountInWei, weeks);
         console.log('EnterLockStaking: ', tx);
         await tx.wait();
         console.log('EnterLockStaking Completed.');
@@ -117,7 +135,6 @@ const enterLockStaking = async (amount, weeks) => {
 const reEnterLockStaking = async (amount, weeks) => {
     try {
         const allowanceNumber = await allowance();
-        const time = weeks * 1440;
         if (allowanceNumber < amount) {
             throw new Error('Insufficient allowance');
         }
@@ -127,12 +144,26 @@ const reEnterLockStaking = async (amount, weeks) => {
         }
         const signer = await getSigner();
         const stakingContract = getStakingContract(signer);
-        const tx = await stakingContract.reEnterLockStaking(amountInWei, time);
+        const tx = await stakingContract.reEnterLockStaking(amountInWei, weeks);
         console.log('ReEnterLockStaking: ', tx);
         await tx.wait();
         console.log('ReEnterLockStaking Completed.');
     } catch (error) {
         console.error('ReEnterLockStaking Error: ', error);
+        throw error;
+    }
+};
+
+const leaveLockStaking = async () => {
+    try {
+        const signer = await getSigner();
+        const stakingContract = getStakingContract(signer);
+        const tx = await stakingContract.leaveLockStaking();
+        console.log('LeaveLockStaking: ', tx);
+        await tx.wait();
+        console.log('LeaveLockStaking Completed.');
+    } catch (error) {
+        console.error('LeaveLockStaking Error: ', error);
         throw error;
     }
 };
@@ -157,8 +188,10 @@ export const ContractService = {
     balanceOf, 
     approve, 
     allowance, 
-    enterStaking, 
+    enterStaking,
+    leaveStaking,
     enterLockStaking, 
     reEnterLockStaking,
+    leaveLockStaking,
     calculateBoost
 };
