@@ -1,5 +1,9 @@
-export const mainnetContractAddr = "0xE824557Ddd1Bf6A93d82A1e905176C41b4e88C81";
+export const MetaflareContractAddr = "0x34dC568ca90e557FE28e81268DE16aFD99e9715F";
 
-export const goerliContractAddr = "0xAe6545AE6ABEc9d6B082D592BFc84e49ADfEbC17";
+export const StakingContractAddr = "0xE9ea9d3eD18be9A523c44C2A203adc10b61A3803";
+
+export const MinStakingAmount = 1000;
+
+export const MinLockStakingAmount = 2500000;
 
 export const days = 3
