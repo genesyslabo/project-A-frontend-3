@@ -71,16 +71,17 @@ const allowance = async () => {
 
 const enterStaking = async (amount) => {
     try {
-        if (amount <= MinStakingAmount) {
-            throw new Error('Insufficient amount');
-        }
         const allowanceNumber = await allowance();
         if (allowanceNumber < amount) {
             throw new Error('Insufficient allowance');
         }
+        const amountInWei = ethers.utils.parseUnits(amount.toString(), 18);
+        if (amountInWei.lte(MinStakingAmount)) {
+            throw new Error('Insufficient amount');
+        }
         const signer = await getSigner();
         const stakingContract = getStakingContract(signer);
-        const tx = await stakingContract.enterStaking(ethers.utils.parseUnits(amount.toString(), 'wei'));
+        const tx = await stakingContract.enterStaking(amountInWei);
         console.log('EnterStaking: ', tx);
         await tx.wait();
         console.log('EnterStaking Completed.');
@@ -92,16 +93,18 @@ const enterStaking = async (amount) => {
 
 const enterLockStaking = async (amount, weeks) => {
     try {
-        if (amount <= MinLockStakingAmount) {
-            throw new Error('Insufficient amount');
-        }
         const allowanceNumber = await allowance();
+        const time = weeks * 1440;
         if (allowanceNumber < amount) {
             throw new Error('Insufficient allowance');
         }
+        const amountInWei = ethers.utils.parseUnits(amount.toString(), 18);
+        if (amountInWei.lte(MinLockStakingAmount)) {
+            throw new Error('Insufficient amount');
+        }
         const signer = await getSigner();
         const stakingContract = getStakingContract(signer);
-        const tx = await stakingContract.enterLockStaking(ethers.utils.parseUnits(amount.toString(), 'wei'), weeks);
+        const tx = await stakingContract.enterLockStaking(amountInWei, time);
         console.log('EnterLockStaking: ', tx);
         await tx.wait();
         console.log('EnterLockStaking Completed.');
@@ -113,16 +116,18 @@ const enterLockStaking = async (amount, weeks) => {
 
 const reEnterLockStaking = async (amount, weeks) => {
     try {
-        if (amount <= MinLockStakingAmount) {
-            throw new Error('Insufficient amount');
-        }
         const allowanceNumber = await allowance();
+        const time = weeks * 1440;
         if (allowanceNumber < amount) {
             throw new Error('Insufficient allowance');
         }
+        const amountInWei = ethers.utils.parseUnits(amount.toString(), 18);
+        if (amountInWei.lte(MinLockStakingAmount)) {
+            throw new Error('Insufficient amount');
+        }
         const signer = await getSigner();
         const stakingContract = getStakingContract(signer);
-        const tx = await stakingContract.reEnterLockStaking(ethers.utils.parseUnits(amount.toString(), 'wei'), weeks);
+        const tx = await stakingContract.reEnterLockStaking(amountInWei, time);
         console.log('ReEnterLockStaking: ', tx);
         await tx.wait();
         console.log('ReEnterLockStaking Completed.');
@@ -132,6 +137,28 @@ const reEnterLockStaking = async (amount, weeks) => {
     }
 };
 
+const calculateBoost = async (amount, weeks) => {
+    try {
+        const signer = await getSigner();
+        const stakingContract = getStakingContract(signer);
+        const address = await signer.getAddress();
+        console.log('Address: ', address);
+        const boost = await stakingContract.calculateBoost(address, amount, weeks);
+        const boostNumber = ethers.utils.formatUnits(boost, 18);
+        console.log('Boost: ', boostNumber);
+        return parseFloat(boostNumber);
+    } catch (error) {
+        console.error('Boost Error: ', error);
+        throw error;
+    }
+};
+
 export const ContractService = {
-    balanceOf, approve, allowance, enterStaking, enterLockStaking, reEnterLockStaking
+    balanceOf, 
+    approve, 
+    allowance, 
+    enterStaking, 
+    enterLockStaking, 
+    reEnterLockStaking,
+    calculateBoost
 };
