@@ -977,12 +977,12 @@ const Index = () => {
                 <HStack className="w-full mt-4 mb-2">
                     <Box className="text-[24px] font-bold" color={"darkgreen"}>Vesting</Box>
                     <Spacer />
-                    <Tabs variant='soft-rounded' colorScheme='green'>
+                    {/* <Tabs variant='soft-rounded' colorScheme='green'>
                         <TabList borderRadius={"var(--chakra-radii-full)"} bg={"white"}>
                             <CustomSwitchTab text="Live" />
                             <CustomSwitchTab text="Finished" />
                         </TabList>
-                    </Tabs>
+                    </Tabs> */}
                 </HStack>
 
                 <Tabs position="relative" variant="unstyled" className="w-full" size={"lg"}>

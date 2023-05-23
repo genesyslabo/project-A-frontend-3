@@ -8,7 +8,7 @@ const Airdrop = () => {
     return (<>
         <FramePage menu="airdrop">
             <Flex className="flex flex-col justify-center items-center pt-4 gap-6">
-                <Flex color={"darkgreen"} className="w-full text-2xl font-medium items-start">Flare claim check</Flex>
+                <Flex color={"darkgreen"} className="w-full text-2xl font-bold items-start">Flare claim check</Flex>
 
                 <Flex className="w-full flex-col">
                     <Flex className="justify-end pr-1">
@@ -30,7 +30,7 @@ const Airdrop = () => {
                                 </Text>
                                 <Flex className="flex-row items-center text-black text-base">
                                     0 APE 
-                                    <Circle size='16px' bg='#02715F' color='white' className="ml-1" />
+                                    <Circle size='16px' bg='#1BA4B9' color='white' className="ml-1" />
                                 </Flex>
                             </Flex>
                         </Flex>
@@ -46,7 +46,7 @@ const Airdrop = () => {
                 </Flex>
 
                 <Flex className="flex-col gap-2">
-                    <Flex color={"darkgreen"} className="w-full text-2xl font-medium items-start">NFT claim check</Flex>
+                    <Flex color={"darkgreen"} className="w-full text-2xl font-bold items-start">NFT claim check</Flex>
 
                     <Text className="text-base text-[#666666]">
                         Enter the Token ID to see if a Bored Ape, Mutant Ape, or companion Kennel Club NFT is eligible for a one-time claim of ApeCoin.

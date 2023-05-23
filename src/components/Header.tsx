@@ -90,9 +90,9 @@ export function Header(props) {
 
             <Box className={
                 isOpen ? 
-                    "fixed top-12 left-0 bottom-0 z-50 !ml-0 flex flex-col justify-between bg-[#bee2fc] py-8 px-8 pb-12 text-white transition-all duration-300 ease-in-out md:hidden right-0 -translate-x-0"
+                    "fixed top-12 left-0 bottom-0 z-50 !ml-0 flex flex-col justify-between bg-[#D5FAFF] py-8 px-8 pb-12 text-white transition-all duration-300 ease-in-out md:hidden right-0 -translate-x-0"
                     :
-                    "fixed top-12 left-0 bottom-0 z-50 !ml-0 flex flex-col justify-between bg-[#bee2fc] py-8 px-8 pb-12 text-white transition-all duration-300 ease-in-out md:hidden -translate-x-full"
+                    "fixed top-12 left-0 bottom-0 z-50 !ml-0 flex flex-col justify-between bg-[#D5FAFF] py-8 px-8 pb-12 text-white transition-all duration-300 ease-in-out md:hidden -translate-x-full"
             }>
                 <Box as="ul" className="mb-8 flex flex-col justify-center space-y-8 font-bold text-[20px] text-[#6E8A99]">
                     <Box as='li' color={props.menu == 'about' ? 'darkgreen' : ''}>
