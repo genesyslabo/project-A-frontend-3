@@ -138,9 +138,9 @@ const reEnterLockStaking = async (amount, weeks) => {
             throw new Error('Insufficient allowance');
         }
         const amountInWei = ethers.utils.parseUnits(amount.toString(), 18);
-        if (amountInWei.lte(MinLockStakingAmount)) {
-            throw new Error('Insufficient amount');
-        }
+        // if (amountInWei.lte(MinLockStakingAmount)) {
+        //     throw new Error('Insufficient amount');
+        // }
         const signer = await getSigner();
         const stakingContract = getStakingContract(signer);
         const tx = await stakingContract.reEnterLockStaking(amountInWei, weeks);
@@ -261,7 +261,7 @@ const lockStakingAPR = async (amount, week) => {
         return apr;
     } catch (error) {
         console.error('LockStakingAPR Error: ', error);
-        throw error;
+        return -1
     }
 };
 

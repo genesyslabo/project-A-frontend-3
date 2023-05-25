@@ -5,8 +5,8 @@ import { StakingAPR } from "../components/StakingAPR"
 import { LockStakingCurrentAPR, LockStakingFutureAPR } from "../components/LockStakingAPR"
 import { StakingAmount } from "../components/StakingAmount"
 import { LockStakingAmount } from "../components/LockStakingAmount"
-import { LockStakingTime } from "../components/LockStakingTime"
-import { LockStaking } from "../components/LockStaking"
+import { LockStakingTime, LockStakingDuration} from "../components/LockStakingTime"
+import LockStaking from "../components/LockStaking"
 import Staking from "../components/Staking"
 import { Balance } from "../components/Balance"
 import { Allowance } from "../components/Allowance"
@@ -326,6 +326,73 @@ const DepositsPanel = () => {
 
                         </Flex>
                         <Staking />
+                    </AccordionPanel>
+                </AccordionItem>
+
+                <AccordionItem mt={4}>
+                    <AccordionButton className="bg-white rounded-2xl">
+                        <Flex className="w-full flex-row items-center justify-between gap-2">
+                            <HStack>
+                                <Avatar bg={"#20B4CA"} name=" ">
+                                    <AvatarBadge
+                                        boxSize="1.25em"
+                                        bg="transparent"
+                                        borderColor="transparent"
+                                    >
+                                        <Image src="/assets/images/icon-cyclic.png" />
+                                    </AvatarBadge>
+                                </Avatar>
+
+                                <VStack className="grow justify-center" alignItems={"start"}>
+                                    <Text className="text-[#1E1E1E] text-sm font-bold !mt-0">
+                                        LOCKED FLARE
+                                    </Text>
+                                </VStack>
+                            </HStack>
+                            <VStack alignItems={"start"}>
+                                <Text className="text-[#6E8A99] text-xs font-medium">
+                                    APR
+                                </Text>
+                                <LockStakingCurrentAPR />
+                            </VStack>
+                        </Flex>
+                        <AccordionIcon color={"darkgreen"} fontSize={32} />
+                    </AccordionButton>
+
+                    <AccordionPanel
+                        pb={4}
+                        className="bg-[#ECFDFF] text-[#507589] rounded-b-2xl mt-2"
+                    >
+                        <Flex
+                            border={"1px solid #96E6FF"}
+                            borderRadius={"8px"}
+                            p={"20px"}
+                            my={"10px"}
+                            className="flex-row justify-between"
+                        >
+                            <Flex className="flex-col">
+                                <Text className="text-[#FE9D1C] text-sm font-medium">
+                                    Flare Locked
+                                </Text>
+                                <LockStakingAmount />
+                            </Flex>
+
+                            <Flex className="flex-col">
+                                <Text className="text-[#FE9D1C] text-sm font-medium">
+                                    Unlock In
+                                </Text>
+                                <LockStakingTime />
+                            </Flex>
+
+                            {/* <Flex className="flex-col">
+                                <Text className="text-[#FE9D1C] text-sm font-medium">
+                                    Duration
+                                </Text>
+                                <LockStakingDuration />
+                            </Flex> */}
+
+                        </Flex>
+                        <LockStaking />
                     </AccordionPanel>
                 </AccordionItem>
 

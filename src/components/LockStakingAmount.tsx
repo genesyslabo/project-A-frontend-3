@@ -15,7 +15,7 @@ export const LockStakingAmount = () => {
     }, []);
 
     return (
-        <Text className="text-black text-[14px] font-medium !mt-0">
+        <Text className="text-black font-bold text-xl">
             {amount} Flare
         </Text>
     );

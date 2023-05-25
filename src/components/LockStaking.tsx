@@ -1,47 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { Text } from '@chakra-ui/react';
+import LockStakingEnter from './LockStakingEnter';
+import LockStakingReEnter from './LockStakingReEnter';
+import LockStakingLeave from './LockStakingLeave';
 import { ContractService } from '../service/contractService';
 
-export const LockStaking = ({ amount, week }) => {
-    const [apr, setApr] = useState(0);
+const LockStaking = () => {
+  const [component, setComponent] = useState(<LockStakingEnter />);
 
-    useEffect(() => {
-        const fetchAPR = async () => {
-            const result = await ContractService.lockStakingAPR(amount, week);
-            setApr(result);
-        };
+  useEffect(() => {
+    const fetchData = async () => {
+      const amount = await ContractService.userLockStakingAmount();
+      if (amount > 0) {
+        const times = await ContractService.userLockStakingTime();
+        if (times[2] > times[1]) {
+          setComponent(<LockStakingReEnter />);
+        } else {
+          setComponent(<LockStakingLeave />);
+        }
+      } else {
+        setComponent(<LockStakingEnter />);
+      }
+    };
 
-        fetchAPR();
-    }, [amount, week]);
+    fetchData();
+  }, []);
 
-    return (
-        <Text className="text-black text-base font-medium">
-            {(apr * 100).toFixed(2)}%
-        </Text>
-    );
+  return component;
 };
 
-export const LockStakingCurrentAPR = () => {
-    const [apr, setApr] = useState(0);
-
-    useEffect(() => {
-        const fetchAPR = async () => {
-            const times = await ContractService.userLockStakingTime();
-            const amount = await ContractService.userLockStakingAmount();
-            const week = Math.round((times[2] - times[0]) / 604800);
-            if (amount != 0 && week != 0) {
-                const result = await ContractService.lockStakingAPR(amount, week);
-                setApr(result);
-            }
-        };
-
-        fetchAPR();
-    }, []);
-
-    return (
-        <Text className="text-black text-base font-medium">
-            {(apr * 100).toFixed(2)}%
-        </Text>
-    );
-};
-
+export default LockStaking;
