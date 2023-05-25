@@ -16,7 +16,7 @@ export const StakingAPR = () => {
 
     return (
         <Text className="text-black text-base font-medium">
-            {apr.toFixed(2)}%
+            {(apr*100).toFixed(2)}%
         </Text>
     );
 };

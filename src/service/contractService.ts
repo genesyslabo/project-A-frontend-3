@@ -189,10 +189,11 @@ const userStakingInfo = async () => {
         const address = await signer.getAddress();
         const userInfo = await stakingContract.userInfo(0, address);
         const amount = ethers.utils.formatUnits(userInfo.amount, 18);
+        console.log('userStakingInfo Amount: ', amount);
         return parseFloat(amount);
     } catch (error) {
         console.error('UserStakingInfo Error: ', error);
-        throw error;
+        throw -1;
     }
 };
 

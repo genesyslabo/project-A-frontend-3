@@ -2,6 +2,7 @@ import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPane
 import { LockIcon, MinusIcon, SmallAddIcon } from '@chakra-ui/icons'
 import { FramePage } from "../components/FramePage"
 import { StakingAPR } from "../components/StakingAPR"
+import { StakingAmount } from "../components/StakingAmount"
 import Link from "next/link"
 import React, { useEffect, useState } from "react"
 import { RadioCard } from "../components/CustomRadio"
@@ -469,9 +470,7 @@ const DepositsPanel = () => {
                                 <Text className="text-[#6E8A99] text-[11px] font-medium whitespace-nowrap">
                                     Total staked
                                 </Text>
-                                <Text className="text-black text-[14px] font-medium !mt-0">
-                                    241,951,557 FLARE
-                                </Text>
+                                <StakingAmount />
                             </VStack>
                         </Flex>
                         <AccordionIcon color={"darkgreen"} fontSize={32} />
