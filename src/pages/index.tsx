@@ -2,6 +2,14 @@ import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPane
 import { LockIcon, MinusIcon, SmallAddIcon } from '@chakra-ui/icons'
 import { FramePage } from "../components/FramePage"
 import { StakingAPR } from "../components/StakingAPR"
+import { LockStakingCurrentAPR, LockStakingFutureAPR } from "../components/LockStakingAPR"
+import { StakingAmount } from "../components/StakingAmount"
+import { LockStakingAmount } from "../components/LockStakingAmount"
+import { LockStakingTime, LockStakingDuration} from "../components/LockStakingTime"
+import LockStaking from "../components/LockStaking"
+import Staking from "../components/Staking"
+import { Balance } from "../components/Balance"
+import { Allowance } from "../components/Allowance"
 import Link from "next/link"
 import React, { useEffect, useState } from "react"
 import { RadioCard } from "../components/CustomRadio"
@@ -244,8 +252,8 @@ const FlareToLock: React.FC<{
 }
 
 const DepositsPanel = () => {
-    const [ isFlexibleOpen, setFlexibleOpen ] = useState(false);
-    const [ isFlareToLockOpen, setFlareToLockOpen ] = useState(false);
+    const [isFlexibleOpen, setFlexibleOpen] = useState(false);
+    const [isFlareToLockOpen, setFlareToLockOpen] = useState(false);
 
     return (
         <>
@@ -254,7 +262,141 @@ const DepositsPanel = () => {
 
             <Accordion defaultIndex={[0]} allowMultiple className="w-full">
 
-                <AccordionItem>
+                <AccordionItem mt={4}>
+                    <AccordionButton className="bg-white rounded-2xl">
+                        <Flex className="w-full flex-row items-center justify-between gap-2">
+                            <HStack>
+                                <Avatar bg={"#20B4CA"} name=" ">
+                                    <AvatarBadge
+                                        boxSize="1.25em"
+                                        bg="transparent"
+                                        borderColor="transparent"
+                                    >
+                                        <Image src="/assets/images/icon-cyclic.png" />
+                                    </AvatarBadge>
+                                </Avatar>
+
+                                <VStack className="grow justify-center" alignItems={"start"}>
+                                    <Text className="text-[#1E1E1E] text-sm font-bold !mt-0">
+                                        Flexible FLARE
+                                    </Text>
+                                </VStack>
+                            </HStack>
+                            <VStack alignItems={"start"}>
+                                <Text className="text-[#6E8A99] text-xs font-medium">
+                                    APR
+                                </Text>
+                                <StakingAPR />
+                            </VStack>
+                        </Flex>
+                        <AccordionIcon color={"darkgreen"} fontSize={32} />
+                    </AccordionButton>
+
+                    <AccordionPanel
+                        pb={4}
+                        className="bg-[#ECFDFF] text-[#507589] rounded-b-2xl mt-2"
+                    >
+                        <Flex
+                            border={"1px solid #96E6FF"}
+                            borderRadius={"8px"}
+                            p={"20px"}
+                            my={"10px"}
+                            className="flex-row justify-between"
+                        >
+                            <Flex className="flex-col">
+                                <Text className="text-[#FE9D1C] text-sm font-medium">
+                                    Your Balance
+                                </Text>
+                                <Balance />
+                            </Flex>
+
+                            <Flex className="flex-col">
+                                <Text className="text-[#FE9D1C] text-sm font-medium">
+                                    Your Allowance
+                                </Text>
+                                <Allowance />
+                            </Flex>
+
+                            <Flex className="flex-col">
+                                <Text className="text-[#FE9D1C] text-sm font-medium">
+                                    Your Amount
+                                </Text>
+                                <StakingAmount />
+                            </Flex>
+
+                        </Flex>
+                        <Staking />
+                    </AccordionPanel>
+                </AccordionItem>
+
+                <AccordionItem mt={4}>
+                    <AccordionButton className="bg-white rounded-2xl">
+                        <Flex className="w-full flex-row items-center justify-between gap-2">
+                            <HStack>
+                                <Avatar bg={"#20B4CA"} name=" ">
+                                    <AvatarBadge
+                                        boxSize="1.25em"
+                                        bg="transparent"
+                                        borderColor="transparent"
+                                    >
+                                        <Image src="/assets/images/icon-cyclic.png" />
+                                    </AvatarBadge>
+                                </Avatar>
+
+                                <VStack className="grow justify-center" alignItems={"start"}>
+                                    <Text className="text-[#1E1E1E] text-sm font-bold !mt-0">
+                                        LOCKED FLARE
+                                    </Text>
+                                </VStack>
+                            </HStack>
+                            <VStack alignItems={"start"}>
+                                <Text className="text-[#6E8A99] text-xs font-medium">
+                                    APR
+                                </Text>
+                                <LockStakingCurrentAPR />
+                            </VStack>
+                        </Flex>
+                        <AccordionIcon color={"darkgreen"} fontSize={32} />
+                    </AccordionButton>
+
+                    <AccordionPanel
+                        pb={4}
+                        className="bg-[#ECFDFF] text-[#507589] rounded-b-2xl mt-2"
+                    >
+                        <Flex
+                            border={"1px solid #96E6FF"}
+                            borderRadius={"8px"}
+                            p={"20px"}
+                            my={"10px"}
+                            className="flex-row justify-between"
+                        >
+                            <Flex className="flex-col">
+                                <Text className="text-[#FE9D1C] text-sm font-medium">
+                                    Flare Locked
+                                </Text>
+                                <LockStakingAmount />
+                            </Flex>
+
+                            <Flex className="flex-col">
+                                <Text className="text-[#FE9D1C] text-sm font-medium">
+                                    Unlock In
+                                </Text>
+                                <LockStakingTime />
+                            </Flex>
+
+                            {/* <Flex className="flex-col">
+                                <Text className="text-[#FE9D1C] text-sm font-medium">
+                                    Duration
+                                </Text>
+                                <LockStakingDuration />
+                            </Flex> */}
+
+                        </Flex>
+                        <LockStaking />
+                    </AccordionPanel>
+                </AccordionItem>
+
+                {/* <AccordionItem>
                     <AccordionButton className="!bg-white rounded-2xl">
                         <Flex className="w-full flex-row items-center justify-between gap-2">
                             <HStack>
@@ -462,16 +604,14 @@ const DepositsPanel = () => {
                                 <Text className="text-[#6E8A99] text-xs font-medium">
                                     APR
                                 </Text>
-                                <StakingAPR />
+                                <LockStakingCurrentAPR />
                             </VStack>
 
                             <VStack className="!hidden md:!flex">
                                 <Text className="text-[#6E8A99] text-[11px] font-medium whitespace-nowrap">
                                     Total staked
                                 </Text>
-                                <Text className="text-black text-[14px] font-medium !mt-0">
-                                    241,951,557 FLARE
-                                </Text>
+                                <LockStakingAmount />
                             </VStack>
                         </Flex>
                         <AccordionIcon color={"darkgreen"} fontSize={32} />
@@ -558,9 +698,7 @@ const DepositsPanel = () => {
                                     <Text className="text-black font-bold text-xl">
                                         20.0000
                                     </Text>
-                                    <Text className="text-black font-bold text-xl">
-                                        7 days
-                                    </Text>
+                                    <LockStakingTime />
                                     <Text className="font-medium text-xs">
                                         ~50.98USD
                                     </Text>
@@ -915,9 +1053,7 @@ const DepositsPanel = () => {
                                 <Text className="text-black font-bold text-xl">
                                     20.0000
                                 </Text>
-                                <Text className="text-black font-bold text-xl">
-                                    7 days
-                                </Text>
+                                <LockStakingTime />
                                 <Text className="text-xs font-medium">~50.98USD</Text>
                                 <Text className="text-xs font-medium">
                                     On May 10,2023,11:38
@@ -1063,9 +1199,7 @@ const DepositsPanel = () => {
                                 <Text className="text-black font-bold text-xl">
                                     20.0000
                                 </Text>
-                                <Text className="text-black font-bold text-xl">
-                                    7 days
-                                </Text>
+                                <LockStakingTime />
                                 <Text className="text-xs font-medium">~50.98USD</Text>
                                 <Text className="text-xs font-medium">
                                     On May 10,2023,11:38
@@ -1181,9 +1315,9 @@ const DepositsPanel = () => {
                             <Box className="text-right">0-2%</Box>
                         </Grid>
                     </AccordionPanel>
-                </AccordionItem>
+                </AccordionItem> */}
             </Accordion>
-            
+
         </>
     );
 }

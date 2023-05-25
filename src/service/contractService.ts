@@ -138,9 +138,9 @@ const reEnterLockStaking = async (amount, weeks) => {
             throw new Error('Insufficient allowance');
         }
         const amountInWei = ethers.utils.parseUnits(amount.toString(), 18);
-        if (amountInWei.lte(MinLockStakingAmount)) {
-            throw new Error('Insufficient amount');
-        }
+        // if (amountInWei.lte(MinLockStakingAmount)) {
+        //     throw new Error('Insufficient amount');
+        // }
         const signer = await getSigner();
         const stakingContract = getStakingContract(signer);
         const tx = await stakingContract.reEnterLockStaking(amountInWei, weeks);
@@ -182,34 +182,49 @@ const calculateBoost = async (amount, weeks) => {
     }
 };
 
-const userStakingInfo = async () => {
+const userStakingAmount = async () => {
     try {
         const signer = await getSigner();
         const stakingContract = getStakingContract(signer);
         const address = await signer.getAddress();
         const userInfo = await stakingContract.userInfo(0, address);
         const amount = ethers.utils.formatUnits(userInfo.amount, 18);
+        console.log('userStakingAmount: ', amount);
         return parseFloat(amount);
     } catch (error) {
-        console.error('UserStakingInfo Error: ', error);
-        throw error;
+        console.error('userStakingAmount Error: ', error);
+        throw -1;
     }
 };
 
-const userLockStakingInfo = async () => {
+const userLockStakingAmount = async () => {
     try {
         const signer = await getSigner();
         const stakingContract = getStakingContract(signer);
         const address = await signer.getAddress();
         const userInfo = await stakingContract.userInfo(1, address);
         const amount = ethers.utils.formatUnits(userInfo.amount, 18);
-        const endTime = userInfo.endTime;
-        const timestamp = (await signer.provider.getBlock('latest')).timestamp;
-        const restDays =  (endTime - timestamp) / 86400;
-        return parseFloat(amount), restDays;
+        console.log('userLockStakingAmount: ', amount);
+        return parseFloat(amount);
     } catch (error) {
-        console.error('UserLockStakingInfo Error: ', error);
-        throw error;
+        console.error('userLockStakingAmount Error: ', error);
+        return -1;
+    }
+};
+
+const userLockStakingTime = async () => {
+    try {
+        const signer = await getSigner();
+        const stakingContract = getStakingContract(signer);
+        const address = await signer.getAddress();
+        const userInfo = await stakingContract.userInfo(1, address);
+        const startTime = userInfo.startTime;
+        const endTime = userInfo.endTime;
+        const currentTime = (await signer.provider.getBlock('latest')).timestamp;
+        return [startTime, currentTime, endTime];
+    } catch (error) {
+        console.error('userLockStakingTime Error: ', error);
+        return [0, 0, 0];
     }
 };
 
@@ -246,7 +261,7 @@ const lockStakingAPR = async (amount, week) => {
         return apr;
     } catch (error) {
         console.error('LockStakingAPR Error: ', error);
-        throw error;
+        return -1
     }
 };
 
@@ -288,8 +303,9 @@ export const ContractService = {
     reEnterLockStaking,
     leaveLockStaking,
     calculateBoost,
-    userStakingInfo,
-    userLockStakingInfo,
+    userStakingAmount,
+    userLockStakingAmount,
+    userLockStakingTime,
     stakingAPR,
     lockStakingAPR,
     reEnterLockStakingAPR
