@@ -2,7 +2,10 @@ import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPane
 import { LockIcon, MinusIcon, SmallAddIcon } from '@chakra-ui/icons'
 import { FramePage } from "../components/FramePage"
 import { StakingAPR } from "../components/StakingAPR"
+import { LockStakingCurrentAPR, LockStakingFutureAPR } from "../components/LockStakingAPR"
 import { StakingAmount } from "../components/StakingAmount"
+import { LockStakingAmount } from "../components/LockStakingAmount"
+import { LockStakingTime } from "../components/LockStakingTime"
 import Link from "next/link"
 import React, { useEffect, useState } from "react"
 import { RadioCard } from "../components/CustomRadio"
@@ -463,14 +466,14 @@ const DepositsPanel = () => {
                                 <Text className="text-[#6E8A99] text-xs font-medium">
                                     APR
                                 </Text>
-                                <StakingAPR />
+                                <LockStakingCurrentAPR />
                             </VStack>
 
                             <VStack className="!hidden md:!flex">
                                 <Text className="text-[#6E8A99] text-[11px] font-medium whitespace-nowrap">
                                     Total staked
                                 </Text>
-                                <StakingAmount />
+                                <LockStakingAmount />
                             </VStack>
                         </Flex>
                         <AccordionIcon color={"darkgreen"} fontSize={32} />
@@ -557,9 +560,7 @@ const DepositsPanel = () => {
                                     <Text className="text-black font-bold text-xl">
                                         20.0000
                                     </Text>
-                                    <Text className="text-black font-bold text-xl">
-                                        7 days
-                                    </Text>
+                                    <LockStakingTime />
                                     <Text className="font-medium text-xs">
                                         ~50.98USD
                                     </Text>
@@ -914,9 +915,7 @@ const DepositsPanel = () => {
                                 <Text className="text-black font-bold text-xl">
                                     20.0000
                                 </Text>
-                                <Text className="text-black font-bold text-xl">
-                                    7 days
-                                </Text>
+                                <LockStakingTime />
                                 <Text className="text-xs font-medium">~50.98USD</Text>
                                 <Text className="text-xs font-medium">
                                     On May 10,2023,11:38
@@ -1062,9 +1061,7 @@ const DepositsPanel = () => {
                                 <Text className="text-black font-bold text-xl">
                                     20.0000
                                 </Text>
-                                <Text className="text-black font-bold text-xl">
-                                    7 days
-                                </Text>
+                                <LockStakingTime />
                                 <Text className="text-xs font-medium">~50.98USD</Text>
                                 <Text className="text-xs font-medium">
                                     On May 10,2023,11:38
