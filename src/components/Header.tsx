@@ -40,7 +40,7 @@ export function Header(props) {
     return (
         <>
             <Box as='nav' className="w-full flex fixed z-20 top-0 left-0 justify-between items-center bg-[#BEF6FF]">
-                <Flex className='w-full md:!w-10/12 lg:!w-8/12 gap-2 px-8 h-12 justify-between items-center mx-auto'>
+                <Flex className='w-full md:!w-10/12 lg:!w-8/12 gap-2 px-8 md:px-4 h-12 justify-between items-center mx-auto'>
                     {/* <Avatar bg={"#02715F"} name='Logo' size={"sm"} src='/' /> */}
                     <Link href={"/"}><Image src='/assets/logo.png' className='cursor-pointer' /></Link>
                     <Tabs position="relative" 

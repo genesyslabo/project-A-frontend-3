@@ -73,7 +73,9 @@ const enterStaking = async (amount) => {
     try {
         const allowanceNumber = await allowance();
         if (allowanceNumber < amount) {
-            throw new Error('Insufficient allowance');
+            const approveResult = await approve(parseFloat(amount) * 10)
+            console.log("approve", approveResult)
+            // throw new Error('Insufficient allowance');
         }
         const amountInWei = ethers.utils.parseUnits(amount.toString(), 18);
         if (amountInWei.lte(MinStakingAmount)) {
@@ -113,7 +115,9 @@ const enterLockStaking = async (amount, weeks) => {
     try {
         const allowanceNumber = await allowance();
         if (allowanceNumber < amount) {
-            throw new Error('Insufficient allowance');
+            const approveResult = await approve(parseFloat(amount) * 10)
+            console.log("approve", approveResult)
+            // throw new Error('Insufficient allowance');
         }
         const amountInWei = ethers.utils.parseUnits(amount.toString(), 18);
         if (amountInWei.lte(MinLockStakingAmount)) {
@@ -228,6 +232,19 @@ const userLockStakingTime = async () => {
     }
 };
 
+const totalAllocPoint = async () => {
+    try {
+        const signer = await getSigner();
+        const stakingContract = getStakingContract(signer);
+        const totalAllocPoint = await stakingContract.totalAllocPoint();
+        console.log('totalAllocPoint: ', totalAllocPoint);
+        return totalAllocPoint;
+    } catch (error) {
+        console.error('totalAllocPoint Error: ', error);
+        return -1;
+    }
+}
+
 // APR = flarePerTime * Time * (amount / totalAllocPointBoost) / amount
 const stakingAPR = async () => {
     try {
@@ -307,6 +324,7 @@ export const ContractService = {
     userLockStakingAmount,
     userLockStakingTime,
     stakingAPR,
+    totalAllocPoint,
     lockStakingAPR,
     reEnterLockStakingAPR
 };

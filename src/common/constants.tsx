@@ -7,3 +7,5 @@ export const MinStakingAmount = 1000;
 export const MinLockStakingAmount = 2500000;
 
 export const days = 3
+
+export const flareUsdRate = 6

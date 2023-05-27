@@ -20,6 +20,7 @@ const breakpoints = {
 }
 const colors = {
     darkgreen: '#1BA4B9',
+    lightgreen: '#CFF8FF',
     lightfont: '#6E8A99',
 }
 

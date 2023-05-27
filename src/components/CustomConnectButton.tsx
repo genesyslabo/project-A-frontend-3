@@ -36,7 +36,7 @@ export const CustomConnectButton = () => {
             {(() => {
               if (!connected) {
                 return (
-                  <Image src='/assets/images/icon-wallet.png' className='md:w-16' onClick={openConnectModal} />
+                  <Image src='/assets/images/icon-wallet.png' className='md:w-14 cursor-pointer' onClick={openConnectModal} />
                 );
               }
               if (chain.unsupported) {
@@ -58,8 +58,8 @@ export const CustomConnectButton = () => {
                       <div
                         style={{
                           background: chain.iconBackground,
-                          width: 12,
-                          height: 12,
+                          width: 20,
+                          height: 20,
                           borderRadius: 999,
                           overflow: 'hidden',
                           marginRight: 4,
@@ -69,14 +69,14 @@ export const CustomConnectButton = () => {
                           <img
                             alt={chain.name ?? 'Chain icon'}
                             src={chain.iconUrl}
-                            style={{ width: 12, height: 12 }}
+                            style={{ width: 20, height: 20 }}
                           />
                         )}
                       </div>
                     )}
-                    {chain.name}
+                    {/* {chain.name} */}
                   </button>
-                  <button onClick={openAccountModal} type="button" className='text-[#02715F]'>
+                  <button onClick={openAccountModal} type="button" className='text-[#02715F] whitespace-nowrap'>
                     {account.displayName}
                     <span className='hidden'>
                         {account.displayBalance

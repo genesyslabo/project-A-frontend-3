@@ -39,7 +39,7 @@ export const LockStakingCurrentAPR = () => {
     }, []);
 
     return (
-        <Text className="text-black text-base font-medium">
+        <Text as="span">
             {(apr * 100).toFixed(2)}%
         </Text>
     );

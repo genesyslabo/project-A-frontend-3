@@ -1,4 +1,4 @@
-import {ChakraProvider} from '@chakra-ui/react'
+import {ChakraProvider, ChakraProviderProps} from '@chakra-ui/react'
 
 import {theme} from '../theme'
 import {AppProps} from 'next/app'
@@ -12,15 +12,16 @@ import {
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
 import { Chain, configureChains, createClient, WagmiConfig } from 'wagmi';
-import { bscTestnet, mainnet } from 'wagmi/chains';
+import { bsc, bscTestnet, mainnet } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 import { isDev } from '../common/utils/tools'
+import CustomToast from '../components/CustomToast'
 
 function MyApp({Component, pageProps}: AppProps) {
 
   const { chains, provider } = configureChains(
-    [bscTestnet],
+    [bscTestnet, bsc],
     [publicProvider()]
   );
 
@@ -43,7 +44,14 @@ function MyApp({Component, pageProps}: AppProps) {
         <link rel="icon" href="/assets/favicon.ico" />
       </Head>
       {/* <Provider store={store}> */}
-      <ChakraProvider theme={theme}>
+      <ChakraProvider theme={theme} toastOptions={{ 
+          defaultOptions: {
+            position: 'top-right',
+            isClosable: true,
+          },
+          // component: (props) => { console.log(props); return (<CustomToast props={props} />)}
+          
+        }}>
         <WagmiConfig client={wagmiClient}>
           <RainbowKitProvider modalSize="compact"
             showRecentTransactions={true}

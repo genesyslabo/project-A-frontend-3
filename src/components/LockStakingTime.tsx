@@ -41,7 +41,7 @@ export const LockStakingDuration = () => {
     }, []);
 
     return (
-        <Text className="text-black font-bold text-xl">
+        <Text as="span">
             {Math.round(time / 604800)} Weeks
         </Text>
     );
