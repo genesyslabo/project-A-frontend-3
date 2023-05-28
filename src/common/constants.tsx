@@ -1,6 +1,6 @@
 export const MetaflareContractAddr = "0x4d2A4736f0213CD78a910c395Da007675a83F0fB";
 
-export const StakingContractAddr = "0x32835d27e6fBD8eCFDc998C664a208bec5ccF889";
+export const StakingContractAddr = "0x457422d9562891fb8Ad232EAa23847D75d57a02A";
 
 export const MinStakingAmount = 1000;
 

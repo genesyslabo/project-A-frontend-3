@@ -3,8 +3,21 @@ import { StakingAmount } from "../StakingAmount";
 import { StakingAPR } from "../StakingAPR";
 import StakingButtons from "./StakingButtons";
 import { TotalStakingAmount } from "./TotalStakingAmount";
+import { PendingFlare } from "./PendingFlare";
+import { useEffect, useState } from "react";
+import { ContractService } from "../../service/contractService";
+import { flareUsdRate } from "../../common/constants";
 
 const FlexiblePanel = () => {
+    const [amount, setAmount] = useState(0);
+    useEffect(() => {
+        const fetchAmount = async () => {
+            const result = await ContractService.userStakingAmount();
+            setAmount(result);
+        };
+
+        fetchAmount();
+    }, []);
     return (<>
         <AccordionItem>
             <AccordionButton className="!bg-white rounded-2xl">
@@ -34,10 +47,10 @@ const FlexiblePanel = () => {
                             FLARE staked
                         </Text>
                         <Text className="text-[#6E8A99] text-[14px] font-medium !mt-0">
-                            0
+                            {amount}
                         </Text>
                         <Text className="text-[#6E8A99] text-[14px] font-medium !mt-0">
-                            0 USD
+                            {amount * flareUsdRate} USD
                         </Text>
                     </VStack>
                     <VStack>
@@ -94,20 +107,12 @@ const FlexiblePanel = () => {
                         RECENT FLARE PROFIT
                     </Text>
                     <Flex className="flex-row items-center gap-8">
-                        <Flex className="flex-col">
-                            <Box className="text-black text-xl font-bold">
-                                0
-                            </Box>
-                            <Box className="text-xs font-medium whitespace-nowrap">
-                                ~ 0USD
-                            </Box>
-                        </Flex>
+                        <PendingFlare pid={0} />
                         <Box className="grow text-right text-black underline text-sm font-medium">
-                            0.1% unstaking fee if withdraw within 72h
+                            flexible lock for 1 day
                         </Box>
                     </Flex>
                 </VStack>
-
 
                 <VStack
                     border={"1px solid #96E6FF"}
@@ -130,7 +135,7 @@ const FlexiblePanel = () => {
                     <Box className="text-right font-medium">
                         189,65,524 FLARE
                     </Box> */}
-                    <Box className="whitespace-nowrap">Average lock duration</Box>
+                    <Box className="">Average lock duration</Box>
                     <Box className="text-right font-medium">
                         40 weeks
                     </Box>

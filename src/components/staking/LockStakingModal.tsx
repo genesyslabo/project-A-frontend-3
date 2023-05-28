@@ -22,6 +22,8 @@ const LockStakingModal: React.FC<{
     const [weekValue, setWeekValue] = useState(1)
     const [usdValue, setUsdValue] = useState(0)
     const [inTransaction, setInTransaction] = useState(false);
+    const [maxWeeks, setMaxWeeks] = useState(52);
+    const [minLockAmount, setMinLockAmount] = useState(0);
 
     const [unlockOn, setUnlockOn] = useState("")
     const [boost, setBoost] = useState(0);
@@ -52,7 +54,7 @@ const LockStakingModal: React.FC<{
             position: 'top-right',
             duration: 1000000,
             render: () => (<CustomToast status={"info"} 
-                title={"Transactioning!"} 
+                title={"Transacting!"} 
                 description={"The transaction is in progress, please waiting..."} />)
           })
         
@@ -94,31 +96,75 @@ const LockStakingModal: React.FC<{
     }
 
     useEffect(() => {
+        if (stakeValue < minLockAmount) {
+            setStakeValue(minLockAmount)
+            setSliderValue(1)
+            toast({
+                position: 'top-right',
+                render: () => (<CustomToast status={"info"} 
+                    title={"Tips!"} 
+                    description={`The min lock amount is ${minLockAmount}`} />)
+              })
+            return;
+        }
         setUsdValue(flareUsdRate * stakeValue)
     }, [stakeValue])
 
     useEffect(() => {
+        if (!weekValue) {
+            setWeekValue(0)
+            return;
+        }
+        if (weekValue > maxWeeks) {
+            setWeekValue(maxWeeks);
+            toast({
+                position: 'top-right',
+                render: () => (<CustomToast status={"info"} 
+                    title={"Tips!"} 
+                    description={`The max weeks is ${maxWeeks}`} />)
+              })
+            return;
+        }
         const currentDate = new Date();
 
         const weeksLater = new Date(currentDate.getTime() + weekValue * 7 * 24 * 60 * 60 * 1000);
 
         setUnlockOn(weeksLater.toLocaleString())
-
-        calcBoost()
     }, [weekValue])
 
-
+    useEffect(() => {
+        calcBoost()
+    }, [weekValue, stakeValue])
+    
     useEffect(() => {
         const fetchBalance = async () => {
             const result = await ContractService.balanceOf();
-            setBalance(result);
+            setBalance(parseInt(result + ""));
+        };
+        
+        fetchBalance();
+
+        const fetchMaxWeeks = async () => {
+            const result = await ContractService.getMaxWeeks();
+            setMaxWeeks(result);
         };
 
-        fetchBalance();
+        fetchMaxWeeks();
+
+        const fetchMinLockAmount = async () => {
+            const result = await ContractService.getMinLockAmount();
+            setMinLockAmount(result);
+            setStakeValue(result)
+        };
+
+        fetchMinLockAmount();
     }, []);
 
     useEffect(() => {
         if (props.openModal) {
+            setWeekValue(0)
+            setSliderValue(0)
+            setStakeValue(0)
             onOpen()
         } else {
             onClose()
@@ -197,7 +243,7 @@ const LockStakingModal: React.FC<{
                             <SmallButton text="5W" onClick={() => setWeekValue(5)} />
                             <SmallButton text="10W" onClick={() => setWeekValue(10)} />
                             <SmallButton text="15W" onClick={() => setWeekValue(15)} />
-                            <SmallButton text="Max" onClick={() => setWeekValue(52)} />
+                            <SmallButton text="Max" onClick={() => setWeekValue(maxWeeks)} />
                         </Grid>
 
                         <Flex className="flex-row items-center mt-4 gap-2">

@@ -18,6 +18,8 @@ const LockExtendModal: React.FC<{
 
     const [unlockOn, setUnlockOn] = useState("")
     const [boost, setBoost] = useState(0);
+    const [roi, setRoi] = useState(0)
+    const [maxWeeks, setMaxWeeks] = useState(52);
 
     const toast = useToast()
 
@@ -26,7 +28,7 @@ const LockExtendModal: React.FC<{
             position: 'top-right',
             duration: 1000000,
             render: () => (<CustomToast status={"info"} 
-                title={"Transactioning!"} 
+                title={"Transacting!"} 
                 description={"The transaction is in progress, please waiting..."} />)
           })
         
@@ -63,19 +65,45 @@ const LockExtendModal: React.FC<{
         setBoost(result);
     }
 
+    const calcRoi = async () => {
+        if (!weekValue) return;
+        const result = await ContractService.lockStakingROI(amount, weekValue);
+        setRoi(result);
+    }
+
     const closeModal = () => {
         onClose()
         props.onClose()
     }
 
     useEffect(() => {
+        if (weekValue > maxWeeks) {
+            setWeekValue(maxWeeks);
+            toast({
+                position: 'top-right',
+                render: () => (<CustomToast status={"info"} 
+                    title={"Tips!"} 
+                    description={`The max weeks is ${maxWeeks}`} />)
+              })
+            return;
+        }
+
         const currentDate = new Date();
 
         const weeksLater = new Date(currentDate.getTime() + weekValue * 7 * 24 * 60 * 60 * 1000);
 
         setUnlockOn(weeksLater.toLocaleString())
 
+        const fetchMaxWeeks = async () => {
+            const result = await ContractService.getMaxWeeks();
+            setMaxWeeks(result);
+        };
+
+        fetchMaxWeeks();
+
         calcBoost()
+
+        calcRoi()
     }, [weekValue])
 
     useEffect(() => {
@@ -89,6 +117,7 @@ const LockExtendModal: React.FC<{
 
     useEffect(() => {
         if (props.openModal) {
+            setWeekValue(0)
             onOpen()
         } else {
             onClose()
@@ -125,7 +154,7 @@ const LockExtendModal: React.FC<{
                             <SmallButton text="5W" onClick={() => setWeekValue(5)} />
                             <SmallButton text="10W" onClick={() => setWeekValue(10)} />
                             <SmallButton text="15W" onClick={() => setWeekValue(15)} />
-                            <SmallButton text="Max" onClick={() => setWeekValue(52)} />
+                            <SmallButton text="Max" onClick={() => setWeekValue(maxWeeks)} />
                         </Grid>
 
                         <Flex className="flex-row items-center mt-4 gap-2">
@@ -154,7 +183,7 @@ const LockExtendModal: React.FC<{
                             <Box>UNLOCK ON</Box>
                             <Box className="text-right text-black text-base">{unlockOn} </Box>
                             <Box>EXPECTED ROI</Box>
-                            <Box className="text-right text-black text-base">$0.05</Box>
+                            <Box className="text-right text-black text-base">${roi}</Box>
                         </Grid>
 
                         <Button

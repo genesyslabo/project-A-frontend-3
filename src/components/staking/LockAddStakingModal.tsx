@@ -24,6 +24,7 @@ const LockAddStakingModal: React.FC<{
 
     const [unlockOn, setUnlockOn] = useState("")
     const [boost, setBoost] = useState(0);
+    const [roi, setRoi] = useState(0)
 
     const toast = useToast()
 
@@ -51,13 +52,13 @@ const LockAddStakingModal: React.FC<{
             position: 'top-right',
             duration: 1000000,
             render: () => (<CustomToast status={"info"} 
-                title={"Transactioning!"} 
+                title={"Transacting!"} 
                 description={"The transaction is in progress, please waiting..."} />)
           })
         
         setInTransaction(true)
         try {
-            const result = await ContractService.enterLockStaking(stakeValue, weekValue);
+            const result = await ContractService.reEnterLockStaking(stakeValue, weekValue);
             console.log(result)
             closeModal();
             toast({
@@ -87,6 +88,13 @@ const LockAddStakingModal: React.FC<{
         setBoost(result);
     }
 
+    const calcRoi = async () => {
+        if (!stakeValue) return;
+        const result = await ContractService.lockStakingROI(stakeValue, weekValue);
+        setRoi(result);
+        console.log('calcroi', stakeValue, weekValue, result)
+    }
+
     const closeModal = () => {
         onClose()
         props.onClose()
@@ -95,6 +103,8 @@ const LockAddStakingModal: React.FC<{
     useEffect(() => {
         setUsdValue(flareUsdRate * stakeValue)
         calcBoost()
+
+        calcRoi()
     }, [stakeValue])
 
     useEffect(() => {
@@ -107,11 +117,10 @@ const LockAddStakingModal: React.FC<{
         calcBoost()
     }, [weekValue])
 
-
     useEffect(() => {
         const fetchBalance = async () => {
             const result = await ContractService.balanceOf();
-            setBalance(result);
+            setBalance(parseInt(result + ""));
         };
 
         const fetchWeek = async () => {
@@ -201,15 +210,6 @@ const LockAddStakingModal: React.FC<{
                             <SmallButton text="Max" onClick={() => handleSliderChange(100)} />
                         </Grid>
 
-                        <Flex className="flex-row items-center mt-4 gap-2">
-                            <Box className="inline grow">
-                                <Input variant='filled' placeholder='' bg={"#ECFDFF"} 
-                                    className="font-bold text-right"
-                                    value={weekValue} onChange={(event) => setWeekValue(parseInt(event.target.value))} />
-                            </Box>
-                            <Text className="inline text-sm font-medium">Week</Text>
-                        </Flex>
-
                         <Text className="text-xs font-medium mt-4">
                             <Box as="span" color={"darkgreen"}>LOCK</Box> OVERVIEW
                         </Text>
@@ -227,7 +227,7 @@ const LockAddStakingModal: React.FC<{
                             <Box>UNLOCK ON</Box>
                             <Box className="text-right text-black text-base">{unlockOn} </Box>
                             <Box>EXPECTED ROI</Box>
-                            <Box className="text-right text-black text-base">$0.05</Box>
+                            <Box className="text-right text-black text-base">${roi}</Box>
                         </Grid>
 
                         <Button

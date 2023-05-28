@@ -44,7 +44,7 @@ const UnstakeModal: React.FC<{
             position: 'top-right',
             duration: 10000000,
             render: () => (<CustomToast status={"info"} 
-                title={"Transactioning!"} 
+                title={"Transacting!"} 
                 description={"The transaction is in progress, please waiting..."} />)
           })
         setInTransaction(true)
@@ -94,6 +94,8 @@ const UnstakeModal: React.FC<{
 
     useEffect(() => {
         if (props.openModal) {
+            setSliderValue(0)
+            setStakeValue(0)
             onOpen()
         } else {
             onClose()

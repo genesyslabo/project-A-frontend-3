@@ -17,14 +17,24 @@ const StakingModal: React.FC<{
     const [stakeValue, setStakeValue] = useState(0)
     const [usdValue, setUsdValue] = useState(0)
     const [inTransaction, setInTransaction] = useState(false);
+    const [roi, setRoi] = useState(0)
 
     const toast = useToast()
 
     const handleSliderChange = (value) => {
         setSliderValue(value)
         
-        const v = BigNumber.from(balance + "").mul(value).div(100);
-        setStakeValue(v.toNumber())
+        try {
+            const v = BigNumber.from(balance + "").mul(value).div(100);
+            setStakeValue(v.toNumber())
+        } catch (err) {
+            toast({
+                position: 'top-right',
+                render: () => (<CustomToast status={"error"} 
+                    title={"Error!"} 
+                    description={err} />)
+            })
+        }
     }
 
     const handleInputChange = (event) => {
@@ -34,8 +44,18 @@ const StakingModal: React.FC<{
             setSliderValue(100)
         } else {
             setStakeValue(value)
-            const v = BigNumber.from(value + "").mul(100).div(BigNumber.from(balance + ""))
-            setSliderValue(+(parseFloat(v.toString()).toFixed(0)))
+            try {
+                const v = BigNumber.from(value + "").mul(100).div(BigNumber.from(balance + ""))
+                setSliderValue(+(parseFloat(v.toString()).toFixed(0)))
+            } catch (err) {
+                toast({
+                    position: 'top-right',
+                    render: () => (<CustomToast status={"error"} 
+                        title={"Error!"} 
+                        description={err} />)
+                  })
+            }
+            
         }
     }
 
@@ -44,7 +64,7 @@ const StakingModal: React.FC<{
             position: 'top-right',
             duration: 10000000,
             render: () => (<CustomToast status={"info"} 
-                title={"Transactioning!"} 
+                title={"Transacting!"} 
                 description={"The transaction is in progress, please waiting..."} />)
           })
         setInTransaction(true)
@@ -74,6 +94,12 @@ const StakingModal: React.FC<{
         }
     }
 
+    const calcRoi = async () => {
+        if (!stakeValue) return;
+        const result = await ContractService.stakingROI(stakeValue);
+        setRoi(result);
+    }
+
     const closeModal = () => {
         onClose()
         props.onClose()
@@ -81,13 +107,14 @@ const StakingModal: React.FC<{
 
     useEffect(() => {
         setUsdValue(flareUsdRate * stakeValue)
+        calcRoi()
     }, [stakeValue])
 
 
     useEffect(() => {
         const fetchBalance = async () => {
             const result = await ContractService.balanceOf();
-            setBalance(result);
+            setBalance(parseInt(result + ""));
         };
 
         fetchBalance();
@@ -171,7 +198,7 @@ const StakingModal: React.FC<{
                                 <Text>Annual ROI at current rates;</Text>
                             </Flex>
                             <Flex className="items-center font-medium text-sm">
-                                35%
+                               ${roi}
                             </Flex>
                         </Flex>
 

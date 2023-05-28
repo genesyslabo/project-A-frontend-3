@@ -8,13 +8,22 @@ import { TotalStakingAmount } from "./TotalStakingAmount"
 import { useEffect, useState } from "react"
 import { ContractService } from "../../service/contractService"
 import { flareUsdRate } from "../../common/constants"
+import { PendingFlare } from "./PendingFlare"
 
 const LockFlexiblePanel = () => {
     const [amount, setAmount] = useState(0);
 
     const [unlockOn, setUnlockOn] = useState("")
     const [weekValue, setWeekValue] = useState(1)
+    const [boost, setBoost] = useState(0);
+    const [stakeAmount, setStakeAmount] = useState(0);
 
+
+    const calcBoost = async () => {
+        if (!weekValue) return;
+        const result = await ContractService.calculateBoost(amount, weekValue);
+        setBoost(result);
+    }
 
     useEffect(() => {
         const currentDate = new Date();
@@ -38,9 +47,18 @@ const LockFlexiblePanel = () => {
             }
         };
 
+        const fetchStakeAmount = async () => {
+            const result = await ContractService.userStakingAmount();
+            setStakeAmount(result);
+        };
+
+        fetchAmount();
+
         fetchWeek();
 
         fetchAmount();
+
+        calcBoost()
     }, []);
 
     return (<>
@@ -76,10 +94,10 @@ const LockFlexiblePanel = () => {
                             FLARE staked
                         </Text>
                         <Text className="text-[#6E8A99] text-[14px] font-medium !mt-0">
-                            0
+                            {stakeAmount}
                         </Text>
                         <Text className="text-[#6E8A99] text-[14px] font-medium !mt-0">
-                            0 USD
+                            {stakeAmount * flareUsdRate} USD
                         </Text>
                     </VStack>
                     <VStack>
@@ -153,18 +171,17 @@ const LockFlexiblePanel = () => {
                         <Text className="text-[#FE9D1C] font-medium text-sm">
                             YIELD BOOST
                         </Text>
-                        <Text className="text-black font-bold text-xl">
-                            0.0000
-                        </Text>
-                        <Text className="text-black font-bold text-xl">
-                            1.38x
-                        </Text>
-                        <Text className="font-medium text-xs">
-                            ~0.00USD
-                        </Text>
-                        <Text className="font-medium text-xs">
-                            Lock for <LockStakingDuration />
-                        </Text>
+
+                        <PendingFlare pid={1} />
+
+                        <Flex className="flex-col">
+                            <Text className="text-black font-bold text-xl">
+                                {boost}x
+                            </Text>
+                            <Text className="font-medium text-xs">
+                                Lock for <LockStakingDuration />
+                            </Text>
+                        </Flex>
                     </Grid>
 
                     <Flex
@@ -182,7 +199,7 @@ const LockFlexiblePanel = () => {
                                 LOCKED
                             </Text>
                             <Text className=" font-medium text-sm">
-                                ULNLOCJS IN
+                                UNLOCK IN
                             </Text>
                             <Text className="text-black font-bold text-xl">
                                 {amount}
