@@ -238,7 +238,8 @@ const LockAddStakingModal: React.FC<{
                             borderColor="darkgreen"
                             bgImg={"linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)"}
                             onClick={lockStaking}
-                            disabled={!stakeValue || stakeValue <= 0 || !weekValue || weekValue <= 0 || weekValue >= 52 || inTransaction }
+                            // disabled={!stakeValue || stakeValue <= 0 || !weekValue || weekValue <= 0 || weekValue >= 52 || inTransaction }
+                            disabled={inTransaction }
                             _hover={{ bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)" }}
                             _active={{
                                 bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)",

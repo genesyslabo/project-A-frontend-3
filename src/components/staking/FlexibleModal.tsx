@@ -210,7 +210,8 @@ const StakingModal: React.FC<{
                             borderColor="darkgreen"
                             bgImg={"linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)"}
                             onClick={staking}
-                            disabled={!stakeValue || stakeValue <= 0 || inTransaction }
+                            // disabled={!stakeValue || stakeValue <= 0 || inTransaction }
+                            disabled={inTransaction }
                             _hover={{ bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)" }}
                             _active={{
                                 bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)",
