@@ -1,6 +1,7 @@
 import { ethers } from 'ethers';
 import contractABI from '../contracts/contract.json'
 import { MetaflareContractAddr, StakingContractAddr, MinStakingAmount, MinLockStakingAmount} from '../common/constants';
+import { useAccount } from 'wagmi';
 
 const getSigner = async () => {
     if (!window.ethereum) {
@@ -23,7 +24,7 @@ const balanceOf = async () => {
     try {
         const signer = await getSigner();
         const metaflareContract = getMetaflareContract(signer);
-        const address = await signer.getAddress();
+        const address = await getAddress();
         const balance = await metaflareContract.balanceOf(address);
         const balanceNumber = ethers.utils.formatUnits(balance, 18);
         console.log('Balance: ', balanceNumber);
@@ -35,6 +36,7 @@ const balanceOf = async () => {
 };
 
 const getAddress = async () => {
+    // const { isConnected, address } = useAccount();
     try {
         const signer = await getSigner();
         const address = await signer.getAddress();
@@ -70,7 +72,7 @@ const allowance = async () => {
     try {
         const signer = await getSigner();
         const metaflareContract = getMetaflareContract(signer);
-        const address = await signer.getAddress();
+        const address = await getAddress();
         const spender = StakingContractAddr;
         const allowance = await metaflareContract.allowance(address, spender);
         const allowanceNumber = ethers.utils.formatUnits(allowance, 18);
@@ -86,7 +88,7 @@ const pendingFlare = async (pid) => {
     try {
         const signer = await getSigner();
         const stakingContract = getStakingContract(signer);
-        const address = await signer.getAddress();
+        const address = await getAddress();
         const pendingFlare = await stakingContract.pendingFlare(address, pid);
         const pendingFlareNumber = ethers.utils.formatUnits(pendingFlare, 18);
         // console.log('pendingFlare: ', pendingFlareNumber);
@@ -204,7 +206,7 @@ const calculateBoost = async (amount, weeks) => {
     try {
         const signer = await getSigner();
         const stakingContract = getStakingContract(signer);
-        const address = await signer.getAddress();
+        const address = await getAddress();
         const boost = await stakingContract.calculateBoost(address, amount, weeks);
         const boostNumber = parseFloat(boost.toString()) / 1000;
         console.log('Boost: ', boostNumber, boost.toString());
@@ -219,7 +221,7 @@ const userStakingAmount = async () => {
     try {
         const signer = await getSigner();
         const stakingContract = getStakingContract(signer);
-        const address = await signer.getAddress();
+        const address = await getAddress();
         const userInfo = await stakingContract.userInfo(0, address);
         const amount = ethers.utils.formatUnits(userInfo.amount, 18);
         console.log('userStakingAmount: ', amount);
@@ -234,7 +236,7 @@ const userLockStakingAmount = async () => {
     try {
         const signer = await getSigner();
         const stakingContract = getStakingContract(signer);
-        const address = await signer.getAddress();
+        const address = await getAddress();
         const userInfo = await stakingContract.userInfo(1, address);
         const amount = ethers.utils.formatUnits(userInfo.amount, 18);
         console.log('userLockStakingAmount: ', amount);
@@ -249,7 +251,7 @@ const userLockStakingTime = async () => {
     try {
         const signer = await getSigner();
         const stakingContract = getStakingContract(signer);
-        const address = await signer.getAddress();
+        const address = await getAddress();
         const userInfo = await stakingContract.userInfo(1, address);
         const startTime = userInfo.startTime;
         const endTime = userInfo.endTime;
@@ -298,7 +300,7 @@ const lockStakingROI = async (amount, week) => {
         const amountInWei = ethers.utils.parseUnits(amount.toString(), 18);
         const signer = await getSigner();
         const stakingContract = getStakingContract(signer);
-        const address = await signer.getAddress();
+        const address = await getAddress();
         const boost = await stakingContract.calculateBoost(address, amountInWei, week);
         const totalAllocPointBoost = await stakingContract.totalAllocPointBoost();
         const flarePerSecond = await stakingContract.flarePerBlock();
@@ -335,7 +337,7 @@ const lockStakingAPR = async (amount, week) => {
         const amountInWei = ethers.utils.parseUnits(amount.toString(), 18);
         const signer = await getSigner();
         const stakingContract = getStakingContract(signer);
-        const address = await signer.getAddress();
+        const address = await getAddress();
         const boost = await stakingContract.calculateBoost(address, amountInWei, week);
         const totalAllocPointBoost = await stakingContract.totalAllocPointBoost();
         const flarePerSecond = await stakingContract.flarePerBlock();
@@ -357,7 +359,7 @@ const reEnterLockStakingAPR = async (amount, weeks) => {
         const amountInWei = ethers.utils.parseUnits(amount.toString(), 18);
         const signer = await getSigner();
         const stakingContract = getStakingContract(signer);
-        const address = await signer.getAddress();
+        const address = await getAddress();
 
         const timestamp = (await signer.provider.getBlock('latest')).timestamp;
         const userInfo = await stakingContract.userInfo(1, address);
