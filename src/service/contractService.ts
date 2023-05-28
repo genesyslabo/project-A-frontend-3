@@ -89,7 +89,7 @@ const pendingFlare = async (pid) => {
         const address = await signer.getAddress();
         const pendingFlare = await stakingContract.pendingFlare(address, pid);
         const pendingFlareNumber = ethers.utils.formatUnits(pendingFlare, 18);
-        console.log('pendingFlare: ', pendingFlareNumber);
+        // console.log('pendingFlare: ', pendingFlareNumber);
         return parseFloat(pendingFlareNumber);
     } catch (error) {
         console.error('pendingFlare Error: ', error);

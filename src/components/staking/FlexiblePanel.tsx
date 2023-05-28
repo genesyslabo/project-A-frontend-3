@@ -82,13 +82,7 @@ const FlexiblePanel = () => {
                         Flexible APY
                     </Box>
                     <Box className="text-right text-black text-base font-medium">
-                        0.63%
-                    </Box>
-                    <Box className="text-base font-medium">
-                        Locked APR
-                    </Box>
-                    <Box className="text-right text-black text-base font-medium">
-                        Up to 20.63%
+                        <StakingAPR />
                     </Box>
                 </Grid>
                 <VStack

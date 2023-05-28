@@ -164,7 +164,8 @@ const StakingModal: React.FC<{
                             Balance: {balance} Flare
                         </Text>
                         <Box pt={6} pb={2}>
-                            <Slider aria-label='slider-ex-6' value={sliderValue} onChange={handleSliderChange}>
+                            <Slider aria-label='slider-ex-6' value={sliderValue} onChange={handleSliderChange}
+                                focusThumbOnChange={false}>
                                 <SliderMark
                                     value={sliderValue}
                                     textAlign='center'

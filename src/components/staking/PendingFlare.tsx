@@ -6,12 +6,15 @@ import { flareUsdRate } from '../../common/constants';
 export const PendingFlare: React.FC<{pid: number}> = (props) => {
     const [amount, setAmount] = useState(0);
 
-    useEffect(() => {
-        const fetchAmount = async () => {
-            const result = await ContractService.pendingFlare(props.pid);
-            setAmount(result);
-        };
+    const fetchAmount = async () => {
+        const result = await ContractService.pendingFlare(props.pid);
+        setAmount(result);
+    };
 
+    useEffect(() => {
+        setInterval(() => {
+            fetchAmount()
+        }, 5000)
         fetchAmount();
     }, []);
 

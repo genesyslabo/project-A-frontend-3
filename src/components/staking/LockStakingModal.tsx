@@ -27,6 +27,7 @@ const LockStakingModal: React.FC<{
 
     const [unlockOn, setUnlockOn] = useState("")
     const [boost, setBoost] = useState(0);
+    const [roi, setRoi] = useState(0)
 
     const toast = useToast()
 
@@ -90,6 +91,12 @@ const LockStakingModal: React.FC<{
         setBoost(result);
     }
 
+    const calcRoi = async () => {
+        if (!stakeValue || !weekValue) return;
+        const result = await ContractService.lockStakingROI(stakeValue, weekValue);
+        setRoi(result);
+    }
+
     const closeModal = () => {
         onClose()
         props.onClose()
@@ -134,6 +141,7 @@ const LockStakingModal: React.FC<{
 
     useEffect(() => {
         calcBoost()
+        calcRoi()
     }, [weekValue, stakeValue])
     
     useEffect(() => {
@@ -207,7 +215,8 @@ const LockStakingModal: React.FC<{
                             Balance: {balance} Flare
                         </Text>
                         <Box pt={6} pb={2}>
-                            <Slider aria-label='slider-ex-6' value={sliderValue} onChange={handleSliderChange}>
+                            <Slider aria-label='slider-ex-6' value={sliderValue} onChange={handleSliderChange}
+                                focusThumbOnChange={false}>
                                 <SliderMark
                                     value={sliderValue}
                                     textAlign='center'
@@ -272,7 +281,7 @@ const LockStakingModal: React.FC<{
                             <Box>UNLOCK ON</Box>
                             <Box className="text-right text-black text-base">{unlockOn} </Box>
                             <Box>EXPECTED ROI</Box>
-                            <Box className="text-right text-black text-base">$0.05</Box>
+                            <Box className="text-right text-black text-base">${roi}</Box>
                         </Grid>
 
                         <Button
