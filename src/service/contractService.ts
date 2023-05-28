@@ -34,6 +34,19 @@ const balanceOf = async () => {
     }
 };
 
+const getAddress = async () => {
+    try {
+        const signer = await getSigner();
+        const metaflareContract = getMetaflareContract(signer);
+        const address = await signer.getAddress();
+        console.log('address: ', address);
+        return address;
+    } catch (error) {
+        console.error('address Error: ', error);
+        throw error;
+    }
+};
+
 const approve = async (amount) => {
     try {
         const balanceNumber = await balanceOf();
@@ -172,6 +185,7 @@ const leaveLockStaking = async () => {
 };
 
 const calculateBoost = async (amount, weeks) => {
+    if (!amount || !weeks) return 0
     try {
         const signer = await getSigner();
         const stakingContract = getStakingContract(signer);
@@ -264,6 +278,7 @@ const stakingAPR = async () => {
 
 // APR = boost * flarePerTime * Time * (amount / totalAllocPointBoost) / amount
 const lockStakingAPR = async (amount, week) => {
+    if (!amount || !week) return 0
     try {
         const amountInWei = ethers.utils.parseUnits(amount.toString(), 18);
         const signer = await getSigner();
@@ -285,6 +300,7 @@ const lockStakingAPR = async (amount, week) => {
 // boost = calculatBoost(address, amount + user.amount, weeks + (user.endtime-time))
 // APR = boost * flarePerTime * Time * (amount / totalAllocPointBoost) / amount
 const reEnterLockStakingAPR = async (amount, weeks) => {
+    if (!amount || !weeks) return 0
     try {
         const amountInWei = ethers.utils.parseUnits(amount.toString(), 18);
         const signer = await getSigner();
@@ -313,7 +329,8 @@ const reEnterLockStakingAPR = async (amount, weeks) => {
 export const ContractService = {
     balanceOf, 
     approve, 
-    allowance, 
+    allowance,
+    getAddress, 
     enterStaking,
     leaveStaking,
     enterLockStaking, 

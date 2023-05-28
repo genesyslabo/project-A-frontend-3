@@ -7,7 +7,7 @@ const FlexibleBox = () => {
     const [isFlexibleOpen, setFlexibleOpen] = useState(false);
 
     return (<>
-        <StakingModal openModal={isFlexibleOpen} />
+        <StakingModal openModal={isFlexibleOpen} onClose={() => setFlexibleOpen(false)} />
 
         <Text className="mb-2 text-black font-medium text-sm">
             <Box as="span" color={"#FE9D1C"}>

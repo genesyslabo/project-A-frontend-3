@@ -10,7 +10,8 @@ import { LockStakingFutureAPR } from "../LockStakingAPR";
 
 
 const LockStakingModal: React.FC<{
-    openModal: Boolean
+    openModal: Boolean,
+    onClose: Function
 }> = (props) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -23,6 +24,7 @@ const LockStakingModal: React.FC<{
     const [inTransaction, setInTransaction] = useState(false);
 
     const [unlockOn, setUnlockOn] = useState("")
+    const [boost, setBoost] = useState(0);
 
     const toast = useToast()
 
@@ -58,13 +60,14 @@ const LockStakingModal: React.FC<{
         try {
             const result = await ContractService.enterLockStaking(stakeValue, weekValue);
             console.log(result)
-            onClose();
+            closeModal();
             toast({
                 position: 'top-right',
                 render: () => (<CustomToast status={"success"} 
                     title={"Staked!"} 
                     description={"Your funds have been staked in the pool."} />)
               })
+            location.reload();
         } catch(err) {
             console.log('staking', err);
             toast({
@@ -79,6 +82,17 @@ const LockStakingModal: React.FC<{
         }
     }
 
+    const calcBoost = async () => {
+        if (!stakeValue) return;
+        const result = await ContractService.calculateBoost(stakeValue, weekValue);
+        setBoost(result);
+    }
+
+    const closeModal = () => {
+        onClose()
+        props.onClose()
+    }
+
     useEffect(() => {
         setUsdValue(flareUsdRate * stakeValue)
     }, [stakeValue])
@@ -88,8 +102,9 @@ const LockStakingModal: React.FC<{
 
         const weeksLater = new Date(currentDate.getTime() + weekValue * 7 * 24 * 60 * 60 * 1000);
 
-        console.log(weeksLater);
         setUnlockOn(weeksLater.toLocaleString())
+
+        calcBoost()
     }, [weekValue])
 
 
@@ -111,7 +126,7 @@ const LockStakingModal: React.FC<{
     }, [props.openModal])
 
     return (<>
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal isOpen={isOpen} onClose={closeModal}>
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader className=" bg-white">FLARE TO LOCK</ModalHeader>
@@ -207,7 +222,7 @@ const LockStakingModal: React.FC<{
                             <Box>DURATION</Box>
                             <Box className="text-right text-black text-base">{weekValue} week{weekValue > 1 ? 's':''}</Box>
                             <Box>YIELD BOOST</Box>
-                            <Box className="text-right text-black text-base">1.38x</Box>
+                            <Box className="text-right text-black text-base">{boost}x</Box>
                             <Box>UNLOCK ON</Box>
                             <Box className="text-right text-black text-base">{unlockOn} </Box>
                             <Box>EXPECTED ROI</Box>

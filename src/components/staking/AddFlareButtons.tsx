@@ -8,8 +8,8 @@ const AddFlareButtons: React.FC<{}> = () => {
     const [isAddFlareOpen, setAddFlareOpen] = useState(false);
 
     return (<>
-        <LockExtendModal openModal={isExtendOpen} />
-        <LockAddStakingModal openModal={isAddFlareOpen} />
+        <LockExtendModal openModal={isExtendOpen} onClose={() => setExtendOpen(false)} />
+        <LockAddStakingModal openModal={isAddFlareOpen} onClose={() => setAddFlareOpen(false)} />
 
         <Grid className="grid-cols-2 gap-2">
             <Button

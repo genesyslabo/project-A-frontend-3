@@ -24,8 +24,8 @@ const FlexibleLockBox = () => {
 
 
     return (<>
-        <StakingModal openModal={isFlexibleOpen} />
-        <UnstakeModal openModal={isUnstakeOpen} />
+        <StakingModal openModal={isFlexibleOpen} onClose={() => setFlexibleOpen(false)} />
+        <UnstakeModal openModal={isUnstakeOpen} onClose={() => setUnstakeOpen(false)} />
 
         <Text className="mb-2 text-black font-medium text-sm">
             <Box as="span" color={"#FE9D1C"}>

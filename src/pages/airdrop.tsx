@@ -1,6 +1,8 @@
-import { Avatar, AvatarBadge, Box, Circle, Flex, Grid, Image, Text } from "@chakra-ui/react"
+import { Circle, Flex, Image, Text } from "@chakra-ui/react"
 import { FramePage } from "../components/FramePage"
+import { Balance } from "../components/Balance"
 import React from "react"
+import { Address } from "../components/Address"
 
 
 const Airdrop = () => {
@@ -21,7 +23,7 @@ const Airdrop = () => {
                                     ACCOUNT
                                 </Text>
                                 <Text className="text-black text-base">
-                                    0x7e8a2Af0335c9BB45664Ad1bd83163F7E3
+                                    <Address />
                                 </Text>
                             </Flex>
                             <Flex className="flex-col gap-2">
@@ -29,7 +31,7 @@ const Airdrop = () => {
                                     BALANCE
                                 </Text>
                                 <Flex className="flex-row items-center text-black text-base">
-                                    0 APE 
+                                    <Balance />
                                     <Circle size='16px' bg='#1BA4B9' color='white' className="ml-1" />
                                 </Flex>
                             </Flex>
@@ -49,7 +51,7 @@ const Airdrop = () => {
                     <Flex color={"darkgreen"} className="w-full text-2xl font-bold items-start">NFT claim check</Flex>
 
                     <Text className="text-base text-[#666666]">
-                        Enter the Token ID to see if a Bored Ape, Mutant Ape, or companion Kennel Club NFT is eligible for a one-time claim of ApeCoin.
+                        Enter the Token ID to see if a XXX NFT is eligible for a one-time claim of Flare NFT.
                     </Text>
 
                     <Flex className="flex-col">

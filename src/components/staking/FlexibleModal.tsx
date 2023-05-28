@@ -7,7 +7,8 @@ import SmallButton from "../SmallButton";
 import CustomToast, { ToastContent } from "../CustomToast";
 
 const StakingModal: React.FC<{
-    openModal: Boolean
+    openModal: Boolean,
+    onClose: Function
 }> = (props) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -51,13 +52,14 @@ const StakingModal: React.FC<{
         try {
             const result = await ContractService.enterStaking(stakeValue);
             console.log(result)
-            onClose();
+            closeModal();
             toast({
                 position: 'top-right',
                 render: () => (<CustomToast status={"success"} 
                     title={"Staked!"} 
                     description={"Your funds have been staked in the pool."} />)
               })
+            location.reload();
         } catch(err) {
             console.log('staking', err);
             toast({
@@ -70,6 +72,11 @@ const StakingModal: React.FC<{
             toast.closeAll();
             setInTransaction(false)
         }
+    }
+
+    const closeModal = () => {
+        onClose()
+        props.onClose()
     }
 
     useEffect(() => {
@@ -95,7 +102,7 @@ const StakingModal: React.FC<{
     }, [props.openModal])
 
     return (<>
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal isOpen={isOpen} onClose={closeModal}>
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader>FLEXIBLE</ModalHeader>

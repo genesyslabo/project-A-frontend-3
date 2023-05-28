@@ -6,7 +6,7 @@ const StakingButton: React.FC<{}> = () => {
     const [openModal, setOpenModal] = useState(false);
 
     return (<>
-        <LockStakingModal openModal={openModal} />
+        <LockStakingModal openModal={openModal} onClose={() => setOpenModal(false)} />
         <Button
             size="lg"
             bg="darkgreen"

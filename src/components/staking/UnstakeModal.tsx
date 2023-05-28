@@ -7,7 +7,8 @@ import SmallButton from "../SmallButton";
 import CustomToast from "../CustomToast";
 
 const UnstakeModal: React.FC<{
-    openModal: Boolean
+    openModal: Boolean,
+    onClose: Function
 }> = (props) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [inTransaction, setInTransaction] = useState(false);
@@ -51,13 +52,14 @@ const UnstakeModal: React.FC<{
         try {
             const result = await ContractService.leaveStaking(stakeValue);
             console.log(result)
-            onClose();
+            closeModal();
             toast({
                 position: 'top-right',
                 render: () => (<CustomToast status={"success"} 
                     title={"Unstaked!"} 
                     description={"Your funds have been staked in the pool."} />)
               })
+            location.reload();
         } catch(err) {
             console.log('unstaking', err);
             toast({
@@ -70,6 +72,11 @@ const UnstakeModal: React.FC<{
             toast.closeAll();
             setInTransaction(false)
         }
+    }
+
+    const closeModal = () => {
+        onClose()
+        props.onClose()
     }
 
     useEffect(() => {
@@ -94,7 +101,7 @@ const UnstakeModal: React.FC<{
     }, [props.openModal])
 
     return (<>
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal isOpen={isOpen} onClose={closeModal}>
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader>Unstake</ModalHeader>

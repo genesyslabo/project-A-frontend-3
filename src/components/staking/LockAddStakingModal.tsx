@@ -1,6 +1,5 @@
 import { Box, Button, Flex, Grid, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, RadioGroup, Slider, SliderFilledTrack, SliderMark, SliderThumb, SliderTrack, Text, useDisclosure, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { RadioCard } from "../CustomRadio";
 import SmallButton from "../SmallButton";
 import { ContractService } from "../../service/contractService";
 import { flareUsdRate } from "../../common/constants";
@@ -10,7 +9,8 @@ import { LockStakingFutureAPR } from "../LockStakingAPR";
 
 
 const LockAddStakingModal: React.FC<{
-    openModal: Boolean
+    openModal: Boolean,
+    onClose: Function
 }> = (props) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -23,6 +23,7 @@ const LockAddStakingModal: React.FC<{
     const [inTransaction, setInTransaction] = useState(false);
 
     const [unlockOn, setUnlockOn] = useState("")
+    const [boost, setBoost] = useState(0);
 
     const toast = useToast()
 
@@ -58,13 +59,14 @@ const LockAddStakingModal: React.FC<{
         try {
             const result = await ContractService.enterLockStaking(stakeValue, weekValue);
             console.log(result)
-            onClose();
+            closeModal();
             toast({
                 position: 'top-right',
                 render: () => (<CustomToast status={"success"} 
                     title={"Staked!"} 
                     description={"Your funds have been staked in the pool."} />)
               })
+            location.reload();
         } catch(err) {
             console.log('staking', err);
             toast({
@@ -79,8 +81,20 @@ const LockAddStakingModal: React.FC<{
         }
     }
 
+    const calcBoost = async () => {
+        if (!stakeValue || !weekValue) return;
+        const result = await ContractService.calculateBoost(stakeValue, weekValue);
+        setBoost(result);
+    }
+
+    const closeModal = () => {
+        onClose()
+        props.onClose()
+    }
+
     useEffect(() => {
         setUsdValue(flareUsdRate * stakeValue)
+        calcBoost()
     }, [stakeValue])
 
     useEffect(() => {
@@ -89,6 +103,8 @@ const LockAddStakingModal: React.FC<{
         const weeksLater = new Date(currentDate.getTime() + weekValue * 7 * 24 * 60 * 60 * 1000);
 
         setUnlockOn(weeksLater.toLocaleString())
+        
+        calcBoost()
     }, [weekValue])
 
 
@@ -121,7 +137,7 @@ const LockAddStakingModal: React.FC<{
     }, [props.openModal])
 
     return (<>
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal isOpen={isOpen} onClose={closeModal}>
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader className=" bg-white">FLARE TO LOCK</ModalHeader>
@@ -207,7 +223,7 @@ const LockAddStakingModal: React.FC<{
                             <Box>DURATION</Box>
                             <Box className="text-right text-black text-base">{weekValue} week{weekValue > 1 ? 's':''}</Box>
                             <Box>YIELD BOOST</Box>
-                            <Box className="text-right text-black text-base">1.38x</Box>
+                            <Box className="text-right text-black text-base">{boost}x</Box>
                             <Box>UNLOCK ON</Box>
                             <Box className="text-right text-black text-base">{unlockOn} </Box>
                             <Box>EXPECTED ROI</Box>
