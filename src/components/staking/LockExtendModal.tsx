@@ -25,6 +25,7 @@ const LockExtendModal: React.FC<{
     const [boost, setBoost] = useState(0);
     const [roi, setRoi] = useState(0)
     const [maxWeeks, setMaxWeeks] = useState(52);
+    const [userInfo, setUserInfo] = useState(null)
 
     const toast = useToast()
 
@@ -71,9 +72,9 @@ const LockExtendModal: React.FC<{
         setWeekValue(parseInt(value))
     }
 
-    const calcBoost = async () => {
-        if (!weekValue) return;
-        const result = await ContractService.calculateBoost(amount, weekValue, address, signer);
+    const calcBoost = async (week) => {
+        if (!week) return;
+        const result = await ContractService.calculateBoost(amount, week, address, signer);
         setBoost(result);
     }
 
@@ -86,6 +87,11 @@ const LockExtendModal: React.FC<{
     const calcWeeks = async () => {
         const result = await ContractService.calcWeeksAfterExtend(weekValue, address, signer);
         setDuration(result)
+    }
+
+    const getUserInfo = async () => {
+        const result = await ContractService.lockUserInfo(address, signer);
+        setUserInfo(result)
     }
 
     const closeModal = () => {
@@ -118,12 +124,20 @@ const LockExtendModal: React.FC<{
 
         fetchMaxWeeks();
 
-        calcBoost()
-
         calcRoi()
 
         calcWeeks()
     }, [weekValue])
+
+    useEffect(() => {
+        if (userInfo && duration) {
+            if (weekValue === 0) {
+                setBoost(userInfo.multiplier/1000)
+            } else {
+                calcBoost(duration)
+            }
+        }
+    }, [userInfo, weekValue, duration])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -132,6 +146,8 @@ const LockExtendModal: React.FC<{
         }
 
         fetchData()
+
+        getUserInfo();
     }, [])
 
     useEffect(() => {

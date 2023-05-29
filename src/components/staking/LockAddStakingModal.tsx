@@ -21,13 +21,14 @@ const LockAddStakingModal: React.FC<{
     const [sliderValue, setSliderValue] = useState(0)
     const [stakeValue, setStakeValue] = useState(0)
 
-    const [weekValue, setWeekValue] = useState(1)
+    const [weekValue, setWeekValue] = useState(0)
     const [usdValue, setUsdValue] = useState(0)
     const [inTransaction, setInTransaction] = useState(false);
 
     const [unlockOn, setUnlockOn] = useState("")
     const [boost, setBoost] = useState(0);
     const [roi, setRoi] = useState(0)
+    const [userInfo, setUserInfo] = useState(null)
 
     const toast = useToast()
 
@@ -90,7 +91,7 @@ const LockAddStakingModal: React.FC<{
 
     const calcBoost = async () => {
         if (!stakeValue || !weekValue) return;
-        const result = await ContractService.calculateBoost(stakeValue, weekValue, address, signer);
+        const result = await ContractService.calculateBoost(stakeValue + userInfo.amount, weekValue, address, signer);
         setBoost(result);
     }
 
@@ -98,12 +99,16 @@ const LockAddStakingModal: React.FC<{
         if (!stakeValue) return;
         const result = await ContractService.lockStakingROI(stakeValue, weekValue, address, signer);
         setRoi(result);
-        console.log('calcroi', stakeValue, weekValue, result)
     }
 
     const calcWeeks = async () => {
         const result = await ContractService.calcWeeksAfterExtend(weekValue, address, signer);
         setWeekValue(result)
+    }
+
+    const getUserInfo = async () => {
+        const result = await ContractService.lockUserInfo(address, signer);
+        setUserInfo(result)
     }
 
     const closeModal = () => {
@@ -114,8 +119,6 @@ const LockAddStakingModal: React.FC<{
     useEffect(() => {
         setUsdValue(flareUsdRate * stakeValue)
         calcBoost()
-
-        calcRoi()
     }, [stakeValue])
 
     useEffect(() => {
@@ -129,6 +132,16 @@ const LockAddStakingModal: React.FC<{
     }, [weekValue])
 
     useEffect(() => {
+        if (userInfo) {
+            if (stakeValue === 0) {
+                setBoost(userInfo.multiplier/1000)
+            } else {
+                calcBoost()
+            }
+        }
+    }, [userInfo, stakeValue])
+
+    useEffect(() => {
         const fetchBalance = async () => {
             const result = await ContractService.balanceOf(address, signer);
             setBalance(parseInt(result + ""));
@@ -137,6 +150,8 @@ const LockAddStakingModal: React.FC<{
         fetchBalance();
 
         calcWeeks();
+
+        getUserInfo();
     }, []);
 
 

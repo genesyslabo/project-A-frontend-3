@@ -109,7 +109,7 @@ const FlexiblePanel = () => {
                     </Text>
                     <Flex className="flex-row items-center gap-8">
                         <PendingFlare pid={0} />
-                        <Box className="grow text-right text-black underline text-sm font-medium">
+                        <Box className="text-right text-black underline text-sm font-medium md:basis-6/12">
                             flexible lock for 1 day
                         </Box>
                     </Flex>

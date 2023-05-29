@@ -197,7 +197,7 @@ const calculateBoost = async (amount, weeks, address, signer) => {
         const stakingContract = getStakingContract(signer);
         const boost = await stakingContract.calculateBoost(address, amount, weeks);
         const boostNumber = parseFloat(boost.toString()) / 1000;
-        // console.log('Boost: ', boostNumber, boost.toString());
+        console.log('Boost: ', amount, weeks, boostNumber);
         return +boostNumber.toFixed(2);
     } catch (error) {
         console.error('Boost Error: ', error);
@@ -240,10 +240,22 @@ const userLockStakingTime = async (address, signer) => {
 
         const provider = signer ? signer.provider : getProvider()
         const currentTime = (await provider.getBlock('latest')).timestamp;
+        console.log(startTime.toNumber(), currentTime, endTime.toNumber())
         return [startTime, currentTime, endTime];
     } catch (error) {
         console.error('userLockStakingTime Error: ', error);
         return [0, 0, 0];
+    }
+};
+
+const lockUserInfo = async (address, signer) => {
+    try {
+        const stakingContract = getStakingContract(signer);
+        const userInfo = await stakingContract.userInfo(1, address);
+        return userInfo;
+    } catch (error) {
+        console.error('lockUserInfo Error: ', error);
+        return {};
     }
 };
 
@@ -412,5 +424,6 @@ export const ContractService = {
     reEnterLockStakingAPR,
     lockStakingROI,
     stakingROI,
-    calcWeeksAfterExtend
+    calcWeeksAfterExtend,
+    lockUserInfo
 };
