@@ -43,7 +43,7 @@ const LockStakingReEnter = () => {
                     onChange={(e) => setWeekInput(e.target.value)}
                 />
                 <Button
-                    onClick={() => ContractService.reEnterLockStaking(0, parseInt(weekInput), address)}
+                    onClick={() => ContractService.reEnterLockStaking(0, parseInt(weekInput), address, signer)}
                     size="lg"
                     bg="darkgreen"
                     color={"white"}

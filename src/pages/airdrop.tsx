@@ -2,10 +2,11 @@ import { Circle, Flex, Image, Text } from "@chakra-ui/react"
 import { FramePage } from "../components/FramePage"
 import { Balance } from "../components/Balance"
 import React from "react"
-import { Address } from "../components/Address"
+import { useAccount } from "wagmi"
 
 
 const Airdrop = () => {
+    const { address } = useAccount();
    
     return (<>
         <FramePage menu="airdrop">
@@ -23,7 +24,7 @@ const Airdrop = () => {
                                     ACCOUNT
                                 </Text>
                                 <Text className="text-black text-base">
-                                    <Address />
+                                    {address}
                                 </Text>
                             </Flex>
                             <Flex className="flex-col gap-2">
