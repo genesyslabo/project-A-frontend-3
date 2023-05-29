@@ -1,21 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { Text } from '@chakra-ui/react';
 import { ContractService } from '../service/contractService';
+import { useAccount, useSigner } from 'wagmi';
 
 export const LockStakingTime = () => {
     const [time, setTime] = useState(0);
+    const { isConnected, address } = useAccount();
+    const {data: signer} = useSigner();
 
     useEffect(() => {
         const fetchTime = async () => {
-            const result = await ContractService.userLockStakingTime();
+            const result = await ContractService.userLockStakingTime(address, signer);
             const rest = result[2] - result[1];
             if (rest > 0) {
                 setTime(rest);
             }
         };
 
-        fetchTime();
-    }, []);
+        if (isConnected) {
+            fetchTime();
+        }
+        
+    }, [isConnected]);
 
     return (
         <Text className="text-black font-bold text-xl">
@@ -26,19 +32,24 @@ export const LockStakingTime = () => {
 
 export const LockStakingDuration = () => {
     const [time, setTime] = useState(0);
+    const { isConnected, address } = useAccount();
+    const {data: signer} = useSigner();
 
     useEffect(() => {
         const fetchTime = async () => {
-            const result = await ContractService.userLockStakingTime();
+            const result = await ContractService.userLockStakingTime(address, signer);
             const rest = result[2] - result[0];
-            console.log("duration: ", rest)
+            
             if (rest > 0) {
                 setTime(rest);
             }
         };
 
-        fetchTime();
-    }, []);
+        if (isConnected) {
+            fetchTime();
+        }
+        
+    }, [isConnected]);
 
     return (
         <Text as="span">

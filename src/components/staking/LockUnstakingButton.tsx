@@ -2,10 +2,12 @@ import { Button, useToast } from "@chakra-ui/react"
 import { useState } from "react"
 import { ContractService } from "../../service/contractService"
 import CustomToast from "../CustomToast"
+import { useSigner } from "wagmi"
 
 const LockUnstakingButton: React.FC<{}> = () => {
     const toast = useToast()
     const [inTransaction, setInTransaction] = useState(false);
+    const {data: signer} = useSigner();
 
     const unstaking = async () => {
         toast({
@@ -18,7 +20,7 @@ const LockUnstakingButton: React.FC<{}> = () => {
         
         setInTransaction(true)
         try {
-            const result = await ContractService.leaveLockStaking();
+            const result = await ContractService.leaveLockStaking(signer);
             console.log(result)
             toast({
                 position: 'top-right',
@@ -29,6 +31,7 @@ const LockUnstakingButton: React.FC<{}> = () => {
             location.reload();
         } catch(err) {
             console.log('unstaking', err);
+            toast.closeAll();
             toast({
                 position: 'top-right',
                 render: () => (<CustomToast status={"error"} 

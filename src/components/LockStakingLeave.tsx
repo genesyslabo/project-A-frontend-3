@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Flex, Grid, Button, Input } from '@chakra-ui/react';
 import { ContractService } from '../service/contractService';
+import { useSigner } from 'wagmi';
 
 const LockStakingLeave = () => {
+    const {data: signer} = useSigner();
 
     return (
         <Flex
@@ -14,7 +16,7 @@ const LockStakingLeave = () => {
         >
             <Grid className="grid-cols-1 gap-3">
                 <Button
-                    onClick={() => ContractService.leaveLockStaking()}
+                    onClick={() => ContractService.leaveLockStaking(signer)}
                     size="lg"
                     bg="darkgreen"
                     color={"white"}

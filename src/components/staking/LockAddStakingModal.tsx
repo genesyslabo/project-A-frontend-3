@@ -2,10 +2,11 @@ import { Box, Button, Flex, Grid, Input, Modal, ModalBody, ModalCloseButton, Mod
 import { useEffect, useState } from "react";
 import SmallButton from "../SmallButton";
 import { ContractService } from "../../service/contractService";
-import { flareUsdRate } from "../../common/constants";
+import { WEEK_MILLICONDS, flareUsdRate } from "../../common/constants";
 import CustomToast from "../CustomToast";
 import { BigNumber } from "ethers";
 import { LockStakingFutureAPR } from "../LockStakingAPR";
+import { useAccount, useSigner } from "wagmi";
 
 
 const LockAddStakingModal: React.FC<{
@@ -13,6 +14,8 @@ const LockAddStakingModal: React.FC<{
     onClose: Function
 }> = (props) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const { address } = useAccount();
+    const {data: signer} = useSigner();
 
     const [balance, setBalance] = useState(0);
     const [sliderValue, setSliderValue] = useState(0)
@@ -37,6 +40,9 @@ const LockAddStakingModal: React.FC<{
 
     const handleInputChange = (event) => {
         const value = event.target.value
+        if (isNaN(value) || value == 0) {
+            return;
+        }
         if (value > balance) {
             setStakeValue(balance)
             setSliderValue(100)
@@ -58,7 +64,7 @@ const LockAddStakingModal: React.FC<{
         
         setInTransaction(true)
         try {
-            const result = await ContractService.reEnterLockStaking(stakeValue, weekValue);
+            const result = await ContractService.reEnterLockStaking(stakeValue, 0, address, signer);
             console.log(result)
             closeModal();
             toast({
@@ -84,13 +90,13 @@ const LockAddStakingModal: React.FC<{
 
     const calcBoost = async () => {
         if (!stakeValue || !weekValue) return;
-        const result = await ContractService.calculateBoost(stakeValue, weekValue);
+        const result = await ContractService.calculateBoost(stakeValue, weekValue, address, signer);
         setBoost(result);
     }
 
     const calcRoi = async () => {
         if (!stakeValue) return;
-        const result = await ContractService.lockStakingROI(stakeValue, weekValue);
+        const result = await ContractService.lockStakingROI(stakeValue, weekValue, address, signer);
         setRoi(result);
         console.log('calcroi', stakeValue, weekValue, result)
     }
@@ -119,15 +125,16 @@ const LockAddStakingModal: React.FC<{
 
     useEffect(() => {
         const fetchBalance = async () => {
-            const result = await ContractService.balanceOf();
+            const result = await ContractService.balanceOf(address, signer);
             setBalance(parseInt(result + ""));
         };
 
         const fetchWeek = async () => {
-            const result = await ContractService.userLockStakingTime();
+            const result = await ContractService.userLockStakingTime(address, signer);
+            console.log('week', result[2].toNumber(), result[1])
             const rest = result[2] - result[1];
             if (rest > 0) {
-                setWeekValue(rest);
+                setWeekValue(parseInt((rest / WEEK_MILLICONDS) + ""));
             }
         };
 

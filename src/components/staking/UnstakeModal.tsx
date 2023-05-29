@@ -5,6 +5,8 @@ import { flareUsdRate } from "../../common/constants";
 import { ContractService } from "../../service/contractService";
 import SmallButton from "../SmallButton";
 import CustomToast from "../CustomToast";
+import { useAccount, useSigner } from "wagmi";
+import { timeDown } from "../../common/utils/tools";
 
 const UnstakeModal: React.FC<{
     openModal: Boolean,
@@ -12,11 +14,14 @@ const UnstakeModal: React.FC<{
 }> = (props) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [inTransaction, setInTransaction] = useState(false);
+    const { isConnected, address } = useAccount();
+    const {data: signer} = useSigner();
 
     const [sliderValue, setSliderValue] = useState(0)
     const [stakeValue, setStakeValue] = useState(0)
     const [usdValue, setUsdValue] = useState(0)
     const [amount, setAmount] = useState(0);
+    const [remainDate, setRemainDate] = useState("")
 
     const toast = useToast()
 
@@ -29,6 +34,9 @@ const UnstakeModal: React.FC<{
 
     const handleInputChange = (event) => {
         const value = event.target.value
+        if (isNaN(value) || value == 0) {
+            return;
+        }
         if (value > amount) {
             setStakeValue(amount)
             setSliderValue(100)
@@ -50,7 +58,7 @@ const UnstakeModal: React.FC<{
         setInTransaction(true)
         
         try {
-            const result = await ContractService.leaveStaking(stakeValue);
+            const result = await ContractService.leaveStaking(stakeValue, signer);
             console.log(result)
             closeModal();
             toast({
@@ -62,6 +70,7 @@ const UnstakeModal: React.FC<{
             location.reload();
         } catch(err) {
             console.log('unstaking', err);
+            toast.closeAll();
             toast({
                 position: 'top-right',
                 render: () => (<CustomToast status={"error"} 
@@ -69,10 +78,14 @@ const UnstakeModal: React.FC<{
                     description={"There has some issue happened."} />)
               })
         } finally {
-            toast.closeAll();
             setInTransaction(false)
         }
     }
+
+    const fetchAmount = async () => {
+        const result = await ContractService.userStakingAmount(address, signer);
+        setAmount(result);
+    };
 
     const closeModal = () => {
         onClose()
@@ -84,13 +97,20 @@ const UnstakeModal: React.FC<{
     }, [stakeValue])
 
     useEffect(() => {
-        const fetchAmount = async () => {
-            const result = await ContractService.userStakingAmount();
-            setAmount(result);
-        };
+        if (isConnected) {
+            fetchAmount();
 
-        fetchAmount();
-    }, []);
+            const fetchWeek = async () => {
+                const result = await ContractService.userLockStakingTime(address, signer);
+                console.log('week', result[2].toNumber(), result[1])
+                const rest = result[2] - result[1];
+                setRemainDate(timeDown(rest))
+            };
+
+            fetchWeek();
+        }
+        
+    }, [isConnected]);
 
     useEffect(() => {
         if (props.openModal) {
@@ -174,7 +194,7 @@ const UnstakeModal: React.FC<{
                             </Flex>
                             <Flex className="flex-col gap-2 items-end grow text-xs text-[#676768]">
                                 <Text>0.0000 FLARE</Text>
-                                <Text>2d:23h:18m</Text>
+                                <Text>{remainDate}</Text>
                             </Flex>
                         </Flex>
 

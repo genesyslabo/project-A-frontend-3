@@ -64,7 +64,7 @@ export const isPCView  = () => {
 export function timeDown(time: any) {
     if (time > 0) {
       //判断剩余倒计时时间如果大于0就执行倒计时否则就结束
-      // var dd = Math.floor(rightTime / 1000 / 60 / 60 / 24);
+      var dd = Math.floor(time / 1000 / 60 / 60 / 24);
       var hh =
         Math.floor((time / 1000 / 60 / 60)) < 10
           ? "0" + Math.floor((time / 1000 / 60 / 60))
@@ -77,9 +77,9 @@ export function timeDown(time: any) {
         Math.floor((time / 1000) % 60) < 10
           ? "0" + Math.floor((time / 1000) % 60)
           : Math.floor((time / 1000) % 60).toString();
-      return `${hh}:${mm}:${ss}`;
+      return `${dd}d:${hh}h:${mm}m`;
     }
-    return "00:00:00"
+    return "0d:00h:00m"
 }
 
 export function formatNumber(number) {

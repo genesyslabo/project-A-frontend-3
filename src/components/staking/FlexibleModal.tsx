@@ -4,13 +4,16 @@ import React, { useEffect, useState } from "react"
 import { flareUsdRate } from "../../common/constants";
 import { ContractService } from "../../service/contractService";
 import SmallButton from "../SmallButton";
-import CustomToast, { ToastContent } from "../CustomToast";
+import CustomToast from "../CustomToast";
+import { useAccount, useSigner } from "wagmi";
 
 const StakingModal: React.FC<{
     openModal: Boolean,
     onClose: Function
 }> = (props) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const { isConnected, address } = useAccount();
+    const {data: signer} = useSigner();
 
     const [balance, setBalance] = useState(0);
     const [sliderValue, setSliderValue] = useState(0)
@@ -39,6 +42,9 @@ const StakingModal: React.FC<{
 
     const handleInputChange = (event) => {
         const value = event.target.value
+        if (isNaN(value) || value == 0) {
+            return;
+        }
         if (value > balance) {
             setStakeValue(balance)
             setSliderValue(100)
@@ -70,7 +76,7 @@ const StakingModal: React.FC<{
         setInTransaction(true)
         
         try {
-            const result = await ContractService.enterStaking(stakeValue);
+            const result = await ContractService.enterStaking(stakeValue, address, signer);
             console.log(result)
             closeModal();
             toast({
@@ -96,7 +102,7 @@ const StakingModal: React.FC<{
 
     const calcRoi = async () => {
         if (!stakeValue) return;
-        const result = await ContractService.stakingROI(stakeValue);
+        const result = await ContractService.stakingROI(stakeValue, signer);
         setRoi(result);
     }
 
@@ -113,12 +119,15 @@ const StakingModal: React.FC<{
 
     useEffect(() => {
         const fetchBalance = async () => {
-            const result = await ContractService.balanceOf();
+            const result = await ContractService.balanceOf(address, signer);
             setBalance(parseInt(result + ""));
         };
 
-        fetchBalance();
-    }, []);
+        if (isConnected) {
+            fetchBalance();
+        }
+        
+    }, [isConnected]);
 
     useEffect(() => {
         if (props.openModal) {
@@ -210,8 +219,7 @@ const StakingModal: React.FC<{
                             borderColor="darkgreen"
                             bgImg={"linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)"}
                             onClick={staking}
-                            // disabled={!stakeValue || stakeValue <= 0 || inTransaction }
-                            disabled={inTransaction }
+                            disabled={!stakeValue || stakeValue <= 0 || stakeValue > balance || inTransaction }
                             _hover={{ bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)" }}
                             _active={{
                                 bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)",

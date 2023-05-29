@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { Flex, Grid, Button, Input } from '@chakra-ui/react';
 import { ContractService } from '../service/contractService';
+import { useAccount, useSigner } from 'wagmi';
 
 const LockStakingReEnter = () => {
     const [amountInput, setAmountInput] = useState("");
     const [weekInput, setWeekInput] = useState("");
+    const { address } = useAccount();
+    const {data: signer} = useSigner();
 
     return (
         <Flex
@@ -20,7 +23,7 @@ const LockStakingReEnter = () => {
                     onChange={(e) => setAmountInput(e.target.value)}
                 />
                 <Button
-                    onClick={() => ContractService.reEnterLockStaking(parseFloat(amountInput), 0)}
+                    onClick={() => ContractService.reEnterLockStaking(parseFloat(amountInput), 0, address, signer)}
                     size="lg"
                     bg="darkgreen"
                     color={"white"}
@@ -40,7 +43,7 @@ const LockStakingReEnter = () => {
                     onChange={(e) => setWeekInput(e.target.value)}
                 />
                 <Button
-                    onClick={() => ContractService.reEnterLockStaking(0, parseInt(weekInput))}
+                    onClick={() => ContractService.reEnterLockStaking(0, parseInt(weekInput), address)}
                     size="lg"
                     bg="darkgreen"
                     color={"white"}

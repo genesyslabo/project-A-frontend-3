@@ -2,21 +2,26 @@ import React, { useEffect, useState } from 'react';
 import { Box, Flex } from '@chakra-ui/react';
 import { ContractService } from '../../service/contractService';
 import { flareUsdRate } from '../../common/constants';
+import { useAccount, useSigner } from 'wagmi';
 
 export const PendingFlare: React.FC<{pid: number}> = (props) => {
     const [amount, setAmount] = useState(0);
+    const { isConnected, address } = useAccount();
+    const {data: signer} = useSigner();
 
     const fetchAmount = async () => {
-        const result = await ContractService.pendingFlare(props.pid);
+        const result = await ContractService.pendingFlare(props.pid, address, signer);
         setAmount(result);
     };
 
     useEffect(() => {
-        setInterval(() => {
-            fetchAmount()
-        }, 5000)
-        fetchAmount();
-    }, []);
+        if (isConnected) {
+            setInterval(() => {
+                fetchAmount()
+            }, 5000)
+            fetchAmount();
+        }
+    }, [isConnected]);
 
     return (
         <Flex className="flex-col">

@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Button, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import StakingModal from "./FlexibleModal";
+import { useAccount } from "wagmi";
 
 const FlexibleBox = () => {
     const [isFlexibleOpen, setFlexibleOpen] = useState(false);
+    const { isConnected } = useAccount();
+    const [disabled, setDisabled] = useState(false);
+
+    useEffect(() => {
+        setDisabled(!isConnected)
+    }, [isConnected])
 
     return (<>
         <StakingModal openModal={isFlexibleOpen} onClose={() => setFlexibleOpen(false)} />
@@ -21,6 +28,7 @@ const FlexibleBox = () => {
             color={"white"}
             borderColor="darkgreen"
             bgImg={"linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)"}
+            disabled={disabled}
             _hover={{ bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)" }}
             _active={{
                 bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)",

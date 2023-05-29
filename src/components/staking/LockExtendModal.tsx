@@ -4,6 +4,8 @@ import SmallButton from "../SmallButton";
 import { ContractService } from "../../service/contractService";
 import CustomToast from "../CustomToast";
 import { LockStakingFutureAPR } from "../LockStakingAPR";
+import { useAccount, useSigner } from "wagmi";
+import { WEEK_MILLICONDS } from "../../common/constants";
 
 
 const LockExtendModal: React.FC<{
@@ -11,10 +13,13 @@ const LockExtendModal: React.FC<{
     onClose: Function
 }> = (props) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const { isConnected, address } = useAccount();
+    const {data: signer} = useSigner();
 
-    const [weekValue, setWeekValue] = useState(1)
+    const [weekValue, setWeekValue] = useState(0)
     const [inTransaction, setInTransaction] = useState(false);
     const [amount, setAmount] = useState(0);
+    const [duration, setDuration] = useState(0)
 
     const [unlockOn, setUnlockOn] = useState("")
     const [boost, setBoost] = useState(0);
@@ -34,8 +39,7 @@ const LockExtendModal: React.FC<{
         
         setInTransaction(true)
         try {
-            
-            const result = await ContractService.reEnterLockStaking(amount, weekValue);
+            const result = await ContractService.reEnterLockStaking(amount, weekValue, address, signer);
             console.log(result)
             closeModal();
             toast({
@@ -59,16 +63,30 @@ const LockExtendModal: React.FC<{
         }
     }
 
+    const handleWeekInputChange = (event) => {
+        const value = event.target.value
+        if (isNaN(value) || value == 0) {
+            return;
+        }
+        setWeekValue(parseInt(value))
+    }
+
     const calcBoost = async () => {
         if (!weekValue) return;
-        const result = await ContractService.calculateBoost(amount, weekValue);
+        const result = await ContractService.calculateBoost(amount, weekValue, address, signer);
         setBoost(result);
     }
 
     const calcRoi = async () => {
         if (!weekValue) return;
-        const result = await ContractService.lockStakingROI(amount, weekValue);
+        const result = await ContractService.lockStakingROI(amount, weekValue, address, signer);
         setRoi(result);
+    }
+
+    const calcWeeks = async () => {
+        const result = await ContractService.calcWeeksAfterExtend(weekValue, address, signer);
+        setDuration(result)
+
     }
 
     const closeModal = () => {
@@ -90,12 +108,12 @@ const LockExtendModal: React.FC<{
 
         const currentDate = new Date();
 
-        const weeksLater = new Date(currentDate.getTime() + weekValue * 7 * 24 * 60 * 60 * 1000);
+        const weeksLater = new Date(currentDate.getTime() + weekValue * WEEK_MILLICONDS * 1000);
 
         setUnlockOn(weeksLater.toLocaleString())
 
         const fetchMaxWeeks = async () => {
-            const result = await ContractService.getMaxWeeks();
+            const result = await ContractService.getMaxWeeks(signer);
             setMaxWeeks(result);
         };
 
@@ -104,11 +122,13 @@ const LockExtendModal: React.FC<{
         calcBoost()
 
         calcRoi()
+
+        calcWeeks()
     }, [weekValue])
 
     useEffect(() => {
         const fetchData = async () => {
-            const result = await ContractService.userLockStakingAmount();
+            const result = await ContractService.userLockStakingAmount(address, signer);
             setAmount(result)
         }
 
@@ -161,7 +181,7 @@ const LockExtendModal: React.FC<{
                             <Box className="inline grow">
                                 <Input variant='filled' placeholder='' bg={"#ECFDFF"} 
                                     className="font-bold text-right"
-                                    value={weekValue} onChange={(event) => setWeekValue(parseInt(event.target.value))} />
+                                    value={weekValue} onChange={handleWeekInputChange} />
                             </Box>
                             <Text className="inline text-sm font-medium">Week</Text>
                         </Flex>
@@ -177,7 +197,7 @@ const LockExtendModal: React.FC<{
                             <Box>APR</Box>
                             <Box className="text-right text-black text-base"><LockStakingFutureAPR amount={amount} week={weekValue} /></Box>
                             <Box>DURATION</Box>
-                            <Box className="text-right text-black text-base">{weekValue} week{weekValue > 1 ? 's':''}</Box>
+                            <Box className="text-right text-black text-base">{duration} week{duration > 1 ? 's':''}</Box>
                             <Box>YIELD BOOST</Box>
                             <Box className="text-right text-black text-base">{boost}x</Box>
                             <Box>UNLOCK ON</Box>
@@ -193,7 +213,7 @@ const LockExtendModal: React.FC<{
                             borderColor="darkgreen"
                             bgImg={"linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)"}
                             onClick={lockStaking}
-                            disabled={!weekValue || weekValue <= 0 || weekValue >= 52 || inTransaction }
+                            disabled={!weekValue || weekValue <= 0 || weekValue > maxWeeks || inTransaction }
                             _hover={{ bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)" }}
                             _active={{
                                 bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)",

@@ -1,26 +1,32 @@
 import { MinusIcon, SmallAddIcon } from "@chakra-ui/icons"
 import { Box, HStack, IconButton, Spacer, Text, VStack } from "@chakra-ui/react"
-import { StakingAmount } from "../StakingAmount"
 import { useEffect, useState } from "react";
 import { ContractService } from "../../service/contractService";
 import { flareUsdRate } from "../../common/constants";
 import StakingModal from "./FlexibleModal";
 import UnstakeModal from "./UnstakeModal";
+import { useAccount, useSigner } from "wagmi";
 
 
 const FlexibleLockBox = () => {
+    const { isConnected, address } = useAccount();
+    const {data: signer} = useSigner();
     const [amount, setAmount] = useState(0);
     const [isFlexibleOpen, setFlexibleOpen] = useState(false);
     const [isUnstakeOpen, setUnstakeOpen] = useState(false);
 
-    useEffect(() => {
-        const fetchAmount = async () => {
-            const result = await ContractService.userStakingAmount();
-            setAmount(result);
-        };
+    const fetchAmount = async () => {
+        const result = await ContractService.userStakingAmount(address, signer);
+        setAmount(result);
+    };
 
-        fetchAmount();
-    }, []);
+    useEffect(() => {
+
+        if (isConnected) {
+            fetchAmount();
+        }
+        
+    }, [isConnected]);
 
 
     return (<>

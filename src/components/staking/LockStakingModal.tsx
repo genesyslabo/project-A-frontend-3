@@ -3,10 +3,11 @@ import { useEffect, useState } from "react";
 import { RadioCard } from "../CustomRadio";
 import SmallButton from "../SmallButton";
 import { ContractService } from "../../service/contractService";
-import { flareUsdRate } from "../../common/constants";
+import { MinLockStakingAmount, flareUsdRate } from "../../common/constants";
 import CustomToast from "../CustomToast";
 import { BigNumber } from "ethers";
 import { LockStakingFutureAPR } from "../LockStakingAPR";
+import { useAccount, useSigner } from "wagmi";
 
 
 const LockStakingModal: React.FC<{
@@ -14,6 +15,8 @@ const LockStakingModal: React.FC<{
     onClose: Function
 }> = (props) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const { isConnected, address } = useAccount();
+    const {data: signer} = useSigner();
 
     const [balance, setBalance] = useState(0);
     const [sliderValue, setSliderValue] = useState(0)
@@ -40,6 +43,9 @@ const LockStakingModal: React.FC<{
 
     const handleInputChange = (event) => {
         const value = event.target.value
+        if (isNaN(value) || value == 0) {
+            return;
+        }
         if (value > balance) {
             setStakeValue(balance)
             setSliderValue(100)
@@ -48,6 +54,14 @@ const LockStakingModal: React.FC<{
             const v = BigNumber.from(value + "").mul(100).div(BigNumber.from(balance + ""))
             setSliderValue(+(parseFloat(v.toString()).toFixed(0)))
         }
+    }
+
+    const handleWeekInputChange = (event) => {
+        const value = event.target.value
+        if (isNaN(value) || value == 0) {
+            return;
+        }
+        setWeekValue(parseInt(value))
     }
 
     const lockStaking = async () => {
@@ -61,7 +75,7 @@ const LockStakingModal: React.FC<{
         
         setInTransaction(true)
         try {
-            const result = await ContractService.enterLockStaking(stakeValue, weekValue);
+            const result = await ContractService.enterLockStaking(stakeValue, weekValue, address, signer);
             console.log(result)
             closeModal();
             toast({
@@ -87,15 +101,31 @@ const LockStakingModal: React.FC<{
 
     const calcBoost = async () => {
         if (!stakeValue) return;
-        const result = await ContractService.calculateBoost(stakeValue, weekValue);
+        const result = await ContractService.calculateBoost(stakeValue, weekValue, address, signer);
         setBoost(result);
     }
 
     const calcRoi = async () => {
         if (!stakeValue || !weekValue) return;
-        const result = await ContractService.lockStakingROI(stakeValue, weekValue);
+        const result = await ContractService.lockStakingROI(stakeValue, weekValue, address, signer);
         setRoi(result);
     }
+
+    const fetchBalance = async () => {
+        const result = await ContractService.balanceOf(address, signer);
+        setBalance(parseInt(result + ""));
+    };
+    
+    const fetchMaxWeeks = async () => {
+        const result = await ContractService.getMaxWeeks(signer);
+        setMaxWeeks(result);
+    };
+
+    const fetchMinLockAmount = async () => {
+        const result = await ContractService.getMinLockAmount(signer);
+        setMinLockAmount(result);
+        setStakeValue(result)
+    };
 
     const closeModal = () => {
         onClose()
@@ -104,15 +134,15 @@ const LockStakingModal: React.FC<{
 
     useEffect(() => {
         if (stakeValue < minLockAmount) {
-            setStakeValue(minLockAmount)
-            setSliderValue(1)
+            // setStakeValue(minLockAmount)
+            // setSliderValue(1)
             toast({
                 position: 'top-right',
                 render: () => (<CustomToast status={"info"} 
                     title={"Tips!"} 
                     description={`The min lock amount is ${minLockAmount}`} />)
               })
-            return;
+            // return;
         }
         setUsdValue(flareUsdRate * stakeValue)
     }, [stakeValue])
@@ -145,28 +175,14 @@ const LockStakingModal: React.FC<{
     }, [weekValue, stakeValue])
     
     useEffect(() => {
-        const fetchBalance = async () => {
-            const result = await ContractService.balanceOf();
-            setBalance(parseInt(result + ""));
-        };
-        
-        fetchBalance();
+        if (isConnected) {
+            fetchBalance();
 
-        const fetchMaxWeeks = async () => {
-            const result = await ContractService.getMaxWeeks();
-            setMaxWeeks(result);
-        };
+            fetchMaxWeeks();
 
-        fetchMaxWeeks();
-
-        const fetchMinLockAmount = async () => {
-            const result = await ContractService.getMinLockAmount();
-            setMinLockAmount(result);
-            setStakeValue(result)
-        };
-
-        fetchMinLockAmount();
-    }, []);
+            fetchMinLockAmount();
+        }
+    }, [isConnected]);
 
     useEffect(() => {
         if (props.openModal) {
@@ -259,7 +275,7 @@ const LockStakingModal: React.FC<{
                             <Box className="inline grow">
                                 <Input variant='filled' placeholder='' bg={"#ECFDFF"} 
                                     className="font-bold text-right"
-                                    value={weekValue} onChange={(event) => setWeekValue(parseInt(event.target.value))} />
+                                    value={weekValue} onChange={handleWeekInputChange} />
                             </Box>
                             <Text className="inline text-sm font-medium">Week</Text>
                         </Flex>
@@ -279,7 +295,7 @@ const LockStakingModal: React.FC<{
                             <Box>YIELD BOOST</Box>
                             <Box className="text-right text-black text-base">{boost}x</Box>
                             <Box>UNLOCK ON</Box>
-                            <Box className="text-right text-black text-base">{unlockOn} </Box>
+                            <Box className="text-right text-black text-base">{unlockOn}</Box>
                             <Box>EXPECTED ROI</Box>
                             <Box className="text-right text-black text-base">${roi}</Box>
                         </Grid>
@@ -291,8 +307,7 @@ const LockStakingModal: React.FC<{
                             borderColor="darkgreen"
                             bgImg={"linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)"}
                             onClick={lockStaking}
-                            // disabled={!stakeValue || stakeValue <= 0 || !weekValue || weekValue <= 0 || weekValue >= 52 || inTransaction }
-                            disabled={inTransaction }
+                            disabled={!stakeValue || stakeValue < minLockAmount || stakeValue > balance || !weekValue || weekValue <= 0 || weekValue > maxWeeks || inTransaction }
                             _hover={{ bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)" }}
                             _active={{
                                 bgImg: "linear-gradient(135deg, #1AC1CE 0%, #00B3EB 100%)",

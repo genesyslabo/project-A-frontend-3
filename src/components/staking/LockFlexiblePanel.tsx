@@ -9,8 +9,11 @@ import { useEffect, useState } from "react"
 import { ContractService } from "../../service/contractService"
 import { flareUsdRate } from "../../common/constants"
 import { PendingFlare } from "./PendingFlare"
+import { useAccount, useSigner } from "wagmi"
 
 const LockFlexiblePanel = () => {
+    const { isConnected, address } = useAccount();
+    const {data: signer} = useSigner();
     const [amount, setAmount] = useState(0);
 
     const [unlockOn, setUnlockOn] = useState("")
@@ -18,10 +21,27 @@ const LockFlexiblePanel = () => {
     const [boost, setBoost] = useState(0);
     const [stakeAmount, setStakeAmount] = useState(0);
 
+    const fetchAmount = async () => {
+        const result = await ContractService.userLockStakingAmount(address, signer);
+        setAmount(result);
+    };
+
+    const fetchWeek = async () => {
+        const result = await ContractService.userLockStakingTime(address, signer);
+        const rest = result[2] - result[1];
+        if (rest > 0) {
+            setWeekValue(rest);
+        }
+    };
+
+    const fetchStakeAmount = async () => {
+        const result = await ContractService.userStakingAmount(address, signer);
+        setStakeAmount(result);
+    };
 
     const calcBoost = async () => {
         if (!weekValue) return;
-        const result = await ContractService.calculateBoost(amount, weekValue);
+        const result = await ContractService.calculateBoost(amount, weekValue, address, signer);
         setBoost(result);
     }
 
@@ -34,32 +54,20 @@ const LockFlexiblePanel = () => {
     }, [weekValue])
 
     useEffect(() => {
-        const fetchAmount = async () => {
-            const result = await ContractService.userLockStakingAmount();
-            setAmount(result);
-        };
 
-        const fetchWeek = async () => {
-            const result = await ContractService.userLockStakingTime();
-            const rest = result[2] - result[1];
-            if (rest > 0) {
-                setWeekValue(rest);
-            }
-        };
+        if (isConnected) {
+            fetchAmount();
 
-        const fetchStakeAmount = async () => {
-            const result = await ContractService.userStakingAmount();
-            setStakeAmount(result);
-        };
+            fetchStakeAmount();
 
-        fetchAmount();
-
-        fetchWeek();
-
-        fetchAmount();
-
-        calcBoost()
-    }, []);
+            fetchWeek();
+    
+            fetchAmount();
+    
+            calcBoost()
+        }
+        
+    }, [isConnected]);
 
     return (<>
         <AccordionItem mt={4}>

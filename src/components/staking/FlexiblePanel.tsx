@@ -7,17 +7,24 @@ import { PendingFlare } from "./PendingFlare";
 import { useEffect, useState } from "react";
 import { ContractService } from "../../service/contractService";
 import { flareUsdRate } from "../../common/constants";
+import { useAccount, useSigner } from "wagmi";
 
 const FlexiblePanel = () => {
     const [amount, setAmount] = useState(0);
-    useEffect(() => {
-        const fetchAmount = async () => {
-            const result = await ContractService.userStakingAmount();
-            setAmount(result);
-        };
+    const { isConnected, address } = useAccount();
+    const {data: signer} = useSigner();
 
-        fetchAmount();
-    }, []);
+    const fetchAmount = async () => {
+        const result = await ContractService.userStakingAmount(address, signer);
+        setAmount(result);
+    };
+
+    useEffect(() => {
+        if (isConnected) {
+            fetchAmount();
+        }
+        
+    }, [isConnected]);
     return (<>
         <AccordionItem>
             <AccordionButton className="!bg-white rounded-2xl">

@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { Flex, Grid, Button, Input } from '@chakra-ui/react';
 import { ContractService } from '../service/contractService';
+import { useAccount, useSigner } from 'wagmi';
 
 const Staking = () => {
+    const { isConnected, address } = useAccount();
+    const {data: signer} = useSigner();
     const [allowanceInput, setAllowanceInput] = useState("");
     const [depositInput, setDepositInput] = useState("");
     const [withdrawInput, setWithdrawInput] = useState("");
@@ -21,7 +24,7 @@ const Staking = () => {
                     onChange={(e) => setAllowanceInput(e.target.value)}
                 />
                 <Button
-                    onClick={() => ContractService.approve(parseFloat(allowanceInput))}
+                    onClick={() => ContractService.approve(parseFloat(allowanceInput), address, signer)}
                     size="lg"
                     bg="darkgreen"
                     color={"white"}
@@ -41,7 +44,7 @@ const Staking = () => {
                     onChange={(e) => setDepositInput(e.target.value)}
                 />
                 <Button
-                    onClick={() => ContractService.enterStaking(parseFloat(depositInput))}
+                    onClick={() => ContractService.enterStaking(parseFloat(depositInput), address, signer)}
                     size="lg"
                     bg="darkgreen"
                     color={"white"}
@@ -61,7 +64,7 @@ const Staking = () => {
                     onChange={(e) => setWithdrawInput(e.target.value)}
                 />
                 <Button
-                    onClick={() => ContractService.leaveStaking(parseFloat(withdrawInput))}
+                    onClick={() => ContractService.leaveStaking(parseFloat(withdrawInput), signer)}
                     size="lg"
                     bg="darkgreen"
                     color={"white"}
