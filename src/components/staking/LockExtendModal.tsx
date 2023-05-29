@@ -86,7 +86,6 @@ const LockExtendModal: React.FC<{
     const calcWeeks = async () => {
         const result = await ContractService.calcWeeksAfterExtend(weekValue, address, signer);
         setDuration(result)
-
     }
 
     const closeModal = () => {

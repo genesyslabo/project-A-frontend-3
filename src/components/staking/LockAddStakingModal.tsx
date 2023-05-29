@@ -101,6 +101,11 @@ const LockAddStakingModal: React.FC<{
         console.log('calcroi', stakeValue, weekValue, result)
     }
 
+    const calcWeeks = async () => {
+        const result = await ContractService.calcWeeksAfterExtend(weekValue, address, signer);
+        setWeekValue(result)
+    }
+
     const closeModal = () => {
         onClose()
         props.onClose()
@@ -129,18 +134,9 @@ const LockAddStakingModal: React.FC<{
             setBalance(parseInt(result + ""));
         };
 
-        const fetchWeek = async () => {
-            const result = await ContractService.userLockStakingTime(address, signer);
-            console.log('week', result[2].toNumber(), result[1])
-            const rest = result[2] - result[1];
-            if (rest > 0) {
-                setWeekValue(parseInt((rest / WEEK_MILLICONDS) + ""));
-            }
-        };
-
-        fetchWeek();
-
         fetchBalance();
+
+        calcWeeks();
     }, []);
 
 

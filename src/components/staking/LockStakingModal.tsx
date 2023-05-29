@@ -201,7 +201,7 @@ const LockStakingModal: React.FC<{
             <ModalContent>
                 <ModalHeader className=" bg-white">FLARE TO LOCK</ModalHeader>
                 <ModalCloseButton />
-                <ModalBody className=" bg-white">
+                <ModalBody className=" bg-white h-[80vh] overflow-y-auto">
                     <Flex className="flex-col gap-2">
                         <Flex>
                             <Text className="grow text-[#5B7A8A] text-xs font-medium">
