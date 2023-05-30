@@ -96,12 +96,12 @@ const pendingFlare = async (pid, address, signer) => {
 
 const enterStaking = async (amount, address, signer) => {
     try {
-        const allowanceNumber = await allowance(address, signer);
-        if (allowanceNumber < amount) {
-            const approveResult = await approve(parseFloat(amount) * 10, address, signer)
+        // const allowanceNumber = await allowance(address, signer);
+        // if (allowanceNumber < amount) {
+            const approveResult = await approve(parseFloat(amount), address, signer)
             console.log("approve", approveResult)
             // throw new Error('Insufficient allowance');
-        }
+        // }
         const amountInWei = ethers.utils.parseUnits(amount.toString(), 18);
         if (amountInWei.lte(MinStakingAmount)) {
             throw new Error('Insufficient amount');
@@ -136,12 +136,12 @@ const leaveStaking = async (amount, signer) => {
 
 const enterLockStaking = async (amount, weeks, address, signer) => {
     try {
-        const allowanceNumber = await allowance(address, signer);
-        if (allowanceNumber < amount) {
-            const approveResult = await approve(parseFloat(amount) * 10, address, signer)
+        // const allowanceNumber = await allowance(address, signer);
+        // if (allowanceNumber < amount) {
+            const approveResult = await approve(parseFloat(amount), address, signer)
             console.log("approve", approveResult)
             // throw new Error('Insufficient allowance');
-        }
+        // }
         const amountInWei = ethers.utils.parseUnits(amount.toString(), 18);
         if (amountInWei.lte(MinLockStakingAmount)) {
             throw new Error('Insufficient amount');
@@ -159,10 +159,12 @@ const enterLockStaking = async (amount, weeks, address, signer) => {
 
 const reEnterLockStaking = async (amount, weeks, address, signer) => {
     try {
-        const allowanceNumber = await allowance(address, signer);
-        if (allowanceNumber < amount) {
-            throw new Error('Insufficient allowance');
-        }
+        // const allowanceNumber = await allowance(address, signer);
+        // if (allowanceNumber < amount) {
+        //     throw new Error('Insufficient allowance');
+        // }
+        const approveResult = await approve(parseFloat(amount), address, signer)
+        console.log("approve", approveResult)
         const amountInWei = ethers.utils.parseUnits(amount.toString(), 18);
         // if (amountInWei.lte(MinLockStakingAmount)) {
         //     throw new Error('Insufficient amount');

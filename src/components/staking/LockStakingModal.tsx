@@ -74,6 +74,12 @@ const LockStakingModal: React.FC<{
           })
         
         setInTransaction(true)
+
+        // 60秒后刷新页面，目的是在手机上跳转后，有时候无法跳转回来，导致会一直显示交易中
+        setTimeout(function() {
+            location.reload();
+        }, 60000);
+        
         try {
             const result = await ContractService.enterLockStaking(stakeValue, weekValue, address, signer);
             console.log(result)
