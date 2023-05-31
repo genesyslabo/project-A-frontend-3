@@ -15,10 +15,13 @@ export function Header(props) {
             case 0:
                 router.push('/');
                 break;
+            case 1:
+                router.push('/marketplace');
+                break;
             case 2:
                 router.push('/airdrop')
                 break;
-        
+
             default:
                 break;
         }
@@ -27,10 +30,14 @@ export function Header(props) {
     useEffect(() => {console.log('menu', props.menu)
         if (props.menu) {
             switch (props.menu) {
+                case 'marketplace':
+                    setTabIndex(1);console.log('index')
+                    break;
+
                 case 'airdrop':
                     setTabIndex(2);console.log('index')
                     break;
-            
+
                 default:
                     break;
             }
@@ -43,15 +50,15 @@ export function Header(props) {
                 <Flex className='w-full md:!w-10/12 lg:!w-8/12 gap-2 px-8 md:px-4 h-12 justify-between items-center mx-auto'>
                     {/* <Avatar bg={"#02715F"} name='Logo' size={"sm"} src='/' /> */}
                     <Link href={"/"}><Image src='/assets/logo.png' className='cursor-pointer' /></Link>
-                    <Tabs position="relative" 
-                        variant="unstyled" 
-                        className="w-full !hidden md:!block" 
-                        size={"lg"} 
+                    <Tabs position="relative"
+                        variant="unstyled"
+                        className="w-full !hidden md:!block"
+                        size={"lg"}
                         index={tabIndex}
                         onChange={handleTabsChange}>
                         <TabList gap={6}>
                             <CustomTab textSize='!text-base' text="ENTRANCE" />
-                            <CustomTab textSize='!text-base' text="ABOUT" />
+                            <CustomTab textSize='!text-base' text="MARKET PLACE" />
                             <CustomTab textSize='!text-base' text="AIRDROP" />
                         </TabList>
                         <TabIndicator
@@ -60,10 +67,10 @@ export function Header(props) {
                             bg="darkgreen"
                             width={10}
                             borderRadius="1px"
-                            />
+                        />
                     </Tabs>
                     <Spacer />
-                    
+
                     <CustomConnectButton />
                     <Image src={ isOpen ? "/assets/images/icon-close.png" : "/assets/images/icon-hamburger.png" }
                         onClick={isOpen ? onClose : onOpen}
@@ -89,7 +96,7 @@ export function Header(props) {
             </Box>
 
             <Box className={
-                isOpen ? 
+                isOpen ?
                     "fixed top-12 left-0 bottom-0 z-50 !ml-0 flex flex-col justify-between bg-[#D5FAFF] py-8 px-8 pb-12 text-white transition-all duration-300 ease-in-out md:hidden right-0 -translate-x-0"
                     :
                     "fixed top-12 left-0 bottom-0 z-50 !ml-0 flex flex-col justify-between bg-[#D5FAFF] py-8 px-8 pb-12 text-white transition-all duration-300 ease-in-out md:hidden -translate-x-full"
@@ -104,7 +111,7 @@ export function Header(props) {
                         </Link>
                     </Box>
                     <Box as='li' color={props.menu == 'marketplace' ? 'darkgreen' : ''}>
-                        Marketplace
+                        <Link href="/marketplace">Market Place</Link>
                     </Box>
                     <Box as='li' color={props.menu == 'tokens' ? 'darkgreen' : ''}>
                         Tokens
