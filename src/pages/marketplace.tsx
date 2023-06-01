@@ -1,4 +1,4 @@
-import { Accordion, Avatar, Box, Image, Flex, Grid, HStack, Spacer, Text, useBreakpointValue} from "@chakra-ui/react"
+import { Accordion, Avatar, Select, Box, Image, Flex, Grid, HStack, Spacer, Text, Button, useBreakpointValue } from "@chakra-ui/react"
 import { FramePage } from "../components/FramePage"
 import React, { useState } from 'react';
 import { ContractService } from '../service/contractService';
@@ -61,21 +61,69 @@ const Upper = () => {
   );
 };
 
+
 const Offers = () => {
-    return (
-        <>
-        </>
-    );
-}
+  const [sortBy, setSortBy] = useState("Price low to high");
+  const width = useBreakpointValue({ base: "260px", md: "350px" });
+  const gridTemplateColumns = useBreakpointValue({ base: "repeat(2, 1fr)", md: "repeat(6, 1fr)" });
+  // const imgWidth = useBreakpointValue({ base: "160px", md: "180px" });
+
+  const images = new Array(12).fill(0).map((_, index) => `/assets/images/temp${index + 1}.png`);
+
+  return (
+    <Box p="10px">
+      <Select
+        backgroundColor="black"
+        color="white"
+        w={width}
+        value={sortBy}
+        onChange={(event) => setSortBy(event.target.value)}
+      >
+        <option value="Price low to high">Price low to high</option>
+        <option value="Price high to low">Price high to low</option>
+        <option value="Recently listed">Recently listed</option>
+        <option value="Best offer">Best offer</option>
+        <option value="Highest last sale">Highest last sale</option>
+        <option value="Recent sold">Recent sold</option>
+        <option value="Recently created">Recently created</option>
+        <option value="Most viewed">Most viewed</option>
+        <option value="Oldest">Oldest</option>
+        <option value="Most favorited">Most favorited</option>
+        <option value="Ending soon">Ending soon</option>
+        <option value="Recently reveived">Recently reveived</option>
+      </Select>
+
+      {/* 列表数据 */}
+      <Grid mt="10px" templateColumns={gridTemplateColumns} gap="10px">
+        {images.map((imgSrc, index) => (
+          <Image key={index} src={imgSrc} />
+        ))}
+      </Grid>
+      <Button
+        w="100%"
+        h="40px"
+        mt="10px"
+        borderRadius="24px"
+        backgroundColor="#0084FF"
+        color="white"
+        fontSize="14px"
+      >
+        Make Collection Offer
+      </Button>
+    </Box>
+  );
+};
+
+
 
 const MarketPlace = () => {
 
-    return (<>
-        <FramePage menu="marketplace">
-            <Upper />
-            <Offers />
-        </FramePage>
-    </>)
+  return (<>
+    <FramePage menu="marketplace">
+      <Upper />
+      <Offers />
+    </FramePage>
+  </>)
 }
 
 export default MarketPlace
